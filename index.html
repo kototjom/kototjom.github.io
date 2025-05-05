@@ -17,6 +17,12 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    .wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       padding: 2rem 1rem;
     }
@@ -103,67 +109,65 @@
       color: #ffffff;
     }
 
-    @media (min-width: 640px) {
-      body {
-        padding-top: 3rem;
-        padding-bottom: 0rem;
-      }
-	.line {
-    border-bottom: 2px solid #5F8B9C; /* Параметры линии */
-	margin-top: 40px
-   }
-      .футер {
-  color: #DEDFDF;
-  font-size: 12px; /* Обычно используют px для размера шрифта */
-  text-align: center;
-  display: block;
-  margin-top: 15px
-   }
+    .line {
+      border-bottom: 2px solid #5F8B9C;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .футер {
+      color: #DEDFDF;
+      font-size: 12px;
+      text-align: center;
+      margin: 15px 0 20px 0;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="profile">
-      <div class="profile-img-wrapper">
-        <img class="profile-img"
-             src="https://yt3.ggpht.com/RqDDBKtvLzvVOmNs0csgO6oa3_IFYy0HegpuMhMCE5LOkn6IOvFe_n23Dx2WDi1ibsLPxXA20Wg=w150-h150-p-k-no-nu"
-             onerror="this.onerror=null; this.src='https://placehold.co/96x96/608B9C/FFFFFF?text=Kototjom';"
-             alt="Аватарка">
+  <div class="wrapper">
+    <div class="container">
+      <div class="profile">
+        <div class="profile-img-wrapper">
+          <img class="profile-img"
+               src="https://yt3.ggpht.com/RqDDBKtvLzvVOmNs0csgO6oa3_IFYy0HegpuMhMCE5LOkn6IOvFe_n23Dx2WDi1ibsLPxXA20Wg=w150-h150-p-k-no-nu"
+               onerror="this.onerror=null; this.src='https://placehold.co/96x96/608B9C/FFFFFF?text=Kototjom';"
+               alt="Аватарка">
+        </div>
+        <h1 class="profile-name">@Kototjom</h1>
+        <p class="profile-description">Привет, я Артём! Шарю за многое, делаю многое</p>
       </div>
-      <h1 class="profile-name">@Kototjom</h1>
-      <p class="profile-description">Привет, я Артём! Шарю за многое, делаю многое</p>
+
+      <div class="links">
+        <a href="https://www.twitch.tv/kototjom" class="link">
+          <i class="bi bi-twitch link-icon"></i>
+          <span>Twitch</span>
+        </a>
+        <a href="https://www.youtube.com/channel/UCF1oUFry68cRUMk-B8GKkJg" class="link">
+          <i class="bi bi-youtube link-icon"></i>
+          <span>YouTube</span>
+        </a>
+        <a href="https://www.instagram.com/kototjom_insta/" class="link">
+          <i class="bi bi-instagram link-icon"></i>
+          <span>Запретограм</span>
+        </a>
+        <a href="https://www.tiktok.com/@kototjom" class="link">
+          <i class="bi bi-tiktok link-icon"></i>
+          <span>TikTok</span>
+        </a>
+        <a href="https://t.me/kototjom_telegram" class="link">
+          <i class="bi bi-telegram link-icon"></i>
+          <span>ТГК</span>
+        </a>
+        <a href="https://author.today/u/kototjom" class="link">
+          <i class="bi bi-envelope-fill link-icon"></i>
+          <span>Author.Today</span>
+        </a>
+      </div>
     </div>
 
-    <div class="links">
-      <a href="https://www.twitch.tv/kototjom" class="link">
-        <i class="bi bi-twitch link-icon"></i>
-        <span>Twitch</span>
-      </a>
-      <a href="https://www.youtube.com/channel/UCF1oUFry68cRUMk-B8GKkJg" class="link">
-        <i class="bi bi-youtube link-icon"></i>
-        <span>YouTube</span>
-      </a>
-      <a href="https://www.instagram.com/kototjom_insta/" class="link">
-        <i class="bi bi-instagram link-icon"></i>
-        <span>Запретограм</span>
-      </a>
-      <a href="https://www.tiktok.com/@kototjom" class="link">
-        <i class="bi bi-tiktok link-icon"></i>
-        <span>TikTok</span>
-      </a>
-      <a href="https://t.me/kototjom_telegram" class="link">
-        <i class="bi bi-telegram link-icon"></i>
-        <span>ТГК</span>
-      </a>
-      <a href="https://author.today/u/kototjom" class="link">
-        <i class="bi bi-envelope-fill link-icon"></i>
-        <span>Author.Today</span>
-      </a>
-    </div>
+    <div class="line"></div>
+    <div class="футер">Ваша приватность. Meta запрещена в РФ</div>
   </div>
-  <div class="line"></div>
-<span class="футер">Ваша приватность. Meta запрещена в РФ</span>
-    </div>
 </body>
 </html>
