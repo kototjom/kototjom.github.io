@@ -133,9 +133,92 @@
   text-decoration: underline;
   transition: color 0.3s ease;
 }
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  background-color: rgba(33, 37, 41, 0.7); /* Твой фон + прозрачность */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-content {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-menu {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-menu a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+  color: #5F8B9C;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 1rem;
+    background-color: rgba(33, 37, 41, 0.95);
+    flex-direction: column;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .nav-menu.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
   </style>
 </head>
 <body>
+<header class="header">
+  <div class="header-content">
+<span>@kototjom</span>
+
+<nav class="nav-menu">
+  <a href="/">Главная</a>
+  <a href="https://blog.kototjom.top/">Блог</a>
+  <a href="https://placehold.co/600x400?text=%D0%92+%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B5">Портфолио</a>
+</nav>
+
+<button class="hamburger" aria-label="Открыть меню">
+  <i class="bi bi-list"></i>
+</button>
+
+  </div>
+</header>
   <div class="wrapper">
     <div class="container">
       <div class="profile">
@@ -145,7 +228,7 @@
                onerror="this.onerror=null; this.src='https://placehold.co/96x96/608B9C/FFFFFF?text=Kototjom';"
                alt="Аватарка">
         </div>
-        <h1 class="profile-name">@Kototjom</h1>
+        <h1 class="profile-name">Артём (aka Kototjom)</h1>
         <p class="profile-description">Привет, я Артём! Шарю за многое, делаю многое</p>
       </div>
 
@@ -174,15 +257,20 @@
           <i class="bi bi-envelope-fill link-icon"></i>
           <span>Author.Today</span>
         </a>
-        <a href="https://blog.kototjom.top/" class="link">
-          <i class="bi bi-blockquote-left link-icon"></i>
-          <span>Блог</span>
-        </a>
       </div>
     </div>
 
     <div class="line"></div>
     <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> Meta запрещена в РФ</div>
   </div>
+  <script>
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+  });
+</script>
+
 </body>
 </html>
