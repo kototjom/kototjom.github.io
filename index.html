@@ -16,7 +16,7 @@
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #212529;
+      background-color: #262422;
       margin: 0;
       padding: 0;
       min-height: 100vh;
@@ -47,7 +47,6 @@
       display: inline-block;
       padding: 0.25rem;
       border-radius: 50%;
-      background-color: #608B9C;
     }
 
     .profile-img {
@@ -65,6 +64,14 @@
       margin-top: 1rem;
       margin-bottom: 0.25rem;
     }
+	
+	    .profile-aka {
+      color: #DDDCDC;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
 
     .profile-description {
       color: rgba(255, 255, 255, 0.85);
@@ -75,29 +82,27 @@
     .links {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.6rem;
     }
 
     .link {
-      background-color: transparent;
-      color: #5F8B9C;
+      background-color: #201F1E;
+      color: rgba(255, 255, 255, 0.85);
       padding: 1rem;
       border-radius: 1rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       display: flex;
       align-items: center;
       gap: 0.75rem;
       text-decoration: none;
       font-weight: 500;
-      border: 2px solid #5F8B9C;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease-in-out;
     }
 
     .link:hover {
-      background-color: #5F8B9C;
-      color: #ffffff;
+      background-color: rgba(30, 30, 30, 0.7);
+      color: rgba(255, 255, 255, 0.85);
       transform: scale(1.02);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
 
     .link-icon {
@@ -106,30 +111,30 @@
       height: 24px;
       flex-shrink: 0;
       line-height: 1;
-      color: #5F8B9C;
+      color: rgba(255, 255, 255, 0.1);
       transition: color 0.3s ease-in-out;
     }
 
     .link:hover .link-icon {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .line {
-      border-bottom: 2px solid #5F8B9C;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.10);
       margin-top: 40px;
       width: 100%;
       max-width: 640px;
     }
 
     .футер {
-      color: #DEDFDF;
+      color: rgba(255, 255, 255, 0.30);
       font-size: 12px;
       text-align: center;
       margin: 15px 0 20px 0;
     }
 
 	.footer-link {
-  color: #5F8B9C;
+  color: rgba(255, 255, 255, 0.3);
   text-decoration: underline;
   transition: color 0.3s ease;
 }
@@ -139,7 +144,7 @@
   width: 100%;
   z-index: 999;
   backdrop-filter: blur(10px);
-  background-color: rgba(33, 37, 41, 0.7); /* Твой фон + прозрачность */
+  background-color: rgba(30, 30, 30, 0.7); /* Твой фон + прозрачность */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -167,7 +172,7 @@
 }
 
 .nav-menu a:hover {
-  color: #5F8B9C;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .hamburger {
@@ -185,7 +190,7 @@
     position: absolute;
     top: 100%;
     right: 1rem;
-    background-color: rgba(33, 37, 41, 0.95);
+    background-color: rgba(30, 30, 30, 0.7);
     flex-direction: column;
     padding: 0.5rem;
     border-radius: 0.5rem;
@@ -228,7 +233,8 @@
                onerror="this.onerror=null; this.src='https://placehold.co/96x96/608B9C/FFFFFF?text=Kototjom';"
                alt="Аватарка">
         </div>
-        <h1 class="profile-name">Артём (aka Kototjom)</h1>
+        <h1 class="profile-name">Артём Титов</h1>
+		<h1 class="profile-aka">aka Kototjom</h1>
         <p class="profile-description">Привет, я Артём! Шарю за многое, делаю многое</p>
       </div>
 
