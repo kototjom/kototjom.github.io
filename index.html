@@ -164,15 +164,23 @@
   gap: 1rem;
 }
 
+/* Существующие стили для ссылок навигации */
 .nav-menu a {
   color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
+  text-decoration: none; /* Убираем подчёркивание по умолчанию */
   font-weight: 500;
   transition: color 0.3s;
 }
 
 .nav-menu a:hover {
   color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline; /* Подчёркивание при наведении */
+}
+
+/* Стиль для активной (текущей) ссылки */
+.nav-menu a.active {
+color: #F2F2F2;
+  font-weight: 600; /* Можно сделать жирнее */
 }
 
 .hamburger {
@@ -213,10 +221,9 @@
 <span>@kototjom</span>
 
 <nav class="nav-menu">
-  <a href="/">Главная</a>
-  <a href="https://blog.kototjom.top/">Блог</a>
-  <a href="https://www.behance.net/kototjom">Портфолио</a>
-</nav>
+  <a href="/" class="active">Главная</a>
+  <a href="blog.kototjom.top">Блог</a>
+  <a href="/work.html">Портфолио</a> </nav>
 
 <button class="hamburger" aria-label="Открыть меню">
   <i class="bi bi-list"></i>

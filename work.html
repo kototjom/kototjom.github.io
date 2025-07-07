@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Kototjom - портфолио</title>
+  <meta name="description" content="Сайт со всеми ссылками на социальные сети @kototjom">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <style>
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #262422;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 640px; /* Увеличена ширина контейнера */
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    h2 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-name {
+      color: #ffffff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 1rem;
+      margin-bottom: 0.10rem;
+    }
+    
+    .profile-aka {
+      color: #DDDCDC;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .profile-description {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1rem;
+      margin-bottom: 3rem;
+	   padding: 0 1rem; 
+    }
+
+/* Стили для плашек умений */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap; /* Разрешает перенос на следующую строку */
+      justify-content: center;
+      gap: 0.20rem; /* Расстояние между плашками */
+      margin-top: -2rem; /* Поднимаем немного вверх, чтобы было ближе к описанию */
+      margin-bottom: 2rem; /* Отступ снизу */
+      padding: 0 1rem; /* Небольшой отступ по бокам для мобильных */
+    }
+
+    .skill-tag {
+      background-color: #201F1E;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 1.5rem; /* Сильное скругление для плашки */
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap; /* Запрещает перенос текста внутри плашки */
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .skill-tag:hover {
+        background-color: rgba(30, 30, 30, 0.7);
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .link {
+      background-color: #201F1E;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 1rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .link:hover {
+      background-color: rgba(30, 30, 30, 0.7);
+      color: rgba(255, 255, 255, 0.85);
+      transform: scale(1.02);
+    }
+
+    .link-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.1);
+      transition: color 0.3s ease-in-out;
+    }
+
+    .link:hover .link-icon {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .line {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.10);
+      margin-top: 40px;
+      width: 100%;
+      max-width: 640px; /* Увеличена ширина линии */
+    }
+
+    .футер {
+      color: rgba(255, 255, 255, 0.30);
+      font-size: 12px;
+      text-align: center;
+      margin: 15px 0 20px 0;
+    }
+
+    .footer-link {
+      color: rgba(255, 255, 255, 0.3);
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+      background-color: rgba(30, 30, 30, 0.7); /* Твой фон + прозрачность */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .header-content {
+      max-width: 640px; /* Увеличена ширина хедера */
+      margin: 0 auto;
+      padding: 0.5rem 1rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1rem;
+    }
+
+/* Существующие стили для ссылок навигации */
+.nav-menu a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none; /* Убираем подчёркивание по умолчанию */
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline; /* Подчёркивание при наведении */
+}
+
+/* Стиль для активной (текущей) ссылки */
+.nav-menu a.active {
+color: #F2F2F2;
+  font-weight: 600; /* Можно сделать жирнее */
+}
+
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Стили для секции портфолио */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* По умолчанию один столбец */
+      gap: 1.5rem; /* Расстояние между элементами */
+      margin-top: 1.5rem;
+    }
+
+    @media (min-width: 768px) { /* На экранах шире 768px - два столбца */
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .portfolio-item {
+      background-color: #201F1E;
+      border-radius: 1rem;
+      overflow: hidden; /* Обрезаем, чтобы картинка не выходила за границы */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease-in-out;
+      text-decoration: none; /* Убираем подчеркивание для ссылки */
+      display: flex;
+      flex-direction: column;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .portfolio-item:hover {
+      background-color: rgba(30, 30, 30, 0.7);
+      transform: scale(1.02);
+    }
+
+    .portfolio-image {
+      width: 100%;
+      height: 200px; /* Фиксированная высота для изображений */
+      object-fit: cover; /* Изображение будет покрывать область, обрезая лишнее */
+      border-radius: 1rem 1rem 0 0; /* Закругление только сверху */
+    }
+
+    .portfolio-content {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 500;
+    }
+
+    .portfolio-content .link-icon {
+        color: rgba(255, 255, 255, 0.85); /* Иконка всегда видна */
+    }
+
+    @media (max-width: 480px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 1rem;
+        background-color: rgba(30, 30, 30, 0.7);
+        flex-direction: column;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+      }
+
+      .nav-menu.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+ .my-class {
+  text-decoration: underline; /* Это делает текст подчёркнутым */
+}
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-content">
+<span>@kototjom</span>
+
+<nav class="nav-menu">
+  <a href="/">Главная</a>
+  <a href="blog.kototjom.top">Блог</a>
+  <a href="/work.html" class="active">Портфолио</a> </nav>
+
+<button class="hamburger" aria-label="Открыть меню">
+  <i class="bi bi-list"></i>
+</button>
+
+  </div>
+</header>
+  <div class="wrapper">
+    <div class="container">
+      <div class="profile">
+        <h1 class="profile-name">Артём Титов</h1>
+        <h2 class="profile-aka">aka Kototjom</h2>
+        <p class="profile-description">Привет! Я Артём, специалист с опытом в графическом дизайне, создании контента и веб-разработке. Моя цель — создавать функциональные и визуально привлекательные решения.</p>
+		      <div class="skills-container">
+        <span class="skill-tag">Графический дизайн</span>
+        <span class="skill-tag">Использование AI</span>
+        <span class="skill-tag">Создание контента</span>
+        <span class="skill-tag">Базовые знания HTML/CSS</span>
+        <span class="skill-tag">Figma</span>
+      </div>
+      </div>
+      
+      <div class="line"></div>
+ <h2>Мои работы</h2>
+      <div class="portfolio-grid" id="projects">
+        <a href="ссылка_на_проект_графический_дизайн_1" class="portfolio-item">
+          <img src="https://placehold.co/400x250?text=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80" alt="Пример графического дизайна 1" class="portfolio-image">
+          <div class="portfolio-content">
+            <i class="bi bi-palette link-icon"></i>
+            <span>Граф дизайн: Дизайн для блоггера</span>
+          </div>
+        </a>
+        <a href="ссылка_на_проект_html_css_1" class="portfolio-item">
+          <img src="https://placehold.co/400x250?text=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80" alt="Пример веб-разработки 1" class="portfolio-image">
+          <div class="portfolio-content">
+            <i class="bi bi-code-slash link-icon"></i>
+            <span>Веб-разработка: Сайт-портфолио</span>
+          </div>
+        </a>
+      </div>
+      <div class="line"></div>
+ <h2>Связь со мной</h2>
+<div class="links">
+        <a href="https://t.me/kototjom" class="link">
+          <i class="bi bi-telegram link-icon"></i>
+          <span>Telegram</span>
+        </a>
+
+   </div>
+
+    <div class="line"></div>
+    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> Meta запрещена в РФ</div>
+  </div>
+  <script>
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+  });
+</script>
+
+</body>
+</html>
