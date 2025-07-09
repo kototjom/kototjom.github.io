@@ -24,13 +24,20 @@
       flex-direction: column;
     }
 
-    .wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
-    }
+.profile-hero {
+  background: linear-gradient(135deg, #332c41, #272433);
+  padding: 2rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem 2rem 1rem;
+}
 
     .container {
       max-width: 640px; /* Увеличена ширина контейнера */
@@ -44,10 +51,10 @@
       margin-bottom: 2rem;
     }
 
-    .profile {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+.profile {
+  text-align: center;
+  margin-bottom: 0;
+}
 
     .profile-name {
       color: #ffffff;
@@ -307,22 +314,27 @@ color: #F2F2F2;
 
   </div>
 </header>
-  <div class="wrapper">
-    <div class="container">
-      <div class="profile">
-        <h1 class="profile-name">Артём Титов</h1>
-        <h2 class="profile-aka">aka Kototjom</h2>
-        <p class="profile-description">Привет! Я Артём, специалист с опытом в графическом дизайне, создании контента и веб-разработке. Моя цель — создавать функциональные и визуально привлекательные решения.</p>
-		      <div class="skills-container">
+ <!-- Секция профиля с градиентным фоном -->
+<div class="profile-hero">
+  <div class="container">
+    <div class="profile">
+      <h1 class="profile-name">Артём Титов</h1>
+      <h2 class="profile-aka">aka Kototjom</h2>
+      <p class="profile-description">Привет! Я Артём, специалист с опытом в графическом дизайне, создании контента и веб-разработке. Моя цель — создавать функциональные и визуально привлекательные решения.</p>
+      <div class="skills-container">
         <span class="skill-tag">Графический дизайн</span>
         <span class="skill-tag">Использование AI</span>
         <span class="skill-tag">Создание контента</span>
         <span class="skill-tag">Базовые знания HTML/CSS</span>
         <span class="skill-tag">Figma</span>
       </div>
-      </div>
-      
-      <div class="line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Остальное содержимое страницы -->
+<div class="wrapper">
+  <div class="container">
  <h2>Мои работы</h2>
       <div class="portfolio-grid" id="projects">
         <a href="ссылка_на_проект_графический_дизайн_1" class="portfolio-item">
