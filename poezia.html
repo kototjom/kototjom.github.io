@@ -16,7 +16,7 @@
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(to top, #262422, #203856);
+      background: #262422;
       margin: 0;
       padding: 0;
       min-height: 100vh;
@@ -247,6 +247,32 @@ border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-п
     color: white; /* Белый текст */
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
+/* Стили для нового раздела "Обо мне" */
+.about-me-section {
+  background-color: #201F1E;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.about-me-section h3 {
+  color: #ffffff;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.about-me-section p {
+  margin-bottom: 1rem;
+}
+
+.about-me-section p:last-child {
+  margin-bottom: 0;
+}
   </style>
 </head>
 <body>
@@ -258,9 +284,9 @@ border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-п
     <a href="/work.html" class="pere2">Работа</a>
             </div>
         </div> <nav class="nav-menu">
-            <a href="/" class="active">Главная</a>
+            <a href="/" >Главная</a>
             <a href="https://blog.kototjom.top/">Блог</a>
-			<a href="poezia.html">Поезия</a>
+			<a href="poezia.html" class="active">Поезия</a>
         </nav>
 
         <button class="hamburger" aria-label="Открыть меню">
@@ -272,43 +298,24 @@ border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-п
   <div class="wrapper">
     <div class="container">
       <div class="profile">
-        <div class="profile-img-wrapper">
-          <img class="profile-img"
-               src="https://yt3.googleusercontent.com/92t9UKykH7LsIpekA1-vH7qMaMipHbqcyamylp6tmxi0eBtpAZYbqTbJ2cxql-A2sJePo9y0rA=s160-c-k-c0x00ffffff-no-rj"
-               onerror="this.onerror=null; this.src='https://placehold.co/96x96/608B9C/FFFFFF?text=Kototjom';"
-               alt="Аватарка">
-        </div>
-        <h1 class="profile-name">It´s me - Kototjom!</h1>
-		<h1 class="profile-aka">Артём Титов</h1>
-        <p class="profile-description">Привет, я Артём! Шарю за многое, делаю многое</p>
+        <h1 class="profile-name">Поезия</h1>
+        <p class="profile-description">Все мои стихотворения и другие формы поэии</p>
       </div>
 
-      <div class="links">
-        <a href="https://www.twitch.tv/kototjom" class="link">
-          <i class="bi bi-twitch link-icon"></i>
-          <span>Twitch</span>
-        </a>
-        <a href="https://www.youtube.com/channel/UCF1oUFry68cRUMk-B8GKkJg" class="link">
-          <i class="bi bi-youtube link-icon"></i>
-          <span>YouTube</span>
-        </a>
-        <a href="https://www.instagram.com/kototjom_insta/" class="link">
-          <i class="bi bi-instagram link-icon"></i>
-          <span>Запретограм</span>
-        </a>
-        <a href="https://www.tiktok.com/@kototjom" class="link">
-          <i class="bi bi-tiktok link-icon"></i>
-          <span>TikTok</span>
-        </a>
-        <a href="https://t.me/kototjom_telegram" class="link">
-          <i class="bi bi-telegram link-icon"></i>
-          <span>ТГК</span>
-        </a>
-        <a href="https://author.today/u/kototjom" class="link">
-          <i class="bi bi-envelope-fill link-icon"></i>
-          <span>Author.Today</span>
-        </a>
-      </div>
+<div class="about-me-section">
+      <h3>И снова у обрыва</h3>
+      <p>И снова здесь, и снова у обрыва.<br>
+Стою мечтательно тут я.<br>
+“Уйти-б отсюда как-нибудь без срыва”,<br>
+И это всё, что требует душа моя.</p>
+      <p>Пытаясь сгинуть как-то прочь отсюда,<br>
+Сомнения заполнили меня.<br>
+Пропасть манила словно сладко-блюдо,<br>
+Что было точно полная брехня.</p>
+      <p>И всё-таки, не устояв пред этой бездной,<br>
+Я, понимая что произойдёт,<br>
+Пошел и сделал шаг к уже известной,<br>
+И снова тот же, родимый мне полёт.</p>
     </div>
 
     <div class="line"></div>
