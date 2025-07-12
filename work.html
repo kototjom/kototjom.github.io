@@ -276,7 +276,10 @@ border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-п
 h2 {
   color: white;
   text-align: center;
+  margin-top: 2rem;
 }
+
+
 .skills {
   display: flex;
   flex-wrap: wrap;
@@ -298,6 +301,51 @@ h2 {
 
 .skill-badge:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+.project-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 600px) {
+  .project-gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.project-card {
+  background-color: rgba(30, 30, 30, 0.7);;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.02);
+}
+
+.project-card img {
+  width: 100%;
+  display: block;
+}
+
+.project-info {
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.project-info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.project-info p {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
   </style>
@@ -342,6 +390,35 @@ h2 {
       <p>Я постоянно исследую новые инструменты и методы, особенно в области искусственного интеллекта, чтобы расширить свои творческие возможности. Моя цель — создавать не просто красивые, но и функциональные дизайны, которые решают реальные задачи.</p>
       <p>Помимо дизайна, я также имею базовые знания HTML/CSS, что позволяет мне лучше понимать, как мои дизайны будут реализованы в вебе. Я верю, что постоянное обучение и эксперименты — ключ к успеху в быстро меняющемся цифровом мире.</p>
     </div>
+	
+
+  <h2>Примеры работ</h2>
+  <div class="project-gallery">
+    <div class="project-card">
+      <img src="https://placehold.co/300x200" alt="Проект 1">
+      <div class="project-info">
+        <h3>Обложка Telegram-канала</h3>
+        <p>Минималистичная обложка для tech-канала с уклоном в нейросети.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://placehold.co/300x200" alt="Проект 2">
+      <div class="project-info">
+        <h3>Лендинг на HTML</h3>
+        <p>Интерактивный одностраничный сайт, сверстанный вручную.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://placehold.co/300x200" alt="Проект 3">
+      <div class="project-info">
+        <h3>Арт Midjourney</h3>
+        <p>Эксперименты с генеративным искусством для обложек и NFT.</p>
+      </div>
+    </div>
+  </div>
+
+
+	
  <h2>Связатся со мной</h2>
       <div class="links">
         <a href="https://t.me/kototjom" class="link">
