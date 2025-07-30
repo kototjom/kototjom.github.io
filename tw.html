@@ -289,6 +289,70 @@ border-color: #363534 transparent #363534 #363534; /* верх, право, ни
 .logo {
   vertical-align: -5px; /* Попробуйте начать с -2px */
   }
+
+
+  /* НОВЫЕ СТИЛИ ДЛЯ ВЛАДОК (ТАБОВ) */
+.tabs-container {
+    margin-top: 0rem; /* Отступ сверху */
+    width: 100%;
+    max-width: 640px;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center; /* Центрируем кнопки табов */
+    gap: 0.5rem; /* Отступ между кнопками */
+    margin-bottom: 0rem; /* Отступ между кнопками и содержимым таба */
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-button {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem; /* Скругленные углы для кнопок */
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    flex-grow: 1; /* Растягиваем кнопки, чтобы они равномерно заполняли пространство */
+    text-align: center;
+}
+
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.tab-button.active {
+    background-color: rgba(255, 255, 255, 0.15); /* Активная кнопка чуть светлее */
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2); /* Легкая внутренняя тень для активной кнопки */
+}
+
+.tab-content {
+    display: none; /* По умолчанию все содержимое табов скрыто */
+}
+
+.tab-content.active {
+    display: block; /* Активный таб отображается */
+}
+
+/* Стили для секций внутри табов (profile и about-me-section) */
+/* Убираем margin-top у about-me-section, так как он будет внутри таба */
+.about-me-section {
+    margin-top: 0; /* Убираем лишний отступ */
+}
+
+/* Добавляем отступ между profile и about-me-section внутри таба */
+.tab-content .profile {
+    margin-bottom: 1.5rem; /* Уменьшаем отступ, чтобы не было слишком много места */
+}
   </style>
 </head>
 <body>
@@ -313,36 +377,46 @@ border-color: #363534 transparent #363534 #363534; /* верх, право, ни
 </header>
   <div class="wrapper">
     <div class="container">
-      <div class="profile">
-        <h1 class="profile-name">Поэзия</h1>
-        <p class="profile-description">Все мои стихотворения и другие формы поэии</p>
-      </div>
+      <div class="tabs-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="poetry">Поэзия</button>
+                <button class="tab-button" data-tab="books">Книги</button>
+                </div>
 
-<div class="about-me-section">
-      <h3>И снова у обрыва</h3>
-      <p>И снова здесь, и снова у обрыва.<br>
-Стою мечтательно тут я.<br>
-“Уйти-б отсюда как-нибудь без срыва”,<br>
-И это всё, что требует душа моя.</p>
-      <p>Пытаясь сгинуть как-то прочь отсюда,<br>
-Сомнения заполнили меня.<br>
-Пропасть манила словно сладко-блюдо,<br>
-Что было точно полная брехня.</p>
-      <p>И всё-таки, не устояв пред этой бездной,<br>
-Я, понимая что произойдёт,<br>
-Пошел и сделал шаг к уже известной,<br>
-И снова тот же, родимый мне полёт.</p>
-    </div>
-	
-      <div class="profile">
-        <h1 class="profile-name">Книги</h1>
-        <p class="profile-description">Все мои книги</p>
-      </div>
-<div class="about-me-section">
-      <h3>(Заброшенная книга) Анфиса, спокойной ночи</h3>
-      <p>Жизнь Алекса была скучна. Он выполнял одну и туже работу каждый день, а из его круга общения у него была только Анфиса - голосовой помощник. Но в один непримечательный день с Анфисой случилось что-то неладное, что сильно повлияло на Алекса... ⚡🔌😊</p>
-      <p><a href="https://author.today/work/286071" class="linksss">Читать</a></p>
-    </div>
+            <div id="poetry" class="tab-content active">
+                <div class="profile">
+                   <!--  <h1 class="profile-name">Поэзия</h1>
+                    <p class="profile-description">Все мои стихотворения и другие формы поэзии</p> -->
+                </div>
+                <div class="about-me-section">
+                    <h3>И снова у обрыва</h3>
+                    <p>И снова здесь, и снова у обрыва.<br>
+                    Стою мечтательно тут я.<br>
+                    “Уйти-б отсюда как-нибудь без срыва”,<br>
+                    И это всё, что требует душа моя.</p>
+                    <p>Пытаясь сгинуть как-то прочь отсюда,<br>
+                    Сомнения заполнили меня.<br>
+                    Пропасть манила словно сладко-блюдо,<br>
+                    Что было точно полная брехня.</p>
+                    <p>И всё-таки, не устояв пред этой бездной,<br>
+                    Я, понимая что произойдёт,<br>
+                    Пошел и сделал шаг к уже известной,<br>
+                    И снова тот же, родимый мне полёт.</p>
+                </div>
+            </div>
+
+            <div id="books" class="tab-content">
+                <div class="profile">
+                    <!-- <h1 class="profile-name">Книги</h1>
+                    <p class="profile-description">Все мои книги</p> -->
+                </div>
+                <div class="about-me-section">
+                    <h3>(Заброшенная книга) Анфиса, спокойной ночи</h3>
+                    <p>Жизнь Алекса была скучна. Он выполнял одну и туже работу каждый день, а из его круга общения у него была только Анфиса - голосовой помощник. Но в один непримечательный день с Анфисой случилось что-то неладное, что сильно повлияло на Алекса... ⚡🔌😊</p>
+                    <p><a href="https://author.today/work/286071" class="linksss">Читать</a></p>
+                </div>
+            </div>
+            </div>
 
     <div class="line"></div>
     <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © 2025 Артём Титов</div>
@@ -354,6 +428,57 @@ border-color: #363534 transparent #363534 #363534; /* верх, право, ни
   hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('show');
   });
+  // JAVASCRIPT ДЛЯ ТАБОВ
+document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // Проверяем, есть ли активная вкладка при загрузке
+    let initialActiveTabFound = false;
+    tabButtons.forEach(button => {
+        if (button.classList.contains('active')) {
+            initialActiveTabFound = true;
+            // Активируем соответствующее содержимое сразу
+            const targetTabId = button.dataset.tab;
+            const targetTabContent = document.getElementById(targetTabId);
+            if (targetTabContent) {
+                tabContents.forEach(content => content.classList.remove('active')); // Скрыть все другие
+                targetTabContent.classList.add('active'); // Показать активную
+            }
+        }
+    });
+
+    // Если ни одна вкладка не была активна изначально, активируем первую
+    if (!initialActiveTabFound && tabButtons.length > 0) {
+        tabButtons[0].classList.add('active');
+        const targetTabId = tabButtons[0].dataset.tab;
+        const targetTabContent = document.getElementById(targetTabId);
+        if (targetTabContent) {
+            targetTabContent.classList.add('active');
+        }
+    }
+
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Удаляем класс 'active' со всех кнопок и содержимого
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Добавляем класс 'active' к нажатой кнопке
+            button.classList.add('active');
+
+            // Получаем ID содержимого, которое нужно показать
+            const targetTabId = button.dataset.tab; // Используем data-tab атрибут
+            const targetTabContent = document.getElementById(targetTabId);
+
+            // Добавляем класс 'active' к соответствующему содержимому
+            if (targetTabContent) {
+                targetTabContent.classList.add('active');
+            }
+        });
+    });
+});
 </script>
 
 </body>
