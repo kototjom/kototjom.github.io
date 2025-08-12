@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@kototjom - портфолио</title>
+  <title>Artjom Titov - Portfolio</title>
   <meta name="description" content="Портфолио Артёма Титова aka @kototjom">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -199,26 +199,6 @@ color: #F2F2F2;
   cursor: poInter;
 }
 
-@media (max-width: 480px) {
-  .nav-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 1rem;
-    background-color: rgba(30, 30, 30, 0.7);
-    flex-direction: column;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-  }
-
-  .nav-menu.show {
-    display: flex;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
 .button-container {
     display: flex;
     justify-content: links; /* 
@@ -230,21 +210,11 @@ text-decoration: none;
   padding: 3px 7px;
     font-size: 0.80rem;
     cursor: pointer;
-border-width: 1px 0 1px 1px;    /* верх, право, низ, лево */
-border-style: solid none solid solid; /* верх, право, низ, лево */
-border-color: #363534 transparent #363534 #363534; /* верх, право, низ, лево */    border-radius: 9999px 0 0 9999px; /* верхний-левый верхний-правый нижний-правый нижний-левый */
+border-width: 1px;  
+border-style: solid;
+border-color: #363534;
+border-radius: 9999px; 
     background-color: #262422; /* Синий фон */
-    color: white; /* Белый текст */
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.pere2 {
-text-decoration: none;
-    padding: 3px 7px;
-    font-size: 0.80rem;
-    cursor: pointer;
-    border: 1px solid #363534; /* Пример границы */
-border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-правый нижний-правый нижний-левый */
-    background-color: rgba(255, 255, 255, 0.2); /* Синий фон */
     color: white; /* Белый текст */
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
@@ -356,15 +326,11 @@ h2 {
 <body>
 <header class="header">
     <div class="header-content">
-        <div class="header-left-group"> <span> <a href="/work.html"> <img class="logo" src="лого полный ник.svg" alt="Kototjom Logo" height="25"> </a> </span>
+        <div class="header-left-group"> <span> <img class="logo" src="лого полный ник.svg" alt="Kototjom Logo" height="25"> </a> </span>
             <div class="button-container">
-    <a href="/" class="pere1">Личное</a>
-    <a href="/work.html" class="pere2">Работа</a>
             </div>
         </div> <nav class="nav-menu">
-            <a href="/work.html" class="active">Главная</a>
-            <a href="https://www.behance.net/kototjom">Behance</a>
-            <a href="/workde.html">DE</a>
+            <a href="/" class="pere1">Назад к сайту</a>
         </nav>
 
         <button class="hamburger" aria-label="Открыть меню">
@@ -376,12 +342,12 @@ h2 {
   <div class="wrapper">
     <div class="container">
       <div class="profile">
-        <h1 class="profile-name">Артём Титов</h1>
+        <h1 class="profile-name">Artjom Titov</h1>
 		<h1 class="profile-aka">aka Kototjom</h1>
 <div class="skills">
-  <span class="skill-badge">Графический дизайн</span>
-  <span class="skill-badge">AI</span>
-  <span class="skill-badge">Базовое HTML/CSS</span>
+  <span class="skill-badge">Grafikdesign</span>
+  <span class="skill-badge">AI/KI</span>
+  <span class="skill-badge">Basic HTML/CSS-Kenntnisse</span>
   <span class="skill-badge">Figma</span>
   <span class="skill-badge">GIMP</span>
 </div>
@@ -389,47 +355,47 @@ h2 {
       </div>
 
 <div class="about-me-section">
-      <h2>Обо мне</h2>
-      <p>Я Артём, 16-летний энтузиаст из Германии, увлеченный миром цифрового искусства и технологий. Мое путешествие в графический дизайн началось с простого любопытства, которое быстро переросло в страсть к созданию визуально привлекательного контента.</p>
-      <p>Помимо дизайна, я также имею базовые знания HTML/CSS, что позволяет мне лучше понимать, как мои дизайны будут реализованы в вебе. Я верю, что постоянное обучение и эксперименты — ключ к успеху в быстро меняющемся цифровом мире.</p>
+      <h2>Über mich</h2>
+      <p>Ich bin Artjom, ein 16-jähriger Enthusiast aus Russland, der von der Welt der digitalen Kunst und Technologie fasziniert ist. Meine Reise in das Grafikdesign begann mit einfacher Neugier, die sich schnell zu einer Leidenschaft für die Erstellung visuell ansprechender Inhalte entwickelte.</p>
+      <p>Neben dem Design habe ich auch grundlegende Kenntnisse in HTML/CSS, was mir ein besseres Verständnis dafür gibt, wie meine Designs im Web umgesetzt werden. Ich glaube, dass kontinuierliches Lernen und Experimentieren der Schlüssel zum Erfolg in der sich schnell verändernden digitalen Welt sind.</p>
     </div>
 	
 
-  <h2>Примеры работ</h2>
+  <h2>Portfolio</h2>
   <div class="project-gallery">
     <div class="project-card">
       <img src="https://mir-s3-cdn-cf.behance.net/projects/404/3972b8230219329.Y3JvcCwxMzE3LDEwMzAsMCwyMDU.png" alt="Проект 1">
       <div class="project-info">
-        <h3>Оформление личных страниц</h3>
-        <p>Создание универсального стиля для личных страниц</p>
+        <h3>Design persönlicher Seiten</h3>
+        <p>Erstellung eines universellen Stils für persönliche Internet-Seiten</p>
       </div>
     </div>
     <div class="project-card">
       <img src="https://i.ibb.co/k2x34vD6/Frame-9.png" alt="Проект 2">
       <div class="project-info">
-        <h3>Персональный веб-сайт</h3>
-        <p>Личный сайт на пару страниц</p>
+        <h3>Persönliche Webseite</h3>
+        <p>Eine kleine persönliche Website mit ein paar Seiten</p>
       </div>
     </div>
   </div>
 
 
 	
- <h2>Связатся со мной</h2>
+ <h2>Kontakt</h2>
       <div class="links">
         <a href="https://t.me/kototjom" class="link">
           <i class="bi bi-telegram link-icon"></i>
-          <span>Напишите мне в Telegram</span>
+          <span>Schreiben Sie mir auf Telegram</span>
         </a>
         <a href="mailto:hello@kototjom.top" class="link">
           <i class="bi bi-envelope-fill link-icon"></i>
-          <span>Напишите мне на почту</span>
+          <span>Schreiben Sie mir per E-Mail</span>
         </a>
       </div>
     </div>
 
     <div class="line"></div>
-    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © 2025 Артём Титов</div>
+    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Datenschutz.</a> © 2025 Artjom Titov</div>
   </div>
   <script>
   const hamburger = document.querySelector('.hamburger');
