@@ -330,7 +330,7 @@ h2 {
             <div class="button-container">
             </div>
         </div> <nav class="nav-menu">
-            <a href="/work.html" class="pere1">Назад к сайту</a>
+            <a href="/work.html" class="pere1">К основному сайту</a>
         </nav>
 
         <button class="hamburger" aria-label="Открыть меню">
@@ -404,6 +404,21 @@ h2 {
   hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('show');
   });
+
+
+  // меняшка языка
+ document.addEventListener("DOMContentLoaded", function() {
+    const backButton = document.querySelector('.nav-menu a.pere1');
+    const referrer = document.referrer;
+    const workPageUrl = "/work.html";
+ 
+    if (referrer.includes(workPageUrl)) {
+      backButton.textContent = "К основному сайту";
+    } else {
+      backButton.textContent = "Auf Russisch";
+    }
+  });
+
 </script>
 
 </body>
