@@ -389,7 +389,7 @@ h2 {
 
 <div class="about-me-section">
       <h2>Обо мне</h2>
-      <p>Я Артём, 16-летний энтузиаст из Германии, увлеченный миром цифрового искусства и технологий. Мое путешествие в графический дизайн началось с простого любопытства, которое быстро переросло в страсть к созданию визуально привлекательного контента.</p>
+      <p>Я Артём, <span id="age"></span>-летний энтузиаст из Германии, увлеченный миром цифрового искусства и технологий. Мое путешествие в графический дизайн началось с простого любопытства, которое быстро переросло в страсть к созданию визуально привлекательного контента.</p>
       <p>Помимо дизайна, я также имею базовые знания HTML/CSS, что позволяет мне лучше понимать, как мои дизайны будут реализованы в вебе. Я верю, что постоянное обучение и эксперименты — ключ к успеху в быстро меняющемся цифровом мире.</p>
     </div>
 	
@@ -420,15 +420,15 @@ h2 {
           <i class="bi bi-telegram link-icon"></i>
           <span>Напишите мне в Telegram</span>
         </a>
-        <a href="mailto:hello@kototjom.top" class="link">
-          <i class="bi bi-envelope-fill link-icon"></i>
-          <span>Напишите мне на почту</span>
-        </a>
+        <a href="mailto:hello@kototjom.top" id="email-link" class="link">
+    <i class="bi bi-envelope-fill link-icon"></i>
+    <span>Напишите мне на почту</span>
+</a>
       </div>
     </div>
 
     <div class="line"></div>
-    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © 2025 Артём Титов</div>
+    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © <span id="current-year"></span> Артём Титов</div>
   </div>
   <script>
   const hamburger = document.querySelector('.hamburger');
@@ -437,6 +437,62 @@ h2 {
   hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('show');
   });
+
+  // Получаем текущий год
+    const currentYear = new Date().getFullYear();
+
+    // Находим элемент с id="current-year" и вставляем в него год
+    document.getElementById("current-year").textContent = currentYear;
+
+    // Ваша дата рождения: год, месяц (от 0 до 11), день
+    const birthDate = new Date(2009, 5, 24); // 24 июня 2009 года
+    const today = new Date();
+
+    // Вычисляем возраст
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // Если текущий месяц меньше месяца рождения
+    // или если месяцы совпадают, но текущий день меньше дня рождения,
+    // то возраст еще не наступил в этом году
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    // Находим элемент, куда нужно вставить возраст, и обновляем его
+    document.getElementById("age").textContent = age;
+
+ // Находим кнопку по id
+    const emailLink = document.getElementById('email-link');
+
+    // Получаем оригинальный текст кнопки для последующего восстановления
+    const originalText = emailLink.querySelector('span').textContent;
+
+    // Добавляем обработчик события 'click'
+    emailLink.addEventListener('click', function(event) {
+        // Отменяем стандартное поведение ссылки (переход на mailto:)
+        event.preventDefault();
+
+        // Email, который нужно скопировать (можно взять из href атрибута)
+        const emailToCopy = this.getAttribute('href').replace('mailto:', '');
+
+        // Используем Clipboard API для копирования текста в буфер обмена
+        navigator.clipboard.writeText(emailToCopy).then(() => {
+            // Если копирование прошло успешно, меняем текст
+            const spanElement = this.querySelector('span');
+            spanElement.textContent = "Скопировано!";
+
+            // Возвращаем оригинальный текст через 2 секунды
+            setTimeout(() => {
+                spanElement.textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            // Обрабатываем возможные ошибки при копировании
+            console.error('Не удалось скопировать текст: ', err);
+            alert('Не удалось скопировать. Пожалуйста, скопируйте адрес вручную.');
+        });
+    });
+
 </script>
 
 </body>

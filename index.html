@@ -319,7 +319,7 @@ border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-п
     </div>
 
     <div class="line"></div>
-    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © 2025 Артём Титов</div>
+    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © <span id="current-year"></span> Артём Титов</div>
   </div>
   <script>
   const hamburger = document.querySelector('.hamburger');
@@ -328,6 +328,13 @@ border-radius: 0 9999px 9999px 0; /* верхний-левый верхний-п
   hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('show');
   });
+
+// Получаем текущий год
+    const currentYear = new Date().getFullYear();
+
+    // Находим элемент с id="current-year" и вставляем в него год
+    document.getElementById("current-year").textContent = currentYear;
+
 </script>
 
 </body>
