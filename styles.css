@@ -1,7 +1,7 @@
 /* === Общие стили для index.html и tw.html === */
 body {
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Inter", Roboto, sans-serif;
-  background: linear-gradient(to bottom, #472c61, #262422);
+  background: linear-gradient(to bottom, #411670, #262422);
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -216,9 +216,9 @@ body {
   cursor: pointer;
   border-width: 1px 0 1px 1px;
   border-style: solid none solid solid;
-  border-color: #8251b1 transparent #8251b1 #8251b1;
+  border-color: #411670 transparent #411670 #411670;
   border-radius: 9999px 0 0 9999px;
-  background-color: #8251b1;
+  background-color: #411670;
   color: white;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
@@ -228,7 +228,7 @@ body {
   padding: 3px 7px;
   font-size: 0.80rem;
   cursor: pointer;
-  border: 1px solid #8251b1;
+  border: 1px solid #411670;
   border-radius: 0 9999px 9999px 0;
   background-color: #262422;
   color: white;
@@ -240,7 +240,7 @@ body {
 }
 
 .viol {
-  color: #8251b1;
+  color: #411670;
   font-weight: 600;
 }
 
