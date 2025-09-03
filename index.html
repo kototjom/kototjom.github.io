@@ -1,104 +1,181 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@kototjom - мультиссылка</title>
-  <meta name="description" content="Сайт со всеми ссылками на социальные сети @kototjom">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kototjom - Личный сайт</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts: Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Пользовательский стиль для фона и основного шрифта */
+        body {
+            background-color: #121212;
+            font-family: 'Manrope', sans-serif;
+            color: #e0e0e0;
+            background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2), transparent 40%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Стиль для кастомного переключателя */
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #4a4a4a;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-ball {
+            transform: translateX(100%);
+            background-color: #a855f7; /* purple-500 */
+        }
+        .toggle-checkbox:checked + .toggle-label .text-personal {
+            color: #a0a0a0;
+        }
+        .toggle-checkbox:checked + .toggle-label .text-work {
+            color: white;
+        }
+    </style>
 </head>
-<body>
-<header class="header">
-    <div class="header-content">
-        <div class="header-left-group"> <span> <a href="/"> <img class="logo" src="лого полный ник.svg" alt="Kototjom Logo" height="25"> </a> </span>
-            <div class="button-container">
-    <a href="/" class="pere1">Личное</a>
-    <a href="/work.html" class="pere2">Работа</a>
+<body class="min-h-screen">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
+        <div class="max-w-[600px] mx-auto px-4 py-3">
+            <div class="w-full bg-black/20 backdrop-blur-lg rounded-full border border-white/10 shadow-lg px-4 py-2">
+                <div class="flex items-center justify-between">
+                    <!-- Левая сторона: Лого и переключатель -->
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-purple-500/50 rounded-full flex items-center justify-center text-sm font-bold">
+                            LOGO
+                        </div>
+                        <!-- Переключатель -->
+                        <div>
+                             <input type="checkbox" id="mode-toggle" class="toggle-checkbox hidden">
+                             <label for="mode-toggle" class="toggle-label flex items-center justify-between w-36 h-8 bg-[#2d2d2d] rounded-full p-1 cursor-pointer transition-colors duration-300 relative">
+                                 <div class="toggle-ball absolute w-[68px] h-6 bg-[#4a4a4a] rounded-full transition-transform duration-300 ease-in-out"></div>
+                                 <span class="text-personal text-white text-xs z-10 w-1/2 text-center transition-colors duration-300">Личный</span>
+                                 <span class="text-work text-gray-400 text-xs z-10 w-1/2 text-center transition-colors duration-300">Рабочий</span>
+                             </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Правая сторона: Навигация -->
+                    <div class="flex items-center gap-4">
+                        <!-- Навигация (десктоп) -->
+                        <nav class="hidden sm:flex items-center space-x-6 text-sm">
+                            <a href="#" class="hover:text-purple-400 transition-colors">Главная</a>
+                            <a href="#" class="hover:text-purple-400 transition-colors">Блог</a>
+                            <a href="#" class="hover:text-purple-400 transition-colors">Творчество</a>
+                        </nav>
+                        
+                        <!-- Гамбургер (мобильные) -->
+                        <button id="hamburger-button" class="sm:hidden text-white text-2xl p-1">
+                            <i class="bi bi-list"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div> <nav class="nav-menu">
-            <a href="/" class="active">Главная</a>
-            <a href="https://blog.kototjom.top/">Блог</a>
-			<a href="tw.html">Творчество</a>
-        </nav>
-
-        <button class="hamburger" aria-label="Открыть меню">
-            <i class="bi bi-list"></i>
-        </button>
-
-    </div>
-</header>
-  <div class="wrapper">
-    <div class="container">
-      <div class="profile">
-        <div class="profile-img-wrapper">
-          <img class="profile-img"
-               src="https://yt3.googleusercontent.com/67yn0mWZFDBNNQzOWpLkE3rBZLa4LusJhIZfMxwKnsB9dtP0vPRAKL0lKPRNtpP4XT9qnZr0Qw=s160-c-k-c0x00ffffff-no-rj"
-               onerror="this.onerror=null; this.src='https://placehold.co/96x96/608B9C/FFFFFF?text=Kototjom';"
-               alt="Аватарка">
         </div>
-        <h1 class="profile-name">It´s me - Kototjom!</h1>
-		<h1 class="profile-aka">Артём Титов</h1>
-      </div>
+    </header>
 
-      <div class="links">
-        <a href="https://www.twitch.tv/kototjom" class="link">
-          <i class="bi bi-twitch link-icon"></i>
-          <span>Twitch</span>
-        </a>
-        <a href="https://www.youtube.com/channel/UCF1oUFry68cRUMk-B8GKkJg" class="link">
-          <i class="bi bi-youtube link-icon"></i>
-          <span>YouTube</span>
-        </a>
-        <a href="https://www.instagram.com/kototjom" class="link">
-          <i class="bi bi-instagram link-icon"></i>
-          <span>Instagram</span>
-        </a>
-        <a href="https://www.tiktok.com/@kototjom" class="link">
-          <i class="bi bi-tiktok link-icon"></i>
-          <span>TikTok</span>
-        </a>
-        <a href="https://t.me/kototjom_telegram" class="link">
-          <i class="bi bi-telegram link-icon"></i>
-          <span>ТГК</span>
-        </a>
-        <a href="https://author.today/u/kototjom" class="link">
-          <i class="bi bi-envelope-fill link-icon"></i>
-          <span>Author.Today</span>
-        </a>
-		<a href="https://kototjom-itch.itch.io/" class="link">
-          <i class="bi bi-controller link-icon"></i>
-          <span>Itch.com</span>
-        </a>
-      </div>
+    <!-- Основной контент -->
+    <main class="pt-28 pb-12">
+        <div class="max-w-[600px] mx-auto px-4">
+            
+            <!-- Секция профиля -->
+            <section class="flex flex-col items-center text-center mb-12">
+                <div class="w-24 h-24 bg-gray-700 rounded-full mb-4 border-2 border-purple-500 flex items-center justify-center">
+                    <span class="text-xs text-gray-400">AVATAR</span>
+                </div>
+                <h1 class="text-4xl font-bold text-white">Привет, я - <span class="text-purple-400">Kototjom!</span></h1>
+            </section>
+
+            <!-- Секция ссылок -->
+            <section class="flex flex-col gap-4">
+                <!-- Верхний ряд кнопок -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <a href="#" class="group block sm:flex sm:flex-col sm:items-center sm:justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-all duration-300 sm:h-32 text-center">
+                        <div class="flex items-center gap-4 sm:flex-col sm:gap-2">
+                           <i class="bi bi-youtube text-red-500 text-2xl sm:text-4xl transition-transform duration-300 group-hover:scale-110"></i>
+                           <span class="font-semibold text-white">YouTube</span>
+                        </div>
+                    </a>
+                    <a href="#" class="group block sm:flex sm:flex-col sm:items-center sm:justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-all duration-300 sm:h-32 text-center">
+                        <div class="flex items-center gap-4 sm:flex-col sm:gap-2">
+                           <i class="bi bi-text-left text-gray-300 text-2xl sm:text-4xl transition-transform duration-300 group-hover:scale-110"></i>
+                           <span class="font-semibold text-white">Author.Today</span>
+                        </div>
+                    </a>
+                    <a href="#" class="group block sm:flex sm:flex-col sm:items-center sm:justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-all duration-300 sm:h-32 text-center">
+                        <div class="flex items-center gap-4 sm:flex-col sm:gap-2">
+                           <i class="bi bi-telegram text-sky-500 text-2xl sm:text-4xl transition-transform duration-300 group-hover:scale-110"></i>
+                           <span class="font-semibold text-white">ТГ - Канал</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Нижний ряд кнопок -->
+                <a href="#" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
+                    <i class="bi bi-twitch text-purple-500 text-2xl absolute left-4 top-1/2 -translate-y-1/2"></i>
+                    <span class="font-semibold text-white">Twitch</span>
+                </a>
+                 <a href="#" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
+                    <i class="bi bi-instagram text-pink-500 text-2xl absolute left-4 top-1/2 -translate-y-1/2"></i>
+                    <span class="font-semibold text-white">Instagram</span>
+                </a>
+                 <a href="#" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
+                    <i class="bi bi-tiktok text-cyan-400 text-2xl absolute left-4 top-1/2 -translate-y-1/2"></i>
+                    <span class="font-semibold text-white">Tiktok</span>
+                </a>
+                <a href="#" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
+                    <i class="bi bi-controller text-orange-500 text-2xl absolute left-4 top-1/2 -translate-y-1/2"></i>
+                    <span class="font-semibold text-white">Itch</span>
+                </a>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Подвал -->
+    <footer class="max-w-[600px] mx-auto px-4 pt-6 pb-6 text-center text-gray-500 text-sm">
+        <div class="border-t border-gray-700 pt-6">
+            Ваша приватность. © 2025 Артём Титов
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 backdrop-blur-lg z-50 hidden flex-col items-center justify-center text-white transition-opacity duration-300" style="background-color: rgba(36, 11, 72, 0.8);">
+        <button id="close-menu-button" class="absolute top-5 right-5 text-4xl p-2">
+            <i class="bi bi-x"></i>
+        </button>
+        <nav class="flex flex-col items-center gap-8 text-2xl">
+            <a href="#" class="hover:text-purple-300 transition-colors">Главная</a>
+            <a href="#" class="hover:text-purple-300 transition-colors">Блог</a>
+            <a href="#" class="hover:text-purple-300 transition-colors">Творчество</a>
+        </nav>
     </div>
 
-    <div class="line"></div>
-    <div class="футер"><a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14" class="footer-link">Ваша приватность.</a> © <span id="current-year"></span> Артём Титов</div>
-  </div>
-  <script>
-  const hamburger = document.querySelector('.hamburger');
-  const navMenu = document.querySelector('.nav-menu');
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-button');
+        const closeMenuBtn = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('show');
-  });
+        hamburgerBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
 
-// Получаем текущий год
-    const currentYear = new Date().getFullYear();
-
-    // Находим элемент с id="current-year" и вставляем в него год
-    document.getElementById("current-year").textContent = currentYear;
-
-</script>
-
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+    </script>
 </body>
 </html>
+
