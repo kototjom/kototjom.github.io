@@ -41,6 +41,37 @@
         .toggle-checkbox:checked + .toggle-label .text-work {
             color: white;
         }
+        .button-container {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.pere1 {
+  text-decoration: none;
+  padding: 3px 7px;
+  font-size: 0.80rem;
+  cursor: pointer;
+  border-width: 1px 0 1px 1px;
+  border-style: solid none solid solid;
+  border-color: #A855F7 transparent #A855F7 #A855F7;
+  border-radius: 9999px 0 0 9999px;
+  background-color: #A855F7;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pere2 {
+  text-decoration: none;
+  padding: 3px 7px;
+  font-size: 0.80rem;
+  cursor: pointer;
+  border: 1px solid #2D2D2D;
+  border-radius: 0 9999px 9999px 0;
+  background-color: #2D2D2D;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
     </style>
 </head>
 <body class="min-h-screen">
@@ -57,12 +88,10 @@
                         </div>
                         <!-- Переключатель -->
                         <div>
-                             <input type="checkbox" id="mode-toggle" class="toggle-checkbox hidden">
-                             <label for="mode-toggle" class="toggle-label flex items-center justify-between w-36 h-8 bg-[#2d2d2d] rounded-full p-1 cursor-pointer transition-colors duration-300 relative">
-                                 <div class="toggle-ball absolute w-[68px] h-6 bg-[#4a4a4a] rounded-full transition-transform duration-300 ease-in-out"></div>
-                                 <span class="text-personal text-white text-xs z-10 w-1/2 text-center transition-colors duration-300">Личный</span>
-                                 <span class="text-work text-gray-400 text-xs z-10 w-1/2 text-center transition-colors duration-300">Рабочий</span>
-                             </label>
+                             <div class="button-container">
+    <a href="/" class="pere1">Личное</a>
+    <a href="/work.html" class="pere2">Работа</a>
+            </div>
                         </div>
                     </div>
                     
@@ -71,7 +100,7 @@
                         <!-- Навигация (десктоп) -->
                         <nav class="hidden sm:flex items-center space-x-6 text-sm">
                             <a href="#" class="hover:text-purple-400 transition-colors">Главная</a>
-                            <a href="blog.kototjom.top" class="hover:text-purple-400 transition-colors">Блог</a>
+                            <a href="https://blog.kototjom.top" class="hover:text-purple-400 transition-colors">Блог</a>
                             <a href="/tw.html" class="hover:text-purple-400 transition-colors">Творчество</a>
                         </nav>
                         
@@ -156,8 +185,8 @@
         </button>
         <nav class="flex flex-col items-center gap-8 text-2xl">
             <a href="#" class="hover:text-purple-300 transition-colors">Главная</a>
-            <a href="#" class="hover:text-purple-300 transition-colors">Блог</a>
-            <a href="#" class="hover:text-purple-300 transition-colors">Творчество</a>
+            <a href="https://blog.kototjom.top" class="hover:text-purple-300 transition-colors">Блог</a>
+            <a href="tw.html" class="hover:text-purple-300 transition-colors">Творчество</a>
         </nav>
     </div>
 
