@@ -72,6 +72,14 @@
   color: white;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
+@media (min-width: 640px) {
+    body {
+        /* Ограничиваем размер градиента, чтобы он не заполнял весь экран */
+        background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2) 0%, transparent 400px);
+        background-size: 800px 800px; /* Устанавливаем размер области градиента */
+        background-position: center top; /* Центрируем градиент по горизонтали и прилипаем к верху */
+    }
+}
     </style>
 </head>
 <body class="min-h-screen">
