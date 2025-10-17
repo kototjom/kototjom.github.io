@@ -1,0 +1,287 @@
+
+<!-- Прошу, не судите меня строго за код. Тут жёсткая мешанина из ИИ, различного кода с инета и саморучного написания. Я не привёл его в порядок, пока-что. -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kototjom - Творчество</title>
+    <meta name="description" content="Мои творческие работы. Книги, стихи и всё подобное">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts: Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Пользовательский стиль для фона и основного шрифта */
+        body {
+            background-color: #121212;
+            font-family: 'Manrope', sans-serif;
+            color: #e0e0e0;
+            background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2), transparent 40%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Стиль для кастомного переключателя */
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #4a4a4a;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-ball {
+            transform: translateX(100%);
+            background-color: #a855f7; /* purple-500 */
+        }
+        .toggle-checkbox:checked + .toggle-label .text-personal {
+            color: #a0a0a0;
+        }
+        .toggle-checkbox:checked + .toggle-label .text-work {
+            color: white;
+        }
+        .button-container {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+  }
+  @media (min-width: 640px) {
+    body {
+        /* Ограничиваем размер градиента, чтобы он не заполнял весь экран */
+        background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2) 0%, transparent 400px);
+        background-size: 800px 800px; /* Устанавливаем размер области градиента */
+        background-position: center top; /* Центрируем градиент по горизонтали и прилипаем к верху */
+    }
+}
+
+.pere1 {
+  text-decoration: none;
+  padding: 3px 7px;
+  font-size: 0.80rem;
+  cursor: pointer;
+  border-width: 1px 0 1px 1px;
+  border-style: solid none solid solid;
+  border-color: #A855F7 transparent #A855F7 #A855F7;
+  border-radius: 9999px 0 0 9999px;
+  background-color: #A855F7;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pere2 {
+  text-decoration: none;
+  padding: 3px 7px;
+  font-size: 0.80rem;
+  cursor: pointer;
+  border: 1px solid #2D2D2D;
+  border-radius: 0 9999px 9999px 0;
+  background-color: #2D2D2D;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.help {
+    background-color: #A855F7;
+    color: white;
+}
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
+        <div class="max-w-[600px] mx-auto px-4 py-3">
+            <div class="w-full bg-black/20 backdrop-blur-lg rounded-full border border-white/10 shadow-lg px-4 py-2">
+                <div class="flex items-center justify-between">
+                    <!-- Левая сторона: Лого и переключатель -->
+                    <div class="flex items-center gap-2">
+                        <div class="h-10 flex items-center justify-center text-sm font-bold">
+                            <img src="лого полный ник.svg" alt="Логотип сайта" class="w-full h-full object-contain p-1">
+                        </div>
+                        <!-- Переключатель -->
+                        <div>
+                             <div class="button-container">
+    <a href="/" class="pere1">Личное</a>
+    <a href="/work.html" class="pere2">Работа</a>
+            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Правая сторона: Навигация -->
+                    <div class="flex items-center gap-4">
+                        <!-- Навигация (десктоп) -->
+                        <nav class="hidden sm:flex items-center space-x-6 text-sm">
+                            <a href="/" class="hover:text-purple-400 transition-colors">Главная</a>
+                            <a href="https://blog.kototjom.top" class="hover:text-purple-400 transition-colors">Блог</a>
+                            <a href="/tw.html" class="hover:text-purple-400 transition-colors">Творчество</a>
+                        </nav>
+                        
+                        <!-- Гамбургер (мобильные) -->
+                        <button id="hamburger-button" class="sm:hidden text-white text-2xl p-1">
+                            <i class="bi bi-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="pt-28 pb-12">
+        <div class="max-w-[600px] mx-auto px-4">
+            
+            <!-- Секция профиля -->
+            <section class="flex flex-col items-center text-center mb-12">
+                <h1 class="text-4xl font-bold text-white">Моё <span class="text-purple-400">Творчество</span></h1>
+                <p class="mt-2 text-lg text-gray-400">Стихи и книги, написанные мной.</p>
+            </section>
+                            <div class="help">
+    Страница не обновленна
+</div><br>
+
+<section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6">Стихи</h2>
+    <div class="flex flex-col gap-4">
+        <div class="bg-[#2d2d2d] p-6 rounded-xl">
+            <h3 class="text-xl font-semibold text-white mb-2">Идея</h3>
+            <p class="text-gray-300 whitespace-pre-line leading-relaxed">
+Идея вспыхнула как газ -
+Такая, как голубоглаз.
+И вот теперь, стою горя,
+С уверенностью короля -
+Хочу начать я колдовать
+И на бумаге создавать.
+Творить чтоб стали узнавать,
+И где-то там их понимать.
+
+Но чудесам ведь не бывать -
+И не могу я рисовать.
+Не знаю я как стих писать
+И новый мир здесь открывать..
+И вот стою, в себя гляжу,
+Понять пытаюсь — что скажу.
+Но не стремлюсь что-то менять,
+Перестаю я создавать.
+            </p>
+        </div>
+
+        <div class="bg-[#2d2d2d] p-6 rounded-xl">
+            <h3 class="text-xl font-semibold text-white mb-2">И снова у обрыва</h3>
+            <p class="text-gray-300 whitespace-pre-line leading-relaxed">
+И снова здесь, и снова у обрыва.
+Стою мечтательно тут я.
+“Уйти-б отсюда как-нибудь без срыва”,
+И это всё, что требует душа моя.
+
+Пытаясь сгинуть как-то прочь отсюда,
+Сомнения заполнили меня.
+Пропасть манила словно сладко-блюдо,
+Что было точно полная брехня.
+
+И всё-таки, не устояв пред этой бездной,
+Я, понимая что произойдёт,
+Пошёл и сделал шаг к уже известной,
+И снова тот же, родимый мне полёт.
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="border-t border-gray-700 my-6"></div>
+
+<section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6">Книги</h2>
+    <div class="flex flex-col gap-4">
+        <div class="bg-[#2d2d2d] p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+            <div class="w-32 h-48 bg-gray-600 rounded-lg overflow-hidden flex-shrink-0">
+                <img src="https://cm.author.today/content/2023/09/21/f8153f80ef6a4f84b24c6a563adf460a.jpg" alt="Обложка книги" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-semibold text-white mb-2">Анфиса, спокойной ночи</h3>
+                <p class="text-gray-400 mb-2">Kototjom, NetTwi</p>
+                <p class="text-gray-300 leading-relaxed">(Заброшенная книга) Жизнь Алекса была скучна. Он выполнял одну и туже работу каждый день, а из его круга общения у него была только Анфиса - голосовой помощник. Но в один непримечательный день с Анфисой случилось что-то неладное, что сильно повлияло на Алекса... </p>
+                <a href="https://author.today/work/286071" class="mt-4 inline-block bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full transition-colors">Читать</a>
+            </div>
+        </div>
+    </div>
+</section>
+        </div>
+    </main>
+    
+    <!-- Подвал -->
+    <footer class="max-w-[600px] mx-auto px-4 pt-6 pb-6 text-center text-gray-500 text-sm">
+        <div class="border-t border-gray-700 pt-6"> 
+            <a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14">Ваша приватность.</a> © 2025 Артём Титов
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 backdrop-blur-lg z-50 hidden flex-col items-center justify-center text-white transition-opacity duration-300" style="background-color: rgba(36, 11, 72, 0.8);">
+        <button id="close-menu-button" class="absolute top-5 right-5 text-4xl p-2">
+            <i class="bi bi-x"></i>
+        </button>
+        <nav class="flex flex-col items-center gap-8 text-2xl">
+            <a href="/" class="hover:text-purple-300 transition-colors">Главная</a>
+            <a href="https://blog.kototjom.top" class="hover:text-purple-300 transition-colors">Блог</a>
+            <a href="tw.html" class="hover:text-purple-300 transition-colors">Творчество</a>
+        </nav>
+    </div>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-button');
+        const closeMenuBtn = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburgerBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
+

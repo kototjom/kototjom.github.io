@@ -4,215 +4,482 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kototjom - Личный сайт</title>
+    <meta name="description" content="Личный сайт Kototjom. Здесь вы найдёте ссылки на мои социальные сети, творчество и многое другое!">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <!-- Google Fonts: Manrope -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Пользовательский стиль для фона и основного шрифта */
+        /* =================================== */
+        /* == Глобальные стили и переменные == */
+        /* =================================== */
+        :root {
+            --primary-color: #A855F7; /* Фиолетовый */
+            --background-color: #121212;
+            --surface-color: #2d2d2d;
+            --surface-hover-color: #3a3a3a;
+            --text-color: #e0e0e0;
+            --text-muted-color: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #121212;
+            background-color: var(--background-color);
             font-family: 'Manrope', sans-serif;
-            color: #e0e0e0;
+            color: var(--text-color);
             background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2), transparent 40%);
             background-repeat: no-repeat;
             background-attachment: fixed;
+            min-height: 100vh;
         }
 
-        /* Стиль для кастомного переключателя */
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #4a4a4a;
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
-        .toggle-checkbox:checked + .toggle-label .toggle-ball {
-            transform: translateX(100%);
-            background-color: #a855f7; /* purple-500 */
+
+        a:hover {
+            color: var(--primary-color);
         }
-        .toggle-checkbox:checked + .toggle-label .text-personal {
-            color: #a0a0a0;
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
-        .toggle-checkbox:checked + .toggle-label .text-work {
+
+        /* ==================== */
+        /* ==     Header     == */
+        /* ==================== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            padding: 0.75rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.5rem; /* 40px */
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.25rem;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            overflow: hidden;
+        }
+
+        .toggle-button {
+            padding: 3px 7px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button.active {
+            border: 1px solid var(--primary-color);
+            border-radius: 9999px 0 0 9999px;
+            background-color: var(--primary-color);
             color: white;
         }
-        .button-container {
-  display: flex;
-  justify-content: flex-start;
-  overflow: hidden;
-}
 
-.pere1 {
-  text-decoration: none;
-  padding: 3px 7px;
-  font-size: 0.80rem;
-  cursor: pointer;
-  border-width: 1px 0 1px 1px;
-  border-style: solid none solid solid;
-  border-color: #A855F7 transparent #A855F7 #A855F7;
-  border-radius: 9999px 0 0 9999px;
-  background-color: #A855F7;
-  color: white;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
+        .toggle-button.inactive {
+            border: 1px solid var(--surface-color);
+            border-radius: 0 9999px 9999px 0;
+            background-color: var(--surface-color);
+            color: white;
+        }
 
-.pere2 {
-  text-decoration: none;
-  padding: 3px 7px;
-  font-size: 0.80rem;
-  cursor: pointer;
-  border: 1px solid #2D2D2D;
-  border-radius: 0 9999px 9999px 0;
-  background-color: #2D2D2D;
-  color: white;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-@media (min-width: 640px) {
-    body {
-        /* Ограничиваем размер градиента, чтобы он не заполнял весь экран */
-        background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2) 0%, transparent 400px);
-        background-size: 800px 800px; /* Устанавливаем размер области градиента */
-        background-position: center top; /* Центрируем градиент по горизонтали и прилипаем к верху */
-    }
-}
+        .desktop-nav {
+            display: none; /* Скрыто по умолчанию */
+        }
+
+        .hamburger-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem; /* 24px */
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        /* ==================== */
+        /* ==      Main      == */
+        /* ==================== */
+        .main-content {
+            padding-top: 7rem; /* 112px */
+            padding-bottom: 3rem; /* 48px - ФИКСИРОВАННЫЙ ОТСТУП ДО ФУТЕРА */
+        }
+        
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3rem; /* 48px */
+        }
+
+        .avatar-wrapper {
+            width: 6rem; /* 96px */
+            height: 6rem; /* 96px */
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-title {
+            font-size: 2.25rem; /* 36px */
+            font-weight: bold;
+            color: white;
+        }
+
+        .profile-title .highlight {
+            color: #c084fc; /* purple-400 */
+        }
+
+        /* ==================== */
+        /* ==     Links      == */
+        /* ==================== */
+        .links-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* 16px */
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        /* ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ КНОПОК-ССЫЛОК */
+        .link-card {
+            display: block;
+            background-color: var(--surface-color);
+            border-radius: 0.75rem;
+            transition: background-color 0.3s ease;
+            position: relative; /* Включаем позиционирование для дочерних элементов */
+        }
+
+        .link-card:hover {
+            background-color: var(--surface-hover-color);
+        }
+
+        .link-card-content {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Центрируем содержимое (текст) по всей ширине */
+            width: 100%;
+            height: 100%;
+        }
+        
+        .link-card-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            position: absolute; /* Вырываем иконку из потока */
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%); /* Идеальное центрирование по вертикали */
+        }
+        
+        .link-card:hover .link-card-icon {
+            transform: scale(1.1) translateY(-50%);
+        }
+        
+        .link-card-title {
+            font-weight: 600;
+            color: white;
+        }
+        
+        /* Размеры для разных типов кнопок */
+        .link-card-small { height: 3.5rem; }
+        .link-card-large { height: 4rem; }
+
+        /* Цвета иконок */
+        .icon-youtube  { color: #ff0000; }
+        .icon-at       { color: #d1d5db; }
+        .icon-telegram { color: #25a3e1; }
+        .icon-twitch   { color: var(--primary-color); }
+        .icon-instagram{ color: #ec4899; }
+        .icon-tiktok   { color: #22d3ee; }
+        .icon-itch     { color: #f97316; }
+
+        /* ==================== */
+        /* ==     Footer     == */
+        /* ==================== */
+        .site-footer {
+            text-align: center;
+            color: #6b7280; /* gray-500 */
+            font-size: 0.875rem; /* 14px */
+            padding: 1.5rem 0;
+        }
+
+        .footer-content {
+            border-top: 1px solid #374151; /* gray-700 */
+            padding-top: 1.5rem;
+        }
+
+        /* ======================== */
+        /* ==   Мобильное меню   == */
+        /* ======================== */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-color: rgba(36, 11, 72, 0.8);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .close-menu-button {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            font-size: 1.5rem;
+        }
+
+        /* ============================ */
+        /* == Адаптивность (Desktop) == */
+        /* ============================ */
+        @media (min-width: 640px) {
+            body {
+                background-image: radial-gradient(circle at top, rgba(128, 90, 213, 0.2) 0%, transparent 400px);
+                background-size: 800px 800px;
+                background-position: center top;
+            }
+
+            .desktop-nav {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                font-size: 0.875rem;
+            }
+
+            .hamburger-button {
+                display: none;
+            }
+
+            .links-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            /* Стили для больших кнопок на ПК */
+            .link-card-large {
+                height: 8rem; /* 128px */
+            }
+
+            .link-card-large .link-card-content {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .link-card-large .link-card-icon {
+                position: static; /* Возвращаем иконку в поток */
+                transform: none;
+                font-size: 2.25rem;
+            }
+
+            .link-card-large:hover .link-card-icon {
+                transform: scale(1.1);
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
-        <div class="max-w-[600px] mx-auto px-4 py-3">
-            <div class="w-full bg-black/20 backdrop-blur-lg rounded-full border border-white/10 shadow-lg px-4 py-2">
-                <div class="flex items-center justify-between">
-                    <!-- Левая сторона: Лого и переключатель -->
-                    <div class="flex items-center gap-2">
-                        <div class="h-10 flex items-center justify-center text-sm font-bold">
-                            <img src="лого полный ник.svg" alt="Логотип сайта" class="w-full h-full object-contain p-1">
-                        </div>
-                        <!-- Переключатель -->
-                        <div>
-                             <div class="button-container">
-    <a href="/" class="pere1">Личное</a>
-    <a href="/work.html" class="pere2">Работа</a>
-            </div>
-                        </div>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="/" class="logo" aria-label="На главную">
+                        <img src="лого полный ник.svg" alt="Логотип сайта">
+                    </a>
+                    <div class="toggle-buttons">
+                        <a href="/" class="toggle-button active">Личное</a>
+                        <a href="/work.html" class="toggle-button inactive">Работа</a>
                     </div>
-                    
-                    <!-- Правая сторона: Навигация -->
-                    <div class="flex items-center gap-4">
-                        <!-- Навигация (десктоп) -->
-                        <nav class="hidden sm:flex items-center space-x-6 text-sm">
-                            <a href="#" class="hover:text-purple-400 transition-colors">Главная</a>
-                            <a href="https://blog.kototjom.top" class="hover:text-purple-400 transition-colors">Блог</a>
-                            <a href="/tw.html" class="hover:text-purple-400 transition-colors">Творчество</a>
-                        </nav>
-                        
-                        <!-- Гамбургер (мобильные) -->
-                        <button id="hamburger-button" class="sm:hidden text-white text-2xl p-1">
-                            <i class="bi bi-list"></i>
-                        </button>
-                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <nav class="desktop-nav">
+                        <a href="#">Главная</a>
+                        <a href="https://blog.kototjom.top">Блог</a>
+                        <a href="/tw.html">Творчество</a>
+                    </nav>
+                    <button id="hamburger-button" class="hamburger-button" aria-label="Открыть меню">
+                        <i class="bi bi-list"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Основной контент -->
-    <main class="pt-28 pb-12">
-        <div class="max-w-[600px] mx-auto px-4">
+    <main class="main-content">
+        <div class="container">
             
-            <!-- Секция профиля -->
-            <section class="flex flex-col items-center text-center mb-12">
-                <div class="w-24 h-24 bg-gray-700 rounded-full mb-4 border-2 border-purple-500 flex items-center justify-center">
-                    <img src="avatar.jpg" alt="Аватар пользователя" class="w-full h-full object-cover rounded-full">
+            <section class="profile-section">
+                <div class="avatar-wrapper">
+                    <img src="avatar.jpg" alt="Аватар пользователя" class="avatar">
                 </div>
-                <h1 class="text-4xl font-bold text-white">Привет, я - <span class="text-purple-400">Kototjom!</span></h1>
+                <h1 class="profile-title">Привет, я - <span class="highlight" title="Читается как Кототём">Kototjom!</span></h1>
             </section>
 
-            <!-- Секция ссылок -->
-            <section class="flex flex-col gap-4">
-                <!-- Верхний ряд кнопок -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <a href="https://www.youtube.com/@kototjom" class="group block sm:flex sm:flex-col sm:items-center sm:justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-all duration-300 sm:h-32 text-center">
-    <div class="flex items-center gap-4 sm:flex-col sm:gap-2 justify-start sm:justify-center w-full">
-        <i class="bi bi-youtube text-red-500 text-2xl sm:text-4xl transition-transform duration-300 group-hover:scale-110"></i>
-        <span class="font-semibold text-white text-center w-full">YouTube</span>
-    </div>
-</a>
-<a href="https://author.today/u/kototjom" class="group block sm:flex sm:flex-col sm:items-center sm:justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-all duration-300 sm:h-32 text-center">
-    <div class="flex items-center gap-4 sm:flex-col sm:gap-2 justify-start sm:justify-center w-full">
-        <i class="bi bi-text-left text-gray-300 text-2xl sm:text-4xl transition-transform duration-300 group-hover:scale-110"></i>
-        <span class="font-semibold text-white text-center w-full">Author.Today</span>
-    </div>
-</a>
-<a href="https://t.me/kototjom_telegram" class="group block sm:flex sm:flex-col sm:items-center sm:justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-all duration-300 sm:h-32 text-center">
-    <div class="flex items-center gap-4 sm:flex-col sm:gap-2 justify-start sm:justify-center w-full">
-        <i class="bi bi-telegram text-sky-500 text-2xl sm:text-4xl transition-transform duration-300 group-hover:scale-110"></i>
-        <span class="font-semibold text-white text-center w-full">ТГ - Канал</span>
-    </div>
-</a>
+            <section class="links-section">
+                <div class="links-grid">
+                    <a href="https://www.youtube.com/@kototjom" class="link-card link-card-large">
+                        <div class="link-card-content">
+                            <i class="bi bi-youtube link-card-icon icon-youtube"></i>
+                            <span class="link-card-title">YouTube</span>
+                        </div>
+                    </a>
+                    <a href="https://author.today/u/kototjom" class="link-card link-card-large">
+                        <div class="link-card-content">
+                            <i class="bi bi-text-left link-card-icon icon-at"></i>
+                            <span class="link-card-title">Author.Today</span>
+                        </div>
+                    </a>
+                    <a href="https://t.me/kototjom_telegram" class="link-card link-card-large">
+                        <div class="link-card-content">
+                            <i class="bi bi-telegram link-card-icon icon-telegram"></i>
+                            <span class="link-card-title">ТГ - Канал</span>
+                        </div>
+                    </a>
                 </div>
                 
-                <!-- Нижний ряд кнопок -->
-                <a href="https://www.twitch.tv/kototjom" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
-                    <i class="bi bi-twitch text-purple-500 text-2xl absolute left-4 top-1/2 -translate-y-1/2 transition-transform duration-300 group-hover:scale-110"></i>
-                    <span class="font-semibold text-white">Twitch</span>
+                <a href="https://www.twitch.tv/kototjom" class="link-card link-card-small">
+                    <div class="link-card-content">
+                        <i class="bi bi-twitch link-card-icon icon-twitch"></i>
+                        <span class="link-card-title">Twitch</span>
+                    </div>
                 </a>
-                 <a href="https://www.instagram.com/kototjom" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
-                    <i class="bi bi-instagram text-pink-500 text-2xl absolute left-4 top-1/2 -translate-y-1/2 transition-transform duration-300 group-hover:scale-110"></i>
-                    <span class="font-semibold text-white">Instagram</span>
+                <a href="https://www.instagram.com/kototjom" class="link-card link-card-small">
+                    <div class="link-card-content">
+                        <i class="bi bi-instagram link-card-icon icon-instagram"></i>
+                        <span class="link-card-title">Instagram</span>
+                    </div>
                 </a>
-                 <a href="https://www.tiktok.com/@kototjom" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
-                    <i class="bi bi-tiktok text-cyan-400 text-2xl absolute left-4 top-1/2 -translate-y-1/2 transition-transform duration-300 group-hover:scale-110"></i>
-                    <span class="font-semibold text-white">Tiktok</span>
+                <a href="https://www.tiktok.com/@kototjom" class="link-card link-card-small">
+                    <div class="link-card-content">
+                        <i class="bi bi-tiktok link-card-icon icon-tiktok"></i>
+                        <span class="link-card-title">Tiktok</span>
+                    </div>
                 </a>
-                <a href="https://kototjom-itch.itch.io/" class="group relative flex items-center justify-center bg-[#2d2d2d] hover:bg-[#3a3a3a] p-4 rounded-xl transition-colors duration-300 h-14">
-                    <i class="bi bi-controller text-orange-500 text-2xl absolute left-4 top-1/2 -translate-y-1/2 transition-transform duration-300 group-hover:scale-110"></i>
-                    <span class="font-semibold text-white">Itch</span>
+                <a href="https://kototjom-itch.itch.io/" class="link-card link-card-small">
+                    <div class="link-card-content">
+                        <i class="bi bi-controller link-card-icon icon-itch"></i>
+                        <span class="link-card-title">Itch</span>
+                    </div>
                 </a>
             </section>
         </div>
     </main>
     
-    <!-- Подвал -->
-    <footer class="max-w-[600px] mx-auto px-4 pt-6 pb-6 text-center text-gray-500 text-sm">
-        <div class="border-t border-gray-700 pt-6"> 
-            <a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14">Ваша приватность.</a> © 2025 Артём Титов
+    <footer class="site-footer">
+        <div class="container footer-content"> 
+            <a href="https://telegra.ph/Politika-konfidencialnosti-05-05-14">Ваша приватность.</a> © <span id="current-year"></span> Артём Титов
         </div>
     </footer>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 backdrop-blur-lg z-50 hidden flex-col items-center justify-center text-white transition-opacity duration-300" style="background-color: rgba(36, 11, 72, 0.8);">
-        <button id="close-menu-button" class="absolute top-5 right-5 text-4xl p-2">
+    <div id="mobile-menu" class="mobile-menu-overlay">
+        <button id="close-menu-button" class="close-menu-button" aria-label="Закрыть меню">
             <i class="bi bi-x"></i>
         </button>
-        <nav class="flex flex-col items-center gap-8 text-2xl">
-            <a href="#" class="hover:text-purple-300 transition-colors">Главная</a>
-            <a href="https://blog.kototjom.top" class="hover:text-purple-300 transition-colors">Блог</a>
-            <a href="tw.html" class="hover:text-purple-300 transition-colors">Творчество</a>
+        <nav class="mobile-nav">
+            <a href="#">Главная</a>
+            <a href="https://blog.kototjom.top">Блог</a>
+            <a href="tw.html">Творчество</a>
         </nav>
     </div>
 
     <script>
+        // --- Скрипт для мобильного меню ---
         const hamburgerBtn = document.getElementById('hamburger-button');
         const closeMenuBtn = document.getElementById('close-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
         hamburgerBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.add('flex');
+            mobileMenu.classList.add('visible');
         });
 
         closeMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            mobileMenu.classList.remove('flex');
+            mobileMenu.classList.remove('visible');
         });
+
+        // --- Скрипт для автоматического обновления года ---
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
-
