@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Название Документа</title>
+    <!-- Подключение Tailwind CSS CDN для стилей -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Подключение шрифта Manrope с Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Настройка шрифта Manrope для лучшей читаемости */
+        body {
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.7; /* Увеличиваем межстрочный интервал для лучшей читаемости */
+        }
+        /* Убедимся, что контейнер занимает всю высоту */
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        /* Стиль для основного контента, чтобы имитировать Notion/Telegraph */
+        .document-prose {
+            max-width: 65ch; /* Ограничение по ширине символов, стандартный подход */
+            font-size: 1.125rem; /* Немного больший размер шрифта */
+        }
+        .document-prose h1, .document-prose h2 {
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .document-prose blockquote {
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            /* Используем новый акцентный цвет #C084FC для рамки цитаты */
+            border-left: 4px solid #C084FC; 
+            font-style: italic;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    <!-- Основной контейнер. Увеличенный вертикальный отступ для эффекта "чистого листа". -->
+    <div class="min-h-screen flex flex-col items-center py-16 sm:py-20 px-4">
+        
+        <!-- Навигационные кнопки (находятся над документом и ограничены той же шириной) -->
+        <nav class="w-full max-w-2xl mx-auto mb-10">
+            <div class="flex space-x-4">
+                <!-- Кнопка "На главную" - использует акцентный цвет #C084FC -->
+                <a href="/" 
+                   class="text-sm font-medium transition duration-150 ease-in-out py-2 px-3 rounded-md 
+                          text-[#C084FC] hover:text-[#9A46E8] bg-[#C084FC]/10 hover:bg-[#C084FC]/20">
+                    ← На главную
+                </a>
+                <!-- Кнопка "Остальные документы" -->
+                <a href="/документы/" class="text-sm font-medium text-gray-600 hover:text-gray-800 transition duration-150 ease-in-out py-2 px-3 rounded-md hover:bg-gray-100">
+                    Остальные документы
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Ограничитель ширины документа (классический узкий для чтения - max-w-2xl) -->
+        <article class="w-full max-w-2xl mx-auto bg-white p-2"> <!-- Убрана тень -->
+
+            <!-- Заголовок документа -->
+            <header class="mb-10 pt-4">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                    Заголовок Вашего Документа или Проекта
+                </h1>
+                
+                <!-- Блок с датами публикации и изменения (очень субтильный) -->
+                <div class="text-xs text-gray-400 space-y-1">
+                    <p>
+                        <span class="font-medium">Опубликовано:</span> 
+                        <!-- Замените эту дату на фактическую дату первой публикации -->
+                        <time datetime="2025-10-23" class="ml-0.5">23 октября 2025 г.</time>
+                    </p>
+                    <p>
+                        <span class="font-medium">Обновлено:</span> 
+                        <!-- Замените эту дату на фактическую дату последнего изменения -->
+                        <time datetime="2025-10-23" class="ml-0.5">23 октября 2025 г.</time>
+                    </p>
+                </div>
+            </header>
+
+            <!-- Тело документа (содержимое) -->
+            <div class="document-prose text-gray-700">
+                
+                <!-- Введение -->
+                <p>
+                    Добро пожаловать в Мастерскую! Теперь с чистым шрифтом Manrope и акцентным фиолетовым цветом (#C084FC). Этот шаблон фокусирует внимание на контенте. Текст узкий, с большим межстрочным интервалом, создавая идеальные условия для чтения.
+                </p>
+
+                <!-- Основной контент -->
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Первый Раздел: Слово и Поэзия</h2>
+                <p>
+                    Здесь можно разместить ваши стихи. Обратите внимание, что рамка цитаты ниже теперь фиолетовая, в соответствии с выбранным акцентом.
+                </p>
+                
+                <blockquote class="text-gray-600">
+                    "Над строкой завис, как над бездной,
+                    Каждая буква — как кирпич.
+                    И не важно, что под капотом,
+                    Если в тексте свет от тысяч свеч.
+                    Тут байты, там метафоры летят,
+                    В Мастерской — два сердца, не одно."
+                </blockquote>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Второй Раздел: Код и Проекты</h2>
+                <p>
+                    А тут можно рассказать о ваших технических проектах. Фиолетовый акцент делает первичную кнопку навигации более заметной.
+                </p>
+
+                <!-- Пример списка -->
+                <ul class="list-disc list-inside ml-6 space-y-2">
+                    <li>**Проект 1:** Лэндинг для вымышленного стартапа (чистый JS).</li>
+                    <li>**Проект 2:** Анализ данных в Python.</li>
+                    <li>**Проект 3:** Сборник стихов (онлайн-публикация в виде Single Page App).</li>
+                </ul>
+
+                <!-- Заключение -->
+                <p class="mt-8">
+                    Дизайн готов! Теперь акценты в "Мастерской" стали ярче и современнее!
+                </p>
+
+            </div>
+            
+            <!-- Футер (очень незаметный) -->
+            <footer class="mt-20 pt-6 border-t border-gray-100 text-center text-xs text-gray-300">
+                <!-- Динамически обновляемый год и ваше имя -->
+                &copy; <span id="current-year"></span> Артём Титов. Все права защищены.
+            </footer>
+
+        </article>
+    </div>
+
+    <script>
+        // JS для автоматического обновления текущего года
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

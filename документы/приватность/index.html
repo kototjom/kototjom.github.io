@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика приватности</title>
+    <!-- Подключение Tailwind CSS CDN для стилей -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Подключение шрифта Manrope с Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Настройка шрифта Manrope для лучшей читаемости */
+        body {
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.7; /* Увеличиваем межстрочный интервал для лучшей читаемости */
+        }
+        /* Убедимся, что контейнер занимает всю высоту */
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        /* Стиль для основного контента, чтобы имитировать Notion/Telegraph */
+        .document-prose {
+            max-width: 65ch; /* Ограничение по ширине символов, стандартный подход */
+            font-size: 1.125rem; /* Немного больший размер шрифта */
+        }
+        .document-prose h1, .document-prose h2 {
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        /* Добавляем стиль для подзаголовков секций (1.1, 1.2) */
+        .document-prose h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        .document-prose blockquote {
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            /* Используем новый акцентный цвет #C084FC для рамки цитаты */
+            border-left: 4px solid #C084FC; 
+            font-style: italic;
+            color: #4b5563;
+        }
+        /* Стиль для инлайн-кода (например, email) */
+        .document-prose code {
+            background-color: #f3f4f6;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    <!-- Основной контейнер. Увеличенный вертикальный отступ для эффекта "чистого листа". -->
+    <div class="min-h-screen flex flex-col items-center py-16 sm:py-20 px-4">
+        
+        <!-- Навигационные кнопки (находятся над документом и ограничены той же шириной) -->
+        <nav class="w-full max-w-2xl mx-auto mb-10">
+            <div class="flex space-x-4">
+                <!-- Кнопка "На главную" - использует акцентный цвет #C084FC -->
+                <a href="/" 
+                   class="text-sm font-medium transition duration-150 ease-in-out py-2 px-3 rounded-md 
+                          text-[#C084FC] hover:text-[#9A46E8] bg-[#C084FC]/10 hover:bg-[#C084FC]/20">
+                    ← На главную
+                </a>
+                <!-- Кнопка "Остальные документы" -->
+                <a href="/документы/" class="text-sm font-medium text-gray-600 hover:text-gray-800 transition duration-150 ease-in-out py-2 px-3 rounded-md hover:bg-gray-100">
+                    Остальные документы
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Ограничитель ширины документа (классический узкий для чтения - max-w-2xl) -->
+        <article class="w-full max-w-2xl mx-auto bg-white p-2"> <!-- Убрана тень -->
+
+            <!-- Заголовок документа -->
+            <header class="mb-10 pt-4">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                    Политика приватности
+                </h1>
+                
+                <!-- Блок с датами публикации и изменения (очень субтильный) -->
+                <div class="text-xs text-gray-400 space-y-1">
+                    <p>
+                        <span class="font-medium">Первая публикация:</span> 
+                        <!-- Дата первой публикации: May 05, 2025 -->
+                        <time datetime="2025-05-05" class="ml-0.5">05 мая 2025 г.</time>
+                    </p>
+                    <p>
+                        <span class="font-medium">Дата вступления в силу:</span> 
+                        <!-- Дата последнего изменения: 12 августа 2025 -->
+                        <time datetime="2025-08-12" class="ml-0.5">12 августа 2025 г.</time>
+                    </p>
+                </div>
+            </header>
+
+            <!-- Тело документа (содержимое Политики конфиденциальности) -->
+            <div class="document-prose text-gray-700">
+                
+                <p>Настоящая Политика конфиденциальности описывает, как обрабатываются данные посетителей сайта kototjom.top (далее — «Сайт»).</p>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">1. Сбор и обработка данных</h2>
+
+                <h3 class="text-xl font-semibold">1.1. Данные, собираемые GitHub Pages</h3>
+                <p>Сайт размещён на платформе GitHub Pages, которая управляется компанией GitHub, Inc. В рамках своей работы по обеспечению безопасности и стабильности платформы, GitHub автоматически собирает IP-адреса посетителей. Эти данные используются исключительно для защиты от DDoS-атак и предотвращения злоупотреблений. Мы не имеем доступа к этим данным и не можем их просматривать. Подробную информацию о сборе данных GitHub можно найти в <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" target="_blank" class="text-[#C084FC] hover:underline">Политике конфиденциальности GitHub</a>.</p>
+
+                <h3 class="text-xl font-semibold">1.2. Данные, собираемые сайтом</h3>
+                <p>Я, как владелец Сайта, не собираю, не храню и не обрабатываю никакие персональные данные посетителей. На сайте нет форм для ввода данных, систем аналитики (таких как Google Analytics) или сторонних трекеров, которые могли бы собирать вашу личную информацию.</p>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">2. Файлы cookie</h2>
+                <p>Сайт не использует собственные файлы cookie для отслеживания посетителей или хранения их данных.</p>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">3. Сторонние ссылки</h2>
+                <p>Сайт содержит ссылки на другие ресурсы в Интернете (Twitch, YouTube, Telegram и др.). Переходя по этим ссылкам, вы покидаете мой Сайт. Пожалуйста, имейте в виду, что политика конфиденциальности этих сторонних сервисов отличается от этой. Я не несу ответственности за их методы сбора и обработки данных. Рекомендуем ознакомиться с их политикой конфиденциальности.</p>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">4. Контактная информация</h2>
+                <p>Если у вас возникли вопросы по поводу настоящей Политики конфиденциальности, вы можете связаться со мной по адресу электронной почты: <code>hello @ kototjom.top</code> (уберите пробелы) или используя другие методы связи, предоставленные на страницах сайта.</p>
+
+            </div>
+            
+            <!-- Футер (очень незаметный) -->
+            <footer class="mt-20 pt-6 border-t border-gray-100 text-center text-xs text-gray-300">
+                <!-- Динамически обновляемый год и ваше имя -->
+                &copy; <span id="current-year"></span> Артём Титов. Все права защищены.
+            </footer>
+
+        </article>
+    </div>
+
+    <script>
+        // JS для автоматического обновления текущего года
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

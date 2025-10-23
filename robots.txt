@@ -1,3 +1,4 @@
 User-agent: *
+Disallow: /документы/
 Allow: /
 Sitemap: https://kototjom.top/sitemap.xml
