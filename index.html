@@ -1,153 +1,255 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kototjom - Личный сайт</title>
-    <meta name="description" content="Личный сайт Kototjom. Здесь вы найдёте ссылки на мои социальные сети, творчество и многое другое!">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kototjom - Bio Link (avatar + language menu)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent-purple: #411670;
+      --dark-bg: #0f0f0f;
+      --card-bg: #1c1c1c;
+      --soft-gray: #9a9a9a;
+      --text-color: #ffffff;
+      --spacing-15: 15px;
+      --gap-buttons: 10px;
+      --radius-card: 35px;
+      --radius-button: 20px;
+      --fz-body: 20px;
+      --fz-subtitle: 24px;
+      --fz-title: 48px;
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight: 400; /* Inter Regular везде */
+      font-size: var(--fz-body);
+      line-height: 1.5;
+      color: var(--text-color);
+      background: var(--dark-bg);
+      display: flex; justify-content: center; align-items: flex-start;
+      min-height: 100vh; padding: 30px var(--spacing-15);
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
 
-    <!-- Стандартный .ico (для старых браузеров и универсальный fallback) -->
-    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    .main-container { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; }
 
-    <!-- Обязательная иконка для всех современных браузеров (32x32) -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    .main-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    .header-button { display: inline-flex; align-items: center; gap: 8px; background: none; border: none; color: var(--soft-gray); font-size: var(--fz-body); font-weight: 400; cursor: pointer; padding: 8px 12px; border-radius: 12px; transition: color .2s ease, background-color .2s ease; }
+    .header-button:hover { color: var(--text-color); background-color: #303030; }
+    .header-button .icon { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
 
-    <!-- Манифест для PWA и Android -->
-    <link rel="manifest" href="/site.webmanifest">
+    .profile-card { width: 100%; background: var(--card-bg); color: var(--text-color); border-radius: var(--radius-card); box-shadow: 0 10px 30px rgba(0,0,0,.5); overflow: hidden; padding: var(--spacing-15); box-sizing: border-box; }
 
-    <!-- Для Apple устройств -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    .cover-section { position: relative; min-height: 154px; margin-bottom: 40px; }
+    .cover-bg { width: 100%; height: 100%; min-height: 154px; background-image: url('https://placehold.co/600x200/220b33/ffffff?text=Dark+Forest'); background-color: rgba(65,22,112,.7); background-blend-mode: multiply; background-size: cover; background-position: center; border-radius: var(--radius-button); }
 
+    /* Заменённая аватарка */
+    .profile-avatar { position: absolute; bottom: -38px; left: 50%; transform: translateX(-50%); width: 92px; height: 92px; border-radius: 50%; background-image: url('https://kototjom.top/pics/avatar.jpg'); background-size: cover; background-position: center; border: 4px solid var(--card-bg); box-shadow: 0 5px 15px rgba(0,0,0,.3); }
+
+    .content-area { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .profile-name { font-size: var(--fz-title); font-weight: 400; margin: 0 0 6px 0; line-height: 1.1; letter-spacing: -0.02em; }
+    .profile-description { font-size: var(--fz-subtitle); color: var(--soft-gray); margin: 0 0 52px 0; padding: 0 1rem; }
+
+    .buttons-wrapper { width: 100%; }
+    .button-link { display: inline-flex; align-items: center; justify-content: center; min-height: 60px; padding: 12px 20px; font-size: var(--fz-body); font-weight: 400; border-radius: var(--radius-button); transition: background-color .2s ease, transform .1s ease, color .2s ease, border-color .2s ease; text-decoration: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+    .button-link:active { transform: scale(.98); }
+
+    .primary-button { background: var(--accent-purple); color: var(--text-color); box-shadow: 0 4px 10px rgba(65,22,112,.4); margin-bottom: var(--gap-buttons); border: none; }
+
+    .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-buttons); width: 100%; }
+    .secondary-button { background: var(--card-bg); color: var(--soft-gray); border: 3px solid #303030; }
+    .secondary-button:hover { background: #303030; color: var(--text-color); border-color: #3a3a3a; }
+
+    @media (max-width: 450px) {
+      .button-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ОБЩИЙ стиль для оверлеев (меню и языки) */
+    .overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--spacing-15); background: radial-gradient(1200px 600px at 50% -10%, rgba(65,22,112,.35), rgba(0,0,0,.65)), rgba(0,0,0,.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, visibility .35s ease; z-index: 999; }
+    .overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+    .sheet { width: min(560px, 92vw); background: rgba(28,28,28,.85); border: 1px solid rgba(255,255,255,.06); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,.6); padding: 28px; transform: translateY(10px) scale(.98); transition: transform .35s ease; }
+    .overlay.open .sheet { transform: translateY(0) scale(1); }
+
+    .floating-close { position: absolute; top: 18px; right: 18px; background: var(--card-bg); color: var(--text-color); border: none; width: 48px; height: 48px; border-radius: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background-color .2s ease, transform .1s ease; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .floating-close:hover { background: #303030; }
+    .floating-close:active { transform: scale(.98); }
+
+    /* Навигационное меню */
+    .menu-nav { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+    .menu-link { display: block; text-decoration: none; color: var(--text-color); font-size: 28px; padding: 16px 18px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); transition: background-color .2s ease, transform .1s ease, border-color .2s ease; }
+    .menu-link:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
+    .menu-link:active { transform: translateY(1px); }
+
+    /* Языковое меню — карточки флагов */
+    .lang-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .lang-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); cursor: pointer; user-select: none; transition: background-color .2s ease, border-color .2s ease, transform .1s ease; }
+    .lang-card:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
+    .lang-card:active { transform: translateY(1px); }
+    .lang-flag { width: 36px; height: 24px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.25); background-size: cover; background-position: center; }
+    .lang-title { font-size: 16px; color: var(--text-color); }
+
+    /* Простейшие флаги через градиенты */
+    .flag-ru { background: linear-gradient(#fff 33.33%, #0039a6 33.33%, #0039a6 66.66%, #d52b1e 66.66%); }
+    .flag-en { background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="%23b22234"/><g fill="%23fff"><rect y="3" width="60" height="3"/><rect y="9" width="60" height="3"/><rect y="15" width="60" height="3"/><rect y="21" width="60" height="3"/><rect y="27" width="60" height="3"/><rect y="33" width="60" height="3"/></g><rect width="24" height="18" fill="%23003f87"/></svg>'); }
+    .flag-de { background: linear-gradient(#000 33.33%, #dd0000 33.33%, #dd0000 66.66%, #ffce00 66.66%); }
+
+    @media (max-width: 420px) {
+      .lang-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
 <body>
+  <div class="main-container">
+    <header class="main-header">
+      <!-- Кнопка языков, открывает красивый оверлей как бургер -->
+      <button class="header-button" id="lang-button" aria-label="Выбор языка" aria-controls="lang-menu" aria-expanded="false">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M2 12h20"></path>
+          <path d="M12 2a15 15 0 0 1 0 20"></path>
+          <path d="M12 2a15 15 0 0 0 0 20"></path>
+        </svg>
+        <span>Языки</span>
+      </button>
 
-    <header class="site-header">
-        <div class="container">
-            <div class="header-content">
-                <div class="header-left">
-                    <a href="/" class="logo" aria-label="На главную">
-                        <img src="/pics/лого полный ник.svg" alt="Логотип сайта">
-                    </a>
-                    <div class="toggle-buttons">
-                        <a href="/" class="toggle-button active">Личное</a>
-                        <a href="/работа/" class="toggle-button inactive">Работа</a>
-                    </div>
-                </div>
-                
-                <div class="header-right">
-                    <nav class="desktop-nav">
-                        <a href="#">Главная</a>
-                        <a href="https://blog.kototjom.top">Блог</a>
-                        <a href="/мастерская/">Мастерская</a>
-                    </nav>
-                    <button id="hamburger-button" class="hamburger-button" aria-label="Открыть меню">
-                        <i class="bi bi-list"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+      <button id="menu-button" class="header-button" aria-expanded="false" aria-controls="full-menu" aria-label="Открыть меню">
+        <span>Меню</span>
+        <span class="icon icon-hamburger" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </span>
+      </button>
     </header>
 
-    <main class="main-content">
-        <div class="container">
-            
-            <section class="profile-section">
-                <div class="avatar-wrapper">
-                    <img src="/pics/avatar.jpg" alt="Аватар пользователя" class="avatar">
-                </div>
-                <h1 class="profile-title">Привет, я - <span class="highlight" title="Читается как Кототём">Kototjom!</span></h1>
-            </section>
+    <main class="profile-card">
+      <div class="cover-section">
+        <div class="cover-bg" role="img" aria-label="фоновая обложка"></div>
+        <div class="profile-avatar" aria-label="аватар"></div>
+      </div>
 
-            <section class="links-section">
-                <div class="links-grid">
-                    <a href="https://www.youtube.com/@kototjom" class="link-card link-card-large">
-                        <div class="link-card-content">
-                            <i class="bi bi-youtube link-card-icon icon-youtube"></i>
-                            <span class="link-card-title">YouTube</span>
-                        </div>
-                    </a>
-                    <a href="https://author.today/u/kototjom" class="link-card link-card-large">
-                        <div class="link-card-content">
-                            <i class="bi bi-text-left link-card-icon icon-at"></i>
-                            <span class="link-card-title">Author.Today</span>
-                        </div>
-                    </a>
-                    <a href="https://t.me/kototjom_telegram" class="link-card link-card-large">
-                        <div class="link-card-content">
-                            <i class="bi bi-telegram link-card-icon icon-telegram"></i>
-                            <span class="link-card-title">ТГ - Канал</span>
-                        </div>
-                    </a>
-                </div>
-                
-                <a href="https://www.twitch.tv/kototjom" class="link-card link-card-small">
-                    <div class="link-card-content">
-                        <i class="bi bi-twitch link-card-icon icon-twitch"></i>
-                        <span class="link-card-title">Twitch</span>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/kototjom" class="link-card link-card-small">
-                    <div class="link-card-content">
-                        <i class="bi bi-instagram link-card-icon icon-instagram"></i>
-                        <span class="link-card-title">Instagram</span>
-                    </div>
-                </a>
-                <a href="https://www.tiktok.com/@kototjom" class="link-card link-card-small">
-                    <div class="link-card-content">
-                        <i class="bi bi-tiktok link-card-icon icon-tiktok"></i>
-                        <span class="link-card-title">Tiktok</span>
-                    </div>
-                </a>
-                <a href="https://kototjom-itch.itch.io/" class="link-card link-card-small">
-                    <div class="link-card-content">
-                        <i class="bi bi-controller link-card-icon icon-itch"></i>
-                        <span class="link-card-title">Itch</span>
-                    </div>
-                </a>
-            </section>
+      <div class="content-area">
+        <h1 class="profile-name">Kototjom</h1>
+        <p class="profile-description">Занимаюсь всем на свете — от музыки до стихов.</p>
+
+        <div class="buttons-wrapper">
+          <a href="#" class="button-link primary-button" aria-label="Telegram канал">Telegram канал</a>
+          <div class="button-grid">
+            <a href="#" class="button-link secondary-button" aria-label="Instagram">Instagram</a>
+            <a href="#" class="button-link secondary-button" aria-label="Twitch">Twitch</a>
+            <a href="#" class="button-link secondary-button" aria-label="TikTok">TikTok</a>
+            <a href="#" class="button-link secondary-button" aria-label="YouTube">YouTube</a>
+          </div>
         </div>
+      </div>
     </main>
-    
-    <footer class="site-footer">
-        <div class="container footer-content"> 
-            <a href="https://docs.kototjom.top/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C/">Ваша приватность.</a> © <span id="current-year"></span> Артём Титов
-        </div>
-    </footer>
+  </div>
 
-    <div id="mobile-menu" class="mobile-menu-overlay">
-        <button id="close-menu-button" class="close-menu-button" aria-label="Закрыть меню">
-            <i class="bi bi-x"></i>
-        </button>
-        <nav class="mobile-nav">
-            <a href="#">Главная</a>
-            <a href="https://blog.kototjom.top">Блог</a>
-            <a href="/мастерская/">Мастерская</a>
-        </nav>
+  <!-- Бургер-меню (навигация) -->
+  <div id="full-menu" class="overlay" role="dialog" aria-modal="true" aria-labelledby="menu-title">
+    <button id="close-menu-button" class="floating-close" aria-label="Закрыть меню">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <div class="sheet">
+      <nav class="menu-nav" aria-label="Навигация">
+        <a href="#" class="menu-link">Главная</a>
+        <a href="#" class="menu-link">Обо мне</a>
+        <a href="#" class="menu-link">Портфолио</a>
+        <a href="#" class="menu-link">Контакты</a>
+      </nav>
     </div>
+  </div>
 
-    <script>
-        // --- Скрипт для мобильного меню ---
-        const hamburgerBtn = document.getElementById('hamburger-button');
-        const closeMenuBtn = document.getElementById('close-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+  <!-- Меню языков (RU, EN, DE) -->
+  <div id="lang-menu" class="overlay" role="dialog" aria-modal="true" aria-labelledby="lang-title">
+    <button id="close-lang-button" class="floating-close" aria-label="Закрыть выбор языка">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <div class="sheet" aria-labelledby="lang-title">
+      <h2 id="lang-title" style="margin:0 0 14px 0; font: inherit; font-size: 28px; font-weight: 400;">Выбери язык</h2>
+      <div class="lang-grid">
+        <button class="lang-card" data-lang="ru" aria-label="Русский">
+          <span class="lang-flag flag-ru"></span>
+          <span class="lang-title">Русский</span>
+        </button>
+        <button class="lang-card" data-lang="en" aria-label="English">
+          <span class="lang-flag flag-en"></span>
+          <span class="lang-title">English</span>
+        </button>
+        <button class="lang-card" data-lang="de" aria-label="Deutsch">
+          <span class="lang-flag flag-de"></span>
+          <span class="lang-title">Deutsch</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-        hamburgerBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('visible');
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuButton = document.getElementById("menu-button");
+      const fullMenu = document.getElementById("full-menu");
+      const closeMenuButton = document.getElementById("close-menu-button");
+
+      const langButton = document.getElementById("lang-button");
+      const langMenu = document.getElementById("lang-menu");
+      const closeLangButton = document.getElementById("close-lang-button");
+
+      // Навигационное меню
+      function openMenu() {
+        fullMenu.classList.add("open");
+        menuButton.setAttribute("aria-expanded", "true");
+        menuButton.setAttribute("aria-label", "Закрыть меню");
+      }
+      function closeMenu() {
+        fullMenu.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Открыть меню");
+      }
+      menuButton.addEventListener("click", () => { fullMenu.classList.contains("open") ? closeMenu() : openMenu(); });
+      closeMenuButton.addEventListener("click", closeMenu);
+      fullMenu.addEventListener("click", (e) => { if (e.target === fullMenu) closeMenu(); });
+
+      // Меню языков
+      function openLang() {
+        langMenu.classList.add("open");
+        langButton.setAttribute("aria-expanded", "true");
+        langButton.setAttribute("aria-label", "Закрыть выбор языка");
+      }
+      function closeLang() {
+        langMenu.classList.remove("open");
+        langButton.setAttribute("aria-expanded", "false");
+        langButton.setAttribute("aria-label", "Открыть выбор языка");
+      }
+      langButton.addEventListener("click", () => { langMenu.classList.contains("open") ? closeLang() : openLang(); });
+      closeLangButton.addEventListener("click", closeLang);
+      langMenu.addEventListener("click", (e) => { if (e.target === langMenu) closeLang(); });
+
+      // Обработчик выбора языка (заглушка: можно подставить реальную локализацию)
+      document.querySelectorAll('.lang-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.getAttribute('data-lang');
+          // Здесь можно подключить вашу систему i18n или просто редиректнуть на /?lang=xx
+          const url = new URL(window.location.href);
+          url.searchParams.set('lang', lang);
+          window.location.href = url.toString();
         });
+      });
 
-        closeMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('visible');
-        });
-
-        // --- Скрипт для автоматического обновления года ---
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+      // Escape для закрытия обоих оверлеев
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { closeMenu(); closeLang(); }
+      });
+    });
+  </script>
 </body>
 </html>
