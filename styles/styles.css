@@ -5,7 +5,7 @@
         :root {
             --primary-color: #A855F7; /* Фиолетовый */
             --background-color: #121212;
-            --surface-color: #2d2d2d;
+            --surface-color: #202020;
             --surface-hover-color: #3a3a3a;
             --text-color: #e0e0e0;
             --text-muted-color: #a0a0a0;
@@ -191,13 +191,15 @@
         .link-card {
             display: block;
             background-color: var(--surface-color);
-            border-radius: 0.75rem;
-            transition: background-color 0.3s ease;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
             position: relative; /* Включаем позиционирование для дочерних элементов */
+            border: 1px solid var(--border-color);
         }
 
         .link-card:hover {
-            background-color: var(--surface-hover-color);
+            background-color: var(--surface-color);
+            border-color: var(--primary-color);
         }
 
         .link-card-content {
