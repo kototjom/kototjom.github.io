@@ -122,7 +122,6 @@
         }
 
         .poem-toggle {
-            display: inline-flex;
             align-items: center;
             background: none;
             border: none;
@@ -133,6 +132,15 @@
             font-size: 0.875rem;
             transition: color 0.3s ease;
         }
+
+.poem-footer {
+    /* Используем Flexbox для выравнивания содержимого внутри этого блока */
+    display: flex;
+    /* Размещаем все, что находится внутри, по краям */
+    justify-content: flex-end; 
+    /* Дополнительный отступ сверху, чтобы отделить кнопку от текста (если нужно) */
+    margin-top: 0.5rem; 
+}
 
         .poem-toggle:hover {
             color: white;
@@ -209,10 +217,12 @@
 Пошёл и сделал шаг к уже известной,
 И снова тот же, родимый мне полёт.
                     </pre>
-                    <button class="poem-toggle" data-poem-id="poem1">
-                        <span>Показать полностью</span>
-                        <i class="bi bi-chevron-down poem-toggle-icon"></i>
-                    </button>
+ <div class="poem-footer">
+        <button class="poem-toggle" data-poem-id="poem1">
+            <span>Показать полностью</span>
+            <i class="bi bi-chevron-down poem-toggle-icon"></i>
+        </button>
+    </div>
                 </div>
 
                 <div class="poem-card">
@@ -236,10 +246,12 @@
 Но не стремлюсь что-то менять,
 Перестаю я создавать.
                     </pre>
-                    <button class="poem-toggle" data-poem-id="poem2">
-                        <span>Показать полностью</span>
-                        <i class="bi bi-chevron-down poem-toggle-icon"></i>
-                    </button>
+<div class="poem-footer">
+        <button class="poem-toggle" data-poem-id="poem2">
+            <span>Показать полностью</span>
+            <i class="bi bi-chevron-down poem-toggle-icon"></i>
+        </button>
+    </div>
                 </div>
 
             </section>
@@ -249,7 +261,7 @@
                 <div class="item-list">
                     
                     <a href="https://author.today/work/286071" class="item-card">
-                        <i class="bi bi-book-fill item-icon" style="color: #44d5ef;"></i>
+                        <i class="bi bi-book-fill item-icon" style="color: #C084FC;"></i>
                         <div class="item-info">
                             <span class="item-title">Анфиса, спокойной ночи</span>
                             <span class="item-desc">Заброшенная книга, Фантастика</span>
