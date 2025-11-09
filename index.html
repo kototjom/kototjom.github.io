@@ -1,321 +1,448 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kototjom</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --accent-purple: #411670;
-      --dark-bg: #0f0f0f;
-      --card-bg: #1c1c1c;
-      --soft-gray: #9a9a9a;
-      --text-color: #ffffff;
-      --spacing-15: 15px;
-      --gap-buttons: 10px;
-      --radius-card: 35px;
-      --radius-button: 20px;
-      --fz-body: 20px;
-      --fz-subtitle: 24px;
-      --fz-title: 48px;
-    }
-    html, body { height: 100%; }
-    body {
-      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-weight: 400; /* Inter Regular везде */
-      font-size: var(--fz-body);
-      line-height: 1.5;
-      color: var(--text-color);
-      background: var(--dark-bg);
-      display: flex; justify-content: center; align-items: flex-start;
-      min-height: 100vh; padding: 30px var(--spacing-15);
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-    }
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>Kototjom</title>
 
-    .main-container {   padding-bottom: 40px; box-sizing: border-box; width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; }
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+      <script src="https://unpkg.com/lucide@latest"></script>
 
-    .main-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-    .header-button { display: inline-flex; align-items: center; gap: 8px; background: none; border: none; color: var(--soft-gray); font-size: var(--fz-body); font-weight: 400; cursor: pointer; padding: 8px 12px; border-radius: 12px; transition: color .2s ease, background-color .2s ease; }
-    .header-button:hover { color: var(--text-color); background-color: #303030; }
-    .header-button .icon { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
+   <style>
+      :root{
+         --bg:#121212;
+         --bg-2:#1a1a1a;
+         --card:#222222;
+         --text:#ffffff;
+         --muted:#b3b3b3;
+         --accent:#411670;
+         --header-bg:rgba(22,22,22,.85);
+         --border:rgba(255,255,255,.08);
+         --radius-pill:9999px;
+         --radius-header:26px;
+         --radius-card:20px;
+         --h-item:38px;
+         --btn-h:48px;
+         --gap-links:12px;
+         --content-w:640px; /* ширина хедера/узкого контейнера */
+      }
 
-    .profile-card { width: 100%; background: var(--card-bg); color: var(--text-color); border-radius: var(--radius-card); box-shadow: 0 10px 30px rgba(0,0,0,.5); overflow: hidden; padding: var(--spacing-15); box-sizing: border-box; }
+      *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+      body{background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;min-height:100vh;text-align:center}
 
-    .cover-section { position: relative; min-height: 154px; margin-bottom: 40px; }
-    .cover-bg { width: 100%; height: 100%; min-height: 154px; background-image: url('/pics/FON.png'); background-color: rgba(65,22,112,.7); background-blend-mode: multiply; background-size: cover; background-position: center; border-radius: var(--radius-button); }
+      /* ===== HEADER: ровно 18px по бокам ===== */
+      header{
+         position:fixed; top:0; left:0; right:0;
+         display:flex; justify-content:center;
+         z-index:1000; background:transparent;
+      }
+      .header-container{
+         width:min(var(--content-w), calc(100% - 36px)); /* 18px слева/справа */
+         background:var(--header-bg);
+         backdrop-filter:saturate(180%) blur(12px);
+         -webkit-backdrop-filter:saturate(180%) blur(12px);
+         border:1px solid var(--border);
+         border-radius:0 0 var(--radius-header) var(--radius-header);
+         display:flex; align-items:center; justify-content:space-between; gap:10px;
+         padding:10px 18px;
+         box-shadow:0 2px 10px rgba(0,0,0,.25);
+      }
+      .header-left{display:flex;align-items:center;gap:10px}
+      .header-avatar img{width:36px;height:36px;border-radius:50%;display:block}
 
-    /* Заменённая аватарка */
-    .profile-avatar { position: absolute; bottom: -38px; left: 50%; transform: translateX(-50%); width: 92px; height: 92px; border-radius: 50%; background-image: url('https://kototjom.top/pics/avatar.jpg'); background-size: cover; background-position: center; border: 4px solid var(--card-bg); box-shadow: 0 5px 15px rgba(0,0,0,.3); }
+      /* Segmented control — активен только текущий */
+      .site-toggle{
+         display:flex; align-items:center; height:var(--h-item);
+         padding:3px; gap:4px; background:#222;
+         border-radius:var(--radius-pill); border:1px solid var(--border);
+      }
+      .site-toggle a{
+         flex:1; min-height:calc(var(--h-item) - 6px); padding:0 12px;
+         text-decoration:none; font-size:14px; color:var(--muted);
+         border-radius:var(--radius-pill); display:flex; align-items:center; justify-content:center; transition:.2s;
+         background:transparent;
+      }
+      .site-toggle a.active{background:var(--accent); color:var(--text)}
 
-    .content-area { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .profile-name { font-size: var(--fz-title); font-weight: 400; margin: 0 0 6px 0; line-height: 1.1; letter-spacing: -0.02em; }
-    .profile-description { font-size: var(--fz-subtitle); color: var(--soft-gray); margin: 0 0 52px 0; padding: 0 1rem; }
+      nav{display:flex; align-items:center; gap:8px}
+      nav a{
+         text-decoration:none; color:var(--text); font-weight:500;
+         padding:0 12px; min-height:var(--h-item);
+         border-radius:var(--radius-pill); display:flex; align-items:center; gap:8px; justify-content:center; transition:.2s;
+         background:transparent;
+      }
+      nav a.active{background:#262626; box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+      nav a:hover{background:#2a2a2a}
+      nav a svg.lucide{width:18px;height:18px}
 
-    .buttons-wrapper { width: 100%; }
-    .button-link { display: inline-flex; align-items: center; justify-content: center; min-height: 60px; padding: 12px 20px; font-size: var(--fz-body); font-weight: 400; border-radius: var(--radius-button); transition: background-color .2s ease, transform .1s ease, color .2s ease, border-color .2s ease; text-decoration: none; cursor: pointer; width: 100%; box-sizing: border-box; }
-    .button-link:active { transform: scale(.98); }
+      .menu-toggle{
+         display:none; width:var(--h-item); height:var(--h-item);
+         border-radius:var(--radius-pill); border:1px solid var(--border);
+         background:#222; cursor:pointer; align-items:center; justify-content:center;
+         position:absolute; right:18px; top:50%; transform:translateY(-50%);
+      }
+      .menu-toggle .bars{width:18px;height:12px;position:relative}
+      .menu-toggle .bars::before,.menu-toggle .bars::after,.menu-toggle .bar{
+         content:""; position:absolute; left:0; right:0; height:2px; background:var(--text); border-radius:2px;
+      }
+      .menu-toggle .bar{top:5px} .menu-toggle .bars::before{top:0} .menu-toggle .bars::after{bottom:0}
+      @media (max-width:560px){
+         nav{display:none}
+         .menu-toggle{display:inline-flex}
+      }
 
-    .primary-button { background: var(--accent-purple); color: var(--text-color); box-shadow: 0 4px 10px rgba(65,22,112,.4); margin-bottom: var(--gap-buttons); border: none; }
+      /* ===== DRAWER (чуть темнее) ===== */
+      .drawer-overlay{
+         position:fixed; inset:0; background:rgba(0,0,0,.45);
+         opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:2000;
+      }
+      .drawer{
+         position:fixed; top:0; right:0; height:100vh; width:min(88vw,340px);
+         background:#191919; box-shadow:-12px 0 24px rgba(0,0,0,.45);
+         transform:translateX(100%); transition:transform .25s ease; z-index:2001;
+         display:flex; flex-direction:column;
+      }
+      .drawer-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px}
+      .drawer-header img{width:36px;height:36px;border-radius:50%}
+      .drawer-header .title{font-weight:600;display:flex;align-items:center;gap:8px}
+      .drawer-header .close-btn{background:transparent;border:none;color:var(--text);cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);transition:.2s}
+      .drawer-header .close-btn:hover{background:rgba(255,255,255,.08)}
+      .drawer-header .close-btn svg.lucide{width:22px;height:22px}
+      .drawer-nav{display:flex;flex-direction:column;padding:12px;gap:8px;overflow-y:auto;align-items:flex-start}
+      .drawer-nav a{
+         display:flex;align-items:center;gap:8px;width:100%;justify-content:flex-start;text-align:left;
+         text-decoration:none;color:var(--text);padding:12px 16px;border-radius:var(--radius-pill);
+         font-weight:500;transition:.2s;background:transparent;
+      }
+      .drawer-nav a.active{background:#262626}
+      .drawer-nav a:hover{background:#2a2a2a}
+      .drawer-nav a svg.lucide{width:18px;height:18px}
+      .drawer-footer{margin-top:auto;padding:16px 12px}
+      .lang-toggle{display:flex;align-items:center;gap:4px;background:#222;border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;height:var(--h-item)}
+      .lang-toggle button{flex:1;min-height:calc(var(--h-item) - 6px);padding:0 12px;border:0;border-radius:var(--radius-pill);background:transparent;color:var(--muted);font-weight:500;cursor:pointer}
+      .lang-toggle button.active{background:var(--accent);color:#fff}
+      body[data-drawer="open"] .drawer{transform:translateX(0)}
+      body[data-drawer="open"] .drawer-overlay{opacity:1;pointer-events:auto}
 
-    .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-buttons); width: 100%; }
-    .secondary-button { background: var(--card-bg); color: var(--soft-gray); border: 3px solid #303030; }
-    .secondary-button:hover { background: #303030; color: var(--text-color); border-color: #3a3a3a; }
+      /* ===== HERO ===== */
+      main{
+         width:100%;
+         flex-grow: 1;
+      }
+      .hero{
+         position:relative; min-height:100vh;
+         display:flex; flex-direction:column; justify-content:center; align-items:center;
+         padding:0 18px;
+      }
+      .avatar{
+         width:clamp(96px,18vw,130px);height:clamp(96px,18vw,130px);
+         border-radius:50%;overflow:hidden;margin-bottom:24px;
+         /* ИЗМЕНЕНО: Свечение сильнее и "длиннее" */
+         box-shadow:0 4px 14px rgba(0,0,0,.4), 0 0 70px rgba(65, 22, 112, 0.75);
+      }
+      .avatar img{width:100%;height:100%;object-fit:cover}
+      h1{font-size:48px;font-weight:700;margin-bottom:12px}
+      h2{font-size:18px;font-weight:400;color:var(--muted);margin-bottom:28px}
 
-    @media (max-width: 450px) {
-      .button-grid { grid-template-columns: 1fr; }
-    }
+      .links{
+         display:grid; grid-template-columns:repeat(2, minmax(160px, 1fr));
+         gap:var(--gap-links); width:100%; max-width:460px;
+      }
+      .link-btn{
+         display:flex; align-items:center; justify-content:center; gap:8px;
+         text-decoration:none; font-weight:500; min-height:var(--btn-h);
+         padding:14px 16px; border-radius:var(--radius-pill);
+         background:#1f1f1f; color:var(--muted);
+         border:1px solid var(--border); transition:.2s;
+         white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+      .link-btn:hover{background:#252525;color:var(--text)}
+      .link-btn svg.lucide{width:18px;height:18px;flex:0 0 18px}
 
-    /* ОБЩИЙ стиль для оверлеев (меню и языки) */
-    .overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--spacing-15); background: radial-gradient(1200px 600px at 50% -10%, rgba(65,22,112,.35), rgba(0,0,0,.65)), rgba(0,0,0,.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, visibility .35s ease; z-index: 999; }
-    .overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+      .btn-telegram{grid-column:span 2; background:var(--accent); color:#fff; border:none}
+      .btn-telegram:hover{background:#36125c}
 
-    .sheet { width: min(560px, 92vw); background: rgba(28,28,28,.85); border: 1px solid rgba(255,255,255,.06); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,.6); padding: 28px; transform: translateY(10px) scale(.98); transition: transform .35s ease; }
-    .overlay.open .sheet { transform: translateY(0) scale(1); }
+      /* На одной колонке — прячем подсказку (дублируем из JS как фолбэк) */
+      @media (max-width:430px){
+         .links{grid-template-columns:1fr; max-width:360px}
+         .btn-telegram{grid-column:auto}
+         .scroll-hint{display:none}
+         
+         /* ИЗМЕНЕНО: Добавляем отступ сверху, равный высоте хедера (56px) */
+         .hero {
+            padding-top: 56px; 
+            box-sizing: border-box; /* чтобы padding включился в min-height */
+         }
+      }
 
-    .floating-close { position: absolute; top: 18px; right: 18px; background: var(--card-bg); color: var(--text-color); border: none; width: 48px; height: 48px; border-radius: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background-color .2s ease, transform .1s ease; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
-    .floating-close:hover { background: #303030; }
-    .floating-close:active { transform: scale(.98); }
+      .scroll-hint{
+         position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+         display:inline-flex; align-items:center; gap:8px;
+         color:var(--muted); font-size:13px; opacity:1; transition:opacity .12s linear;
+      }
+      .scroll-hint i.lucide{width:18px;height:18px}
 
-    /* Навигационное меню */
-    .menu-nav { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
-    .menu-link { display: block; text-decoration: none; color: var(--text-color); font-size: 28px; padding: 16px 18px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); transition: background-color .2s ease, transform .1s ease, border-color .2s ease; }
-    .menu-link:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
-    .menu-link:active { transform: translateY(1px); }
+      /* ===== LIBRARY ===== */
+      .works{
+         background:var(--bg-2);
+         border-top-left-radius:28px; border-top-right-radius:28px;
+         padding:30px 0 30px; /* без боковых паддингов, чтобы совпасть с хедером при узком контейнере */
+      }
+      /* по умолчанию — широкая */
+      .works__inner{
+         width:min(1100px, calc(100% - 36px));
+         margin:0 auto;
+         text-align:left;
+      }
+      .works h3{font-size:22px;font-weight:700;margin-bottom:8px;text-align:center}
+      .works p.sub{color:var(--muted);margin-bottom:22px;font-size:14px;text-align:center}
 
-    /* Языковое меню — карточки флагов */
-    .lang-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .lang-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); cursor: pointer; user-select: none; transition: background-color .2s ease, border-color .2s ease, transform .1s ease; }
-    .lang-card:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
-    .lang-card:active { transform: translateY(1px); }
-    .lang-flag { width: 36px; height: 24px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.25); background-size: cover; background-position: center; }
-    .lang-title { font-size: 16px; color: var(--text-color); }
+      .library-grid{
+         display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+      }
+      @media (max-width:980px){
+         .library-grid{grid-template-columns:repeat(2,1fr)}
+      }
+      /* когда 1 колонка — ширина как у хедера */
+      @media (max-width:620px){
+         .library-grid{grid-template-columns:1fr}
+         .works__inner{width:min(var(--content-w), calc(100% - 36px))}
+      }
 
-    /* Простейшие флаги через градиенты */
-    .flag-ru { background: linear-gradient(#fff 33.33%, #0039a6 33.33%, #0039a6 66.66%, #d52b1e 66.66%); }
-    .flag-en { background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="%23b22234"/><g fill="%23fff"><rect y="3" width="60" height="3"/><rect y="9" width="60" height="3"/><rect y="15" width="60" height="3"/><rect y="21" width="60" height="3"/><rect y="27" width="60" height="3"/><rect y="33" width="60" height="3"/></g><rect width="24" height="18" fill="%23003f87"/></svg>'); }
-    .flag-de { background: linear-gradient(#000 33.33%, #dd0000 33.33%, #dd0000 66.66%, #ffce00 66.66%); }
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);display:flex;flex-direction:column;overflow:hidden}
+      .card-cover{position:relative;width:100%;aspect-ratio:16/9;background:#171717;overflow:hidden}
+      .card-cover img{width:100%;height:100%;object-fit:cover;display:block}
+      .badge-lang{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);color:#fff;font-size:12px;padding:4px 8px;border-radius:999px}
+      .card-body{padding:16px}
+      .card-title{font-size:18px;font-weight:700;margin:2px 0 8px}
+      .card-meta{color:var(--muted);font-size:12px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+      .card-desc{color:#e6e6e6;font-size:14px;line-height:1.45;margin-bottom:12px}
+      .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+      .tag{font-size:12px;color:#eaeaea;background:#2b2b2b;border:1px solid var(--border);padding:6px 10px;border-radius:999px}
+      .card-actions{display:flex;gap:12px;padding:0 16px 16px}
+      .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:999px;text-decoration:none;font-weight:600;border:1px solid var(--border);background:#1f1f1f;color:#eaeaea;transition:.2s}
+      .btn:hover{background:#272727}
+      .btn.primary{background:var(--accent);border:none;color:#fff}
+      .btn.primary:hover{background:#36125c}
 
-    @media (max-width: 420px) {
-      .lang-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+      /* ===== FOOTER ===== */
+      footer{background:var(--bg);padding:20px 0}
+      .footer-inner{
+         width:min(1100px, calc(100% - 36px));   /* широкая по умолчанию */
+         margin:0 auto; display:flex; align-items:center; justify-content:space-between;
+         gap:12px; color:var(--muted); font-size:13px;
+      }
+      .footer-inner a{
+         color:var(--muted);
+         text-decoration:none; /* ИЗМЕНЕНО: убрал рамку */
+      }
+      .footer-inner a:hover{
+         color:#fff; /* ИЗМЕНЕНО: убрал рамку */
+      }
+      
+   </style>
 </head>
 <body>
-  <div class="main-container">
-    <header class="main-header">
-      <!-- Кнопка языков, открывает красивый оверлей как бургер -->
-      <button class="header-button" id="lang-button" aria-label="Выбор языка" aria-controls="lang-menu" aria-expanded="false">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M2 12h20"></path>
-          <path d="M12 2a15 15 0 0 1 0 20"></path>
-          <path d="M12 2a15 15 0 0 0 0 20"></path>
-        </svg>
-        <span>Языки</span>
-      </button>
+      <header>
+      <div class="header-container" id="headerContainer">
+         <div class="header-left">
+            <div class="header-avatar"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /></div>
+            <div class="site-toggle" aria-label="Тип сайта">
+               <a href="#" class="active">Personal</a>
+               <a href="/работа/">Work</a>
+            </div>
+         </div>
 
-      <button id="menu-button" class="header-button" aria-expanded="false" aria-controls="full-menu" aria-label="Открыть меню">
-        <span>Меню</span>
-        <span class="icon icon-hamburger" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </span>
-      </button>
-    </header>
+         <nav aria-label="Основное меню">
+            <a href="#" class="active"><i data-lucide="home"></i> Главная</a>
+            <a href="https://blog.kototjom.top/"><i data-lucide="book"></i> Блог</a>
+         </nav>
 
-    <main class="profile-card">
-      <div class="cover-section">
-        <div class="cover-bg" role="img" aria-label="фоновая обложка"></div>
-        <div class="profile-avatar" aria-label="аватар"></div>
+         <button class="menu-toggle" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer">
+            <span class="bars"><span class="bar"></span></span>
+         </button>
       </div>
+   </header>
 
-      <div class="content-area">
-        <h1 class="profile-name">Kototjom</h1>
-        <p class="profile-description">Занимаюсь всем на свете — от музыки до стихов.</p>
-
-        <div class="buttons-wrapper">
-          <a href="https://t.me/kototjom_telegram" class="button-link primary-button" aria-label="Telegram канал">Telegram канал</a>
-          <div class="button-grid">
-            <a href="https://www.instagram.com/kototjom" class="button-link secondary-button" aria-label="Instagram">Instagram</a>
-            <a href="https://www.twitch.tv/kototjom" class="button-link secondary-button" aria-label="Twitch">Twitch</a>
-            <a href="https://www.tiktok.com/@kototjom" class="button-link secondary-button" aria-label="TikTok">TikTok</a>
-            <a href="https://www.youtube.com/@kototjom" class="button-link secondary-button" aria-label="YouTube">YouTube</a>
-            <a href="https://author.today/u/kototjom" class="button-link secondary-button" aria-label="AuthorToday">Author.Today</a>
-            <a href="https://poeziya.ru/u/92335/" class="button-link secondary-button" aria-label="Poezia">Poezia.ru</a>
-          </div>
-        </div>
+      <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+   <aside class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer-header">
+         <div class="title"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /> Kototjom</div>
+         <button class="close-btn" id="drawerClose"><i data-lucide="x"></i></button>
       </div>
-            <p style="margin-top: 30px; font-size: 14px; color: #777; text-align: center;">
-              <a href="https://docs.kototjom.top/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C/" style="color: #777; text-decoration: none;" data-i18n="Privacy">
-               Политика конфиденциальности
-              </a>
-            </p>
-    </main>
-  </div>
-
-  <!-- Бургер-меню (навигация) -->
-  <div id="full-menu" class="overlay" role="dialog" aria-modal="true" aria-labelledby="menu-title">
-    <button id="close-menu-button" class="floating-close" aria-label="Закрыть меню">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
-    <div class="sheet">
-      <nav class="menu-nav" aria-label="Навигация">
-        <a href="#" class="menu-link" data-i18n="Home">Главная</a>
-        <a href="https://blog.kototjom.top/" class="menu-link" data-i18n="Blog">Блог</a>
-        <a href="/работа/" class="menu-link" data-i18n="Job">Рабочий сайт</a>
+      <nav class="drawer-nav" aria-label="Мобильное меню">
+         <a href="#" class="active"><i data-lucide="home"></i> Главная</a>
+         <a href="https://blog.kototjom.top/"><i data-lucide="book"></i> Блог</a>
       </nav>
-    </div>
-  </div>
-
-  <!-- Меню языков (RU, EN, DE) -->
-  <div id="lang-menu" class="overlay" role="dialog" aria-modal="true" aria-labelledby="lang-title">
-    <button id="close-lang-button" class="floating-close" aria-label="Закрыть выбор языка">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
-    <div class="sheet" aria-labelledby="lang-title">
-      <h2 id="lang-title" style="margin:0 0 14px 0; font: inherit; font-size: 28px; font-weight: 400;">Выбери язык</h2>
-      <div class="lang-grid">
-        <button class="lang-card" data-lang="ru" aria-label="Русский">
-          <span class="lang-flag flag-ru"></span>
-          <span class="lang-title">Русский</span>
-        </button>
-        <button class="lang-card" data-lang="en" aria-label="English">
-          <span class="lang-flag flag-en"></span>
-          <span class="lang-title">English</span>
-        </button>
-        <button class="lang-card" data-lang="de" aria-label="Deutsch">
-          <span class="lang-flag flag-de"></span>
-          <span class="lang-title">Deutsch</span>
-        </button>
+      <div class="drawer-footer">
+         <div class="lang-toggle" role="tablist" aria-label="Язык сайта">
+            <button type="button" class="active">RU</button>
+            <button type="button">EN</button>
+            <button type="button">DE</button>
+         </div>
       </div>
-    </div>
-  </div>
+   </aside>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const menuButton = document.getElementById("menu-button");
-      const fullMenu = document.getElementById("full-menu");
-      const closeMenuButton = document.getElementById("close-menu-button");
+      <main>
+            <section class="hero" id="hero">
+         <div class="avatar"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /></div>
+         <h1>Kototjom</h1>
+         <h2>Занимаюсь всем на свете — от музыки до стихов.</h2>
 
-      const langButton = document.getElementById("lang-button");
-      const langMenu = document.getElementById("lang-menu");
-      const closeLangButton = document.getElementById("close-lang-button");
+         <div class="links" id="linksGrid">
+            <a href="https://t.me/kototjom_telegram" class="link-btn btn-telegram"><i data-lucide="send"></i> Telegram</a>
+            <a href="https://www.instagram.com/kototjom" class="link-btn"><i data-lucide="camera"></i> Instagram</a>
+            <a href="https://www.twitch.tv/kototjom" class="link-btn"><i data-lucide="gamepad-2"></i> Twitch</a>
+            <a href="https://www.tiktok.com/@kototjom" class="link-btn"><i data-lucide="music-2"></i> TikTok</a>
+            <a href="https://www.youtube.com/@kototjom" class="link-btn"><i data-lucide="youtube"></i> YouTube</a>
+         </div>
 
-      // Навигационное меню
-      function openMenu() {
-        fullMenu.classList.add("open");
-        menuButton.setAttribute("aria-expanded", "true");
-        menuButton.setAttribute("aria-label", "Закрыть меню");
+         <div class="scroll-hint" id="scrollHint">
+            <i data-lucide="mouse-pointer-2"></i><span>Листай вниз — моя библиотека</span>
+         </div>
+      </section>
+
+            <section class="works" id="library">
+         <div class="works__inner">
+            <h3>Библиотека</h3>
+            <p class="sub">Книги, стихи и проекты</p>
+
+            <div class="library-grid">
+                              <article class="card">
+                  <div class="card-cover">
+                     <img src="/pics/Frameв 19.png" alt="Иллюстрация к книге 'Анфиса, спокойной ночи'">
+                     <span class="badge-lang">author.today</span>
+                  </div>
+    <div class="card-body">
+                     <div class="card-title">"Анфиса, спокойной ночи"</div>
+                     <div class="card-meta"><i data-lucide="calendar"></i> 2023 • <i data-lucide="book"></i> Проза</div>
+                     <p class="card-desc">Жизнь Алекса была скучна. Он выполнял одну и туже работу каждый день, а из его круга общения у него была только Анфиса...</p>
+                     <div class="tags"><span class="tag">#проза</span><span class="tag">#соавтор</span></div>
+                  </div>
+                  <div class="card-actions"><a class="btn primary" href="https://author.today/work/286071">Читать</a></div>
+               </article>
+
+                              <article class="card">
+                  <div class="card-cover">
+                     <img src="/pics/книга.png" alt="Иллюстрация к сборнику поэзии">
+                     <span class="badge-lang">poeziya.ru</span>
+                  </div>
+                  <div class="card-body">
+                     <div class="card-title">"И снова у обрыва"</div>
+                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
+                     <p class="card-desc">Стихотворение о навязчивом повторении и принятия безисходности. Входит в сборник поэзии "На грани повтора"</p>
+                     <div class="tags"><span class="tag">#abab</span><span class="tag">#ru</span></div>
+                  </div>
+                  <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303808/">Читать</a></div>
+               </article>
+
+                              <article class="card">
+                  <div class="card-cover">
+                     <img src="/pics/Frame 19.png" alt="Иллюстрация к сборнику поэзии">
+                     <span class="badge-lang">poeziya.ru</span>
+                  </div>
+    <div class="card-body">
+                     <div class="card-title">"Идея"</div>
+                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
+                     <p class="card-desc">Стихотворение о вдохновении и его неарелизации. Входит в сборник поэзии "На грани повтора"</p>
+                     <div class="tags"><span class="tag">#aabbccdd</span><span class="tag">#ru</span></div>
+                  </div>
+                  <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303809/">Читать</a></div>
+               </article>
+
+                              <article class="card">
+                  <div class="card-cover">
+                     <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Erl_king_sterner.jpg" alt="Иллюстрация к балладе Erlkönig">
+                     <span class="badge-lang">poeziya.ru</span>
+                  </div>
+                  <div class="card-body">
+                     <div class="card-title">Перевод "Erlkönig" - "Лесной царь"</div>
+                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
+                     <p class="card-desc">Перевод баллады Erlkönig на русский с сохранением смысла</p>
+                     <div class="tags"><span class="tag">#aabb</span><span class="tag">#ru</span></div>
+                  </div>
+                  <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303810/">Читать</a></div>
+               </article>
+
+                              <article class="card">
+                  <div class="card-cover">
+                     <img src="/pics/Fraыme 19.png" alt="Иллюстрация к калькулятору скруглений">
+                     <span class="badge-lang">WEB</span>
+                  </div>
+                  <div class="card-body">
+                     <div class="card-title">"Калькулятор скруглений"</div>
+                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="laptop"></i> Сайт</div>
+                     <p class="card-desc">В дизайне часто нужно создать блок, внутри которого находится другой элемент. Мой калькулятор подсчитает скругления для них</p>
+                     <div class="tags"><span class="tag">#abab</span><span class="tag">#ru</span></div>
+                  </div>
+                  <div class="card-actions"><a class="btn primary" href="https://calc.kototjom.top/">Перейти</a></div>
+               </article>
+
+            </div>
+         </div>
+      </section>
+   </main>
+
+   <footer>
+      <div class="footer-inner">
+         <div class="copy">© 2025 Kototjom — Все права защищены. <a href="https://docs.kototjom.top/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C/" class="policy">Документы и политика приватности</a></div>
+      </div>
+   </footer>
+
+   <script>
+      // Icons
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+         window.lucide.createIcons();
       }
-      function closeMenu() {
-        fullMenu.classList.remove("open");
-        menuButton.setAttribute("aria-expanded", "false");
-        menuButton.setAttribute("aria-label", "Открыть меню");
-      }
-      menuButton.addEventListener("click", () => { fullMenu.classList.contains("open") ? closeMenu() : openMenu(); });
-      closeMenuButton.addEventListener("click", closeMenu);
-      fullMenu.addEventListener("click", (e) => { if (e.target === fullMenu) closeMenu(); });
 
-      // Меню языков
-      function openLang() {
-        langMenu.classList.add("open");
-        langButton.setAttribute("aria-expanded", "true");
-        langButton.setAttribute("aria-label", "Закрыть выбор языка");
-      }
-      function closeLang() {
-        langMenu.classList.remove("open");
-        langButton.setAttribute("aria-expanded", "false");
-        langButton.setAttribute("aria-label", "Открыть выбор языка");
-      }
-      langButton.addEventListener("click", () => { langMenu.classList.contains("open") ? closeLang() : openLang(); });
-      closeLangButton.addEventListener("click", closeLang);
-      langMenu.addEventListener("click", (e) => { if (e.target === langMenu) closeLang(); });
+      // Drawer
+      (function(){
+         const body = document.body;
+         const btn = document.getElementById('menuBtn');
+         const drawer = document.getElementById('drawer');
+         const overlay = document.getElementById('drawerOverlay');
+         const closeBtn = document.getElementById('drawerClose');
 
-// Объект с переводами
-const translations = {
-  ru: {
-    languages: "Языки",
-    menu: "Меню",
-    description: "Занимаюсь всем на свете — от музыки до стихов.",
-    chooseLang: "Выбери язык",
-    telegram: "Telegram канал",
-    Home: "Главная",
-    Blog: "Блог",
-    Job: "Рабочий сайт",
-    Privacy: "Политика конфиденциальности",
-  },
-  en: {
-    languages: "Languages",
-    menu: "Menu",
-    description: "I do everything — from music to poetry.",
-    chooseLang: "Choose a language",
-    telegram: "Telegram channel (In Russian)",
-    Home: "Homepage",
-    Blog: "Blog",
-    Job: "Worksite",
-    Privacy: "Privacy Policy",
-  },
-  de: {
-    languages: "Sprachen",
-    menu: "Menü",
-    description: "Ich schreibe alles – von Musik bis Gedichten.",
-    chooseLang: "Sprache wählen",
-    telegram: "Telegram-Kanal (Auf Russisch)",
-    Home: "Hauptseite",
-    Blog: "Blog",
-    Job: "Arbeitsseite",
-    Privacy: "Datenschutzerklärung ",
-  }
-};
+         function openDrawer(){ body.setAttribute('data-drawer','open'); drawer.setAttribute('aria-hidden','false'); overlay.hidden = false; }
+         function closeDrawer(){ body.setAttribute('data-drawer','closed'); drawer.setAttribute('aria-hidden','true'); overlay.hidden = true; }
+         function toggleDrawer(){ const isOpen = body.getAttribute('data-drawer') === 'open'; isOpen ? closeDrawer() : openDrawer(); }
 
-// Функция смены языка
-function setLanguage(lang) {
-  const t = translations[lang] || translations["ru"];
+         btn?.addEventListener('click', toggleDrawer);
+         closeBtn?.addEventListener('click', closeDrawer);
+         overlay?.addEventListener('click', closeDrawer);
+         document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
+      })();
 
-  // 🔹 Перевод всех элементов с data-i18n
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    if (t[key]) el.textContent = t[key];
-  });
+      // Подсказка: прятать при 1 колонке + плавная прозрачность при скролле
+      (function(){
+         const hint = document.getElementById('scrollHint');
+         const links = document.getElementById('linksGrid');
+         if(!hint || !links) return;
 
-  // 🔹 Остальные элементы без data-i18n
-  document.querySelector("#lang-button span").textContent = t.languages;
-  document.querySelector("#menu-button span").textContent = t.menu;
-  document.querySelector(".profile-description").textContent = t.description;
-  document.querySelector("#lang-title").textContent = t.chooseLang;
-  document.querySelector(".primary-button").textContent = t.telegram;
-}
+         function columnsCount(){
+            const cols = getComputedStyle(links).gridTemplateColumns;
+            return cols ? cols.split(' ').length : 2;
+         }
 
+         function applyVisibility(){
+            if(columnsCount() === 1){
+               hint.style.display = 'none';
+            }else{
+               hint.style.display = 'inline-flex';
+            }
+         }
 
-// При клике на карточку
-document.querySelectorAll('.lang-card').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const lang = btn.getAttribute('data-lang');
-    localStorage.setItem('language', lang); // сохраняем
-    setLanguage(lang);
-    closeLang();
-  });
-});
+         function applyOpacity(){
+            if(hint.style.display === 'none') return;
+            const y = Math.max(window.scrollY, 0);
+            const k = Math.min(y / 200, 1);
+            hint.style.opacity = String(1 - k);
+         }
 
-// При загрузке страницы — применяем язык из localStorage
-const savedLang = localStorage.getItem('language') || 'ru';
-setLanguage(savedLang);
-
-
-      // Escape для закрытия обоих оверлеев
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') { closeMenu(); closeLang(); }
-      });
-    });
-  </script>
+         applyVisibility(); applyOpacity();
+         window.addEventListener('resize', ()=>{ applyVisibility(); applyOpacity(); });
+         window.addEventListener('scroll', applyOpacity, {passive:true});
+      })();
+   </script>
 </body>
 </html>
