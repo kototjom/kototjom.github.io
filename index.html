@@ -133,7 +133,17 @@
          position:relative; min-height:100vh;
          display:flex; flex-direction:column; justify-content:center; align-items:center;
          padding:0 18px;
+         overflow: hidden;
       }
+      /* Стили для Canvas-фона */
+#heroCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Помещаем за контентом */
+}
       .avatar{
          width:clamp(96px,18vw,130px);height:clamp(96px,18vw,130px);
          border-radius:50%;overflow:hidden;margin-bottom:24px;
@@ -185,7 +195,7 @@
       /* ===== LIBRARY ===== */
       .works{
          background:var(--bg-2);
-         border-top-left-radius:28px; border-top-right-radius:28px;
+         border-top-left-radius:40px; border-top-right-radius:40px;
          padding:30px 0 30px; /* без боковых паддингов, чтобы совпасть с хедером при узком контейнере */
       }
       /* по умолчанию — широкая */
@@ -195,7 +205,7 @@
          text-align:left;
       }
       .works h3{font-size:22px;font-weight:700;margin-bottom:8px;text-align:center}
-      .works p.sub{color:var(--muted);margin-bottom:22px;font-size:14px;text-align:center}
+      .works p.sub{color:var(--muted);margin-bottom:22px;font-size:14px;text-align:center;margin-bottom:30px}
 
       .library-grid{
          display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
@@ -280,6 +290,7 @@
 
       <main>
             <section class="hero" id="hero">
+               <canvas id="heroCanvas"></canvas>
          <div class="avatar"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /></div>
          <h1>Kototjom</h1>
          <h2>Занимаюсь всем на свете — от музыки до стихов.</h2>
@@ -438,6 +449,124 @@
          window.addEventListener('resize', ()=>{ applyVisibility(); applyOpacity(); });
          window.addEventListener('scroll', applyOpacity, {passive:true});
       })();
+      // ===== CANVAS ANIMATION LOGIC =====
+(function(){
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const PARTICLE_COUNT = 80;
+    // Используем ваш фиолетовый акцент с прозрачностью
+    const ACCENT_COLOR = 'rgba(65, 22, 112, 0.5)'; 
+    const LINK_DISTANCE = 100;
+
+    /**
+     * Particle class for the flowing background effect.
+     */
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            // Направление движения (медленное)
+            this.dx = (Math.random() - 0.4) * 0.2; 
+            this.dy = (Math.random() - 0.5) * 0.2;
+            this.radius = Math.random() * 1.5 + 0.5;
+            this.color = ACCENT_COLOR;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+
+        update() {
+            // Перенос через границы
+            if (this.x + this.radius > width) this.x = 0;
+            if (this.x - this.radius < 0) this.x = width;
+            if (this.y + this.radius > height) this.y = 0;
+            if (this.y - this.radius < 0) this.y = height;
+
+            this.x += this.dx;
+            this.y += this.dy;
+
+            this.draw();
+        }
+    }
+
+    /**
+     * Sets up the canvas size based on its parent container.
+     */
+    function resizeCanvas() {
+        const heroSection = document.getElementById('hero');
+        if (heroSection) {
+            width = heroSection.clientWidth;
+            height = heroSection.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Reinitialize particles on resize
+            particles = [];
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new Particle());
+            }
+        }
+    }
+
+    /**
+     * Draws lines between close particles for a "cosmic web" effect.
+     */
+    function drawConnections() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i; j < particles.length; j++) {
+                const p1 = particles[i];
+                const p2 = particles[j];
+
+                // Calculate distance
+                const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+                if (dist < LINK_DISTANCE) {
+                    const opacity = 1 - dist / LINK_DISTANCE;
+                    ctx.beginPath();
+                    // Очень тонкая фиолетовая линия
+                    ctx.strokeStyle = `rgba(65, 22, 112, ${opacity * 0.4})`; 
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    /**
+     * Main animation loop.
+     */
+    function animate() {
+        // Полупрозрачный фон для эффекта "шлейфа"
+        ctx.fillStyle = 'rgba(18, 18, 18, 0.2)'; 
+        ctx.fillRect(0, 0, width, height);
+
+        drawConnections();
+        
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    // Start the application:
+    window.addEventListener('load', () => {
+        resizeCanvas();
+        animate();
+    });
+
+    window.addEventListener('resize', resizeCanvas);
+})();
    </script>
 </body>
 </html>
