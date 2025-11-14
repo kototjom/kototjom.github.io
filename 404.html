@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Страница в разработке</title>
+  <title>404 — Страница не найдена</title>
   <style>
     :root {
       --bg: #121212;
@@ -27,14 +27,19 @@
       text-align: center;
     }
 
-    .title {
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: 14px;
+    .code { 
+      font-size: 80px; 
+      font-weight: 700; 
+      margin-bottom: 10px; 
     }
 
-    .text {
-      font-size: 16px;
+    .title { 
+      font-size: 26px; 
+      margin-bottom: 10px;
+    }
+
+    .text { 
+      font-size: 16px; 
       color: var(--muted);
       margin-bottom: 6px;
     }
@@ -53,25 +58,24 @@
 
     /* Адаптивность */
     @media (max-width: 480px) {
-      .title { font-size: 24px; }
+      .code { font-size: 64px; }
+      .title { font-size: 22px; }
       .text { font-size: 14px; }
       .btn { font-size: 14px; line-height: 42px; padding: 0 20px; }
     }
 
     @media (min-width: 900px) {
-      .title { font-size: 32px; }
-      .text  { font-size: 18px; }
+      .code { font-size: 100px; }
+      .title { font-size: 30px; }
     }
   </style>
 </head>
 <body>
   <div>
-    <div class="title">Страница в разработке</div>
-
-    <p class="text">Скоро здесь появится что-то интересное</p>
-    <p class="text">Пожалуйста, зайдите позже</p>
-    <p class="text">Спасибо за терпение</p>
-
+    <div class="code">404</div>
+    <div class="title">Страница не найдена</div>
+    <p class="text">Похоже, эта страница недоступна.</p>
+    <p class="text">Попробуйте вернуться на главную.</p>
     <a class="btn" href="/">На главную</a>
   </div>
 </body>

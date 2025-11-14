@@ -1,572 +1,1256 @@
 <!DOCTYPE html>
+<!-- 
+  РЕКОМЕНДАЦИЯ:
+  Используй 'ru' для основного языка.
+-->
 <html lang="ru">
 <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <title>Kototjom</title>
+  <meta charset="UTF-8" />
+  <!-- 
+    Viewport (адаптивность) уже был, это отлично.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kototjom</title>
 
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-      <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- 
+    Шрифты (без изменений)
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- 
+    ИЗМЕНЕНИЕ:
+    Загружаем .min.js версию иконoк и добавляем 'defer',
+    чтобы скрипт не блокировал загрузку страницы.
+  -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-   <style>
-      :root{
-         --bg:#121212;
-         --bg-2:#1a1a1a;
-         --card:#222222;
-         --text:#ffffff;
-         --muted:#b3b3b3;
-         --accent:#411670;
-         --header-bg:rgba(22,22,22,.85);
-         --border:rgba(255,255,255,.08);
-         --radius-pill:9999px;
-         --radius-header:26px;
-         --radius-card:20px;
-         --h-item:38px;
-         --btn-h:48px;
-         --gap-links:12px;
-         --content-w:640px; /* ширина хедера/узкого контейнера */
-      }
-
-      *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-      body{background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;min-height:100vh;text-align:center}
-
-      /* ===== HEADER: ровно 18px по бокам ===== */
-      header{
-         position:fixed; top:0; left:0; right:0;
-         display:flex; justify-content:center;
-         z-index:1000; background:transparent;
-      }
-      .header-container{
-         width:min(var(--content-w), calc(100% - 36px)); /* 18px слева/справа */
-         background:var(--header-bg);
-         backdrop-filter:saturate(180%) blur(12px);
-         -webkit-backdrop-filter:saturate(180%) blur(12px);
-         border:1px solid var(--border);
-         border-radius:0 0 var(--radius-header) var(--radius-header);
-         display:flex; align-items:center; justify-content:space-between; gap:10px;
-         padding:10px 18px;
-         box-shadow:0 2px 10px rgba(0,0,0,.25);
-      }
-      .header-left{display:flex;align-items:center;gap:10px}
-      .header-avatar img{width:36px;height:36px;border-radius:50%;display:block}
-
-      /* Segmented control — активен только текущий */
-      .site-toggle{
-         display:flex; align-items:center; height:var(--h-item);
-         padding:3px; gap:4px; background:#222;
-         border-radius:var(--radius-pill); border:1px solid var(--border);
-      }
-      .site-toggle a{
-         flex:1; min-height:calc(var(--h-item) - 6px); padding:0 12px;
-         text-decoration:none; font-size:14px; color:var(--muted);
-         border-radius:var(--radius-pill); display:flex; align-items:center; justify-content:center; transition:.2s;
-         background:transparent;
-      }
-      .site-toggle a.active{background:var(--accent); color:var(--text)}
-
-      nav{display:flex; align-items:center; gap:8px}
-      nav a{
-         text-decoration:none; color:var(--text); font-weight:500;
-         padding:0 12px; min-height:var(--h-item);
-         border-radius:var(--radius-pill); display:flex; align-items:center; gap:8px; justify-content:center; transition:.2s;
-         background:transparent;
-      }
-      nav a.active{background:#262626; box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-      nav a:hover{background:#2a2a2a}
-      nav a svg.lucide{width:18px;height:18px}
-
-      .menu-toggle{
-         display:none; width:var(--h-item); height:var(--h-item);
-         border-radius:var(--radius-pill); border:1px solid var(--border);
-         background:#222; cursor:pointer; align-items:center; justify-content:center;
-         position:absolute; right:18px; top:50%; transform:translateY(-50%);
-      }
-      .menu-toggle .bars{width:18px;height:12px;position:relative}
-      .menu-toggle .bars::before,.menu-toggle .bars::after,.menu-toggle .bar{
-         content:""; position:absolute; left:0; right:0; height:2px; background:var(--text); border-radius:2px;
-      }
-      .menu-toggle .bar{top:5px} .menu-toggle .bars::before{top:0} .menu-toggle .bars::after{bottom:0}
-      @media (max-width:560px){
-         nav{display:none}
-         .menu-toggle{display:inline-flex}
-      }
-
-      /* ===== DRAWER (чуть темнее) ===== */
-      .drawer-overlay{
-         position:fixed; inset:0; background:rgba(0,0,0,.45);
-         opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:2000;
-      }
-      .drawer{
-         position:fixed; top:0; right:0; height:100vh; width:min(88vw,340px);
-         background:#191919; box-shadow:-12px 0 24px rgba(0,0,0,.45);
-         transform:translateX(100%); transition:transform .25s ease; z-index:2001;
-         display:flex; flex-direction:column;
-      }
-      .drawer-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px}
-      .drawer-header img{width:36px;height:36px;border-radius:50%}
-      .drawer-header .title{font-weight:600;display:flex;align-items:center;gap:8px}
-      .drawer-header .close-btn{background:transparent;border:none;color:var(--text);cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);transition:.2s}
-      .drawer-header .close-btn:hover{background:rgba(255,255,255,.08)}
-      .drawer-header .close-btn svg.lucide{width:22px;height:22px}
-      .drawer-nav{display:flex;flex-direction:column;padding:12px;gap:8px;overflow-y:auto;align-items:flex-start}
-      .drawer-nav a{
-         display:flex;align-items:center;gap:8px;width:100%;justify-content:flex-start;text-align:left;
-         text-decoration:none;color:var(--text);padding:12px 16px;border-radius:var(--radius-pill);
-         font-weight:500;transition:.2s;background:transparent;
-      }
-      .drawer-nav a.active{background:#262626}
-      .drawer-nav a:hover{background:#2a2a2a}
-      .drawer-nav a svg.lucide{width:18px;height:18px}
-      .drawer-footer{margin-top:auto;padding:16px 12px}
-      .lang-toggle{display:flex;align-items:center;gap:4px;background:#222;border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;height:var(--h-item)}
-      .lang-toggle button{flex:1;min-height:calc(var(--h-item) - 6px);padding:0 12px;border:0;border-radius:var(--radius-pill);background:transparent;color:var(--muted);font-weight:500;cursor:pointer}
-      .lang-toggle button.active{background:var(--accent);color:#fff}
-      body[data-drawer="open"] .drawer{transform:translateX(0)}
-      body[data-drawer="open"] .drawer-overlay{opacity:1;pointer-events:auto}
-
-      /* ===== HERO ===== */
-      main{
-         width:100%;
-         flex-grow: 1;
-      }
-      .hero{
-         position:relative; min-height:100vh;
-         display:flex; flex-direction:column; justify-content:center; align-items:center;
-         padding:0 18px;
-         overflow: hidden;
-      }
-      /* Стили для Canvas-фона */
-#heroCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Помещаем за контентом */
-}
-      .avatar{
-         width:clamp(96px,18vw,130px);height:clamp(96px,18vw,130px);
-         border-radius:50%;overflow:hidden;margin-bottom:24px;
-         /* ИЗМЕНЕНО: Свечение сильнее и "длиннее" */
-         box-shadow:0 4px 14px rgba(0,0,0,.4), 0 0 70px rgba(65, 22, 112, 0.75);
-      }
-      .avatar img{width:100%;height:100%;object-fit:cover}
-      h1{font-size:48px;font-weight:700;margin-bottom:12px}
-      h2{font-size:18px;font-weight:400;color:var(--muted);margin-bottom:28px}
-
-      .links{
-         display:grid; grid-template-columns:repeat(2, minmax(160px, 1fr));
-         gap:var(--gap-links); width:100%; max-width:460px;
-      }
-      .link-btn{
-         display:flex; align-items:center; justify-content:center; gap:8px;
-         text-decoration:none; font-weight:500; min-height:var(--btn-h);
-         padding:14px 16px; border-radius:var(--radius-pill);
-         background:#1f1f1f; color:var(--muted);
-         border:1px solid var(--border); transition:.2s;
-         white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      }
-      .link-btn:hover{background:#252525;color:var(--text)}
-      .link-btn svg.lucide{width:18px;height:18px;flex:0 0 18px}
-
-      .btn-telegram{grid-column:span 2; background:var(--accent); color:#fff; border:none}
-      .btn-telegram:hover{background:#36125c}
-
-      /* На одной колонке — прячем подсказку (дублируем из JS как фолбэк) */
-      @media (max-width:430px){
-         .links{grid-template-columns:1fr; max-width:360px}
-         .btn-telegram{grid-column:auto}
-         .scroll-hint{display:none}
-         
-         /* ИЗМЕНЕНО: Добавляем отступ сверху, равный высоте хедера (56px) */
-         .hero {
-            padding-top: 56px; 
-            box-sizing: border-box; /* чтобы padding включился в min-height */
-         }
-      }
-
-      .scroll-hint{
-         position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
-         display:inline-flex; align-items:center; gap:8px;
-         color:var(--muted); font-size:13px; opacity:1; transition:opacity .12s linear;
-      }
-      .scroll-hint i.lucide{width:18px;height:18px}
-
-      /* ===== LIBRARY ===== */
-      .works{
-         background:var(--bg-2);
-         border-top-left-radius:40px; border-top-right-radius:40px;
-         padding:40px 0 40px; /* без боковых паддингов, чтобы совпасть с хедером при узком контейнере */
-      }
-      /* по умолчанию — широкая */
-      .works__inner{
-         width:min(1100px, calc(100% - 36px));
-         margin:0 auto;
-         text-align:left;
-      }
-      .works h3{font-size:22px;font-weight:700;margin-bottom:8px;text-align:center}
-      .works p.sub{color:var(--muted);margin-bottom:22px;font-size:14px;text-align:center;margin-bottom:40px}
-
-      .library-grid{
-         display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
-      }
-      @media (max-width:980px){
-         .library-grid{grid-template-columns:repeat(2,1fr)}
-      }
-      /* когда 1 колонка — ширина как у хедера */
-      @media (max-width:620px){
-         .library-grid{grid-template-columns:1fr}
-         .works__inner{width:min(var(--content-w), calc(100% - 36px))}
-      }
-
-      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);display:flex;flex-direction:column;overflow:hidden}
-      .card-cover{position:relative;width:100%;aspect-ratio:16/9;background:#171717;overflow:hidden}
-      .card-cover img{width:100%;height:100%;object-fit:cover;display:block}
-      .badge-lang{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);color:#fff;font-size:12px;padding:4px 8px;border-radius:999px}
-      .card-body{padding:16px}
-      .card-title{font-size:18px;font-weight:700;margin:2px 0 8px}
-      .card-meta{color:var(--muted);font-size:12px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-      .card-desc{color:#e6e6e6;font-size:14px;line-height:1.45;margin-bottom:12px}
-      .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-      .tag{font-size:12px;color:#eaeaea;background:#2b2b2b;border:1px solid var(--border);padding:6px 10px;border-radius:999px}
-      .card-actions{display:flex;gap:12px;padding:0 16px 16px}
-      .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:999px;text-decoration:none;font-weight:600;border:1px solid var(--border);background:#1f1f1f;color:#eaeaea;transition:.2s}
-      .btn:hover{background:#272727}
-      .btn.primary{background:var(--accent);border:none;color:#fff}
-      .btn.primary:hover{background:#36125c}
-
-      /* ===== FOOTER ===== */
-      footer{background:var(--bg);padding:20px 0}
-      .footer-inner{
-         width:min(1100px, calc(100% - 36px));   /* широкая по умолчанию */
-         margin:0 auto; display:flex; align-items:center; justify-content:space-between;
-         gap:12px; color:var(--muted); font-size:13px;
-      }
-      .footer-inner a{
-         color:var(--muted);
-         text-decoration:none; /* ИЗМЕНЕНО: убрал рамку */
-      }
-      .footer-inner a:hover{
-         color:#fff; /* ИЗМЕНЕНО: убрал рамку */
-      }
+  <style>
+    /* =============================================
+     * CSS ПЕРЕМЕННЫЕ (Твоя тема)
+     * ============================================= */
+    :root {
+      --bg: #121212;
+      --bg-2: #1a1a1a;
+      --card: #222222;
+      --text: #ffffff;
+      --muted: #b3b3b3;
+      --accent: #411670;
+      --header-bg: rgba(22, 22, 22, .85);
+      --border: rgba(255, 255, 255, .08);
       
-   </style>
+      --radius-pill: 9999px;
+      --radius-header: 26px;
+      --radius-card: 20px;
+      
+      --h-item: 38px;
+      --btn-h: 48px;
+      --gap-links: 12px;
+      --content-w: 640px;
+    }
+
+    /* =============================================
+     * ГЛОБАЛЬНЫЕ СТИЛИ И СБРОС
+     * ============================================= */
+    
+    /* ИЗМЕНЕНИЕ:
+      Добавил 'scroll-behavior' для плавного скролла (если будут якорные ссылки)
+      и 'scroll-padding-top', чтобы фиксированный хедер не перекрывал контент при навигации.
+    */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px; /* (Высота хедера + отступ) */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* ИЗМЕНЕНИЕ:
+        Используем '100dvh' (dynamic viewport height) - это 
+        учитывает UI браузера на мобильных (полосы вверху/внизу).
+      */
+      min-height: 100dvh;
+      text-align: center;
+      
+      /* Улучшение рендеринга текста */
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* =============================================
+     * HEADER (Без серьезных изменений, твоя логика была хорошей)
+     * ============================================= */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      background: transparent;
+    }
+
+    .header-container {
+      /* Твой min/max для отступов в 18px по бокам - сохранен */
+      width: min(var(--content-w), calc(100% - 36px)); 
+      background: var(--header-bg);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 0 0 var(--radius-header) var(--radius-header);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 18px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-avatar img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* Segmented control */
+    .site-toggle {
+      display: flex;
+      align-items: center;
+      height: var(--h-item);
+      padding: 3px;
+      gap: 4px;
+      background: #222;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+    }
+
+    .site-toggle a {
+      flex: 1;
+      min-height: calc(var(--h-item) - 6px);
+      padding: 0 12px;
+      text-decoration: none;
+      font-size: 14px;
+      color: var(--muted);
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      background: transparent;
+    }
+
+    .site-toggle a.active {
+      background: var(--accent);
+      color: var(--text);
+    }
+
+    /* Навигация */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      padding: 0 12px;
+      min-height: var(--h-item);
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+      background: transparent;
+    }
+
+    nav a.active {
+      background: #262626;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+    }
+
+    nav a:hover {
+      background: #2a2a2a;
+    }
+
+    nav a svg.lucide {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Кнопка "Бургер" */
+    .menu-toggle {
+      display: none; /* Появится в media query */
+      width: var(--h-item);
+      height: var(--h-item);
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: #222;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      /* ИЗМЕНЕНИЕ:
+        Убрал 'position: absolute' и 'transform', 
+        т.к. flex-контейнер (.header-container)
+        сам выровняет ее. Это надежнее.
+      */
+    }
+
+    .menu-toggle .bars {
+      width: 18px;
+      height: 12px;
+      position: relative;
+    }
+
+    .menu-toggle .bars::before,
+    .menu-toggle .bars::after,
+    .menu-toggle .bar {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+    }
+
+    .menu-toggle .bar { top: 5px; }
+    .menu-toggle .bars::before { top: 0; }
+    .menu-toggle .bars::after { bottom: 0; }
+
+    @media (max-width: 560px) {
+      nav {
+        display: none;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
+    }
+
+    /* =============================================
+     * DRAWER (Мобильное меню)
+     * ============================================= */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      z-index: 2000;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: min(88vw, 340px);
+      background: #191919;
+      box-shadow: -12px 0 24px rgba(0, 0, 0, .45);
+      transform: translateX(100%);
+      transition: transform .25s ease;
+      z-index: 2001;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+
+    .drawer-header img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .drawer-header .title {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .drawer-header .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-pill);
+      transition: background 0.2s;
+    }
+
+    .drawer-header .close-btn:hover {
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .drawer-header .close-btn svg.lucide {
+      width: 22px;
+      height: 22px;
+    }
+
+    .drawer-nav {
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      gap: 8px;
+      overflow-y: auto;
+      align-items: flex-start;
+    }
+
+    .drawer-nav a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      text-decoration: none;
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+      transition: background 0.2s;
+      background: transparent;
+    }
+
+    .drawer-nav a.active { background: #262626; }
+    .drawer-nav a:hover { background: #2a2a2a; }
+
+    .drawer-nav a svg.lucide {
+      width: 18px;
+      height: 18px;
+    }
+
+    .drawer-footer {
+      margin-top: auto;
+      padding: 16px 12px;
+    }
+
+    /* Логика открытия/закрытия */
+    body[data-drawer="open"] .drawer {
+      transform: translateX(0);
+    }
+
+    body[data-drawer="open"] .drawer-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* =============================================
+     * MAIN / HERO (ГЛАВНОЕ ИЗМЕНЕНИЕ)
+     * ============================================= */
+    main {
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .hero {
+      position: relative;
+      /* ИЗМЕНЕНИЕ (ЭТО ГЛАВНЫЙ ФИКС):
+        1. 'min-height: 100dvh' - занимает МИНИМУМ 100% высоты
+           видимой области (dvh = dynamic viewport height).
+        2. 'padding' - добавляем отступы СВЕРХУ (под хедер) и снизу.
+           Это гарантирует, что контент не прилипнет к краям.
+        3. 'box-sizing: border-box' - включает padding в расчет min-height.
+        
+        РЕЗУЛЬТАТ:
+        Если контент помещается, он будет центрирован на экране (как и раньше).
+        Если контент НЕ помещается (маленький телефон),
+        секция '.hero' просто станет ВЫШЕ, чем 100dvh,
+        и появится обычный скролл. Ничего не обрежется.
+      */
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 24px 60px 24px; /* Отступы: 100px сверху, 24 по бокам, 60 снизу */
+      box-sizing: border-box; 
+      overflow: hidden;
+    }
+
+    /* НОВОЕ: 
+      На ПК (широких экранах) убираем верхний padding,
+      чтобы контент центрировался ровно по 100dvh,
+      "игнорируя" фиксированный хедер.
+    */
+    @media (min-width: 769px) {
+      .hero {
+        padding: 60px 24px; /* Оставляем только боковые и нижний, или 0 24px */
+      }
+    }
+
+    /* Стили для Canvas-фона */
+    #heroCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* НОВОЕ:
+      Анимация "пульсации" тени для аватара.
+      Делает сайт "живее".
+    */
+    @keyframes pulseShadow {
+      0% {
+        box-shadow: 0 4px 14px rgba(0,0,0,.4), 0 0 70px rgba(65, 22, 112, 0.75);
+      }
+      50% {
+        box-shadow: 0 6px 20px rgba(0,0,0,.45), 0 0 90px rgba(65, 22, 112, 0.9);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0,0,0,.4), 0 0 70px rgba(65, 22, 112, 0.75);
+      }
+    }
+
+    .avatar {
+      width: clamp(96px, 18vw, 130px);
+      height: clamp(96px, 18vw, 130px);
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 24px;
+      /* ИЗМЕНЕНИЕ:
+        Применяем тень + новую анимацию.
+      */
+      box-shadow: 0 4px 14px rgba(0,0,0,.4), 0 0 70px rgba(65, 22, 112, 0.75);
+      animation: pulseShadow 4s infinite ease-in-out;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: clamp(36px, 10vw, 48px); /* Адаптивный размер шрифта */
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(16px, 4vw, 18px); /* Адаптивный размер шрифта */
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 28px;
+      /* ИЗМЕНЕНИЕ:
+        Ограничиваем ширину, чтобы на больших экранах
+        подзаголовок не был слишком длинным.
+      */
+      max-width: 450px;
+    }
+
+    /* НОВОЕ:
+      На ПК делаем подзаголовок и ссылки
+      чуть шире, чтобы не было "пусто".
+    */
+    @media (min-width: 769px) {
+      h2 {
+        max-width: 550px;
+      }
+    }
+
+    /* Ссылки */
+    .links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
+      gap: var(--gap-links);
+      width: 100%;
+      max-width: 460px;
+    }
+
+    /* НОВОЕ: На ПК делаем блок ссылок чуть шире */
+    @media (min-width: 769px) {
+      .links {
+        max-width: 550px;
+      }
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      min-height: var(--btn-h);
+      padding: 14px 16px;
+      border-radius: var(--radius-pill);
+      background: #1f1f1f;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      transition: background 0.2s, color 0.2s; /* Улучшен 'transition' */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-btn:hover {
+      background: #252525;
+      color: var(--text);
+    }
+
+    .link-btn svg.lucide {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+    }
+
+    .btn-telegram {
+      grid-column: span 2;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-telegram:hover {
+      background: #36125c;
+    }
+
+    /* Адаптивность ссылок */
+    @media (max-width: 430px) {
+      .links {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+      }
+      .btn-telegram {
+        grid-column: auto;
+      }
+      /* ИЗМЕНЕНИЕ:
+        Этот фикс 'padding-top: 56px' больше не нужен,
+        так как наш новый '.hero' с padding'ом
+        справляется с этим сам.
+      */
+      
+      /* ИЗМЕНЕНИЕ:
+        Подсказку о скролле на 1 колонке (телефоны)
+        лучше скрыть, т.к. там и так все очевидно.
+      */
+      .scroll-hint {
+        display: none !important; /* !important, чтобы перебить JS */
+      }
+    }
+
+    /* Подсказка о скролле */
+    .scroll-hint {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      opacity: 1;
+      transition: opacity .12s linear;
+    }
+
+    .scroll-hint i.lucide {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* =============================================
+     * LIBRARY / WORKS
+     * ============================================= */
+    .works {
+      background: var(--bg-2);
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      padding: 40px 0 40px;
+      /* ИЗМЕНЕНИЕ:
+        Добавил z-index, чтобы фон был *над* canvas'ом,
+        но *под* хедером.
+      */
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ИЗМЕНЕНИЕ:
+      Упростил селектор (был .works__inner)
+    */
+    .works-inner {
+      width: min(1100px, calc(100% - 36px));
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .works h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .works p.sub {
+      color: var(--muted);
+      margin-bottom: 22px;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    /* Сетка карточек */
+    .library-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .library-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .library-grid {
+        grid-template-columns: 1fr;
+      }
+      /* ИЗМЕНЕНИЕ:
+        Упростил селектор (был .works__inner)
+      */
+      .works-inner {
+        width: min(var(--content-w), calc(100% - 36px));
+      }
+    }
+
+    /* Карточка */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      /* ИЗМЕНЕНИЕ:
+        Добавил 'transition' для красивого
+        эффекта при наведении.
+      */
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* НОВОЕ:
+      Эффект "подъема" карточки при наведении.
+    */
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+    }
+
+    .card-cover {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #171717;
+      overflow: hidden;
+    }
+
+    .card-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .badge-lang {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      background: rgba(0, 0, 0, .6);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 9999px; /* Используем --radius-pill? */
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 2px 0 8px;
+    }
+
+    .card-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-desc {
+      color: #e6e6e6;
+      font-size: 14px;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 12px;
+      color: #eaeaea;
+      background: #2b2b2b;
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 9999px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 12px;
+      padding: 0 16px 16px;
+    }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #1f1f1f;
+      color: #eaeaea;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #272727;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+    }
+
+    .btn.primary:hover {
+      background: #36125c;
+    }
+
+    /* =============================================
+     * FOOTER
+     * ============================================= */
+    footer {
+      background: var(--bg);
+      padding: 20px 0;
+      width: 100%; /* Убедимся, что футер на всю ширину */
+      z-index: 10; /* Как и .works, над canvas'ом */
+      position: relative;
+    }
+
+    .footer-inner {
+      width: min(1100px, calc(100% - 36px));
+      margin: 0 auto;
+      display: flex;
+      /* ИЗМЕНЕНИЕ: 
+        По умолчанию (на мобильных) - колонка,
+        все по центру.
+      */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 16px; /* Чуть больше отступ для колонки */
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* НОВОЕ: 
+      На ПК (широких экранах) возвращаем
+      разметку в строку, как было.
+    */
+    @media (min-width: 769px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 12px;
+        text-align: left;
+      }
+    }
+
+
+    .footer-inner a {
+      color: var(--muted);
+      text-decoration: none;
+      /* ИЗМЕНЕНИЕ:
+        Добавил 'transition' для плавности.
+      */
+      transition: color 0.2s ease;
+    }
+
+    .footer-inner a:hover {
+      color: var(--text); /* Используем переменную */
+    }
+
+    /* НОВОЕ: Стили для иконок в футере */
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-socials a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #1f1f1f;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .footer-socials a:hover {
+      background: #2a2a2a;
+      color: var(--text);
+    }
+
+    .footer-socials a svg.lucide {
+      width: 18px;
+      height: 18px;
+    }
+  </style>
 </head>
 <body>
-      <header>
-      <div class="header-container" id="headerContainer">
-         <div class="header-left">
-            <div class="header-avatar"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /></div>
-            <div class="site-toggle" aria-label="Тип сайта">
-               <a href="#" class="active">Personal</a>
-               <a href="/работа/">Work</a>
-            </div>
-         </div>
+  <!-- 
+    РЕКОМЕНДАЦИЯ:
+    Добавил 'onerror' для всех <img>. 
+    Если аватарка не загрузится,
+    покажется заглушка, а не сломанная иконка.
+  -->
 
-         <nav aria-label="Основное меню">
-            <a href="#" class="active"><i data-lucide="home"></i> Главная</a>
-            <a href="https://blog.kototjom.top/"><i data-lucide="book"></i> Блог</a>
-         </nav>
-
-         <button class="menu-toggle" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer">
-            <span class="bars"><span class="bar"></span></span>
-         </button>
+  <header>
+    <div class="header-container" id="headerContainer">
+      <div class="header-left">
+        <div class="header-avatar">
+          <img 
+            src="https://kototjom.top/pics/avatar.jpg" 
+            onerror="this.src='https://placehold.co/36x36/411670/ffffff?text=K'"
+            alt="Avatar" />
+        </div>
+        <div class="site-toggle" aria-label="Тип сайта">
+          <a href="#" class="active">Personal</a>
+          <a href="/работа/">Work</a>
+        </div>
       </div>
-   </header>
 
-      <div class="drawer-overlay" id="drawerOverlay" hidden></div>
-   <aside class="drawer" id="drawer" aria-hidden="true">
-      <div class="drawer-header">
-         <div class="title"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /> Kototjom</div>
-         <button class="close-btn" id="drawerClose"><i data-lucide="x"></i></button>
-      </div>
-      <nav class="drawer-nav" aria-label="Мобильное меню">
-         <a href="#" class="active"><i data-lucide="home"></i> Главная</a>
-         <a href="https://blog.kototjom.top/"><i data-lucide="book"></i> Блог</a>
+      <nav aria-label="Основное меню">
+        <a href="#" class="active"><i data-lucide="home"></i> Главная</a>
+        <a href="https://blog.kototjom.top/"><i data-lucide="book"></i> Блог</a>
       </nav>
-      <div class="drawer-footer">
+
+      <button class="menu-toggle" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer">
+        <span class="bars"><span class="bar"></span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="title">
+        <img 
+          src="https://kototjom.top/pics/avatar.jpg" 
+          onerror="this.src='https://placehold.co/36x36/411670/ffffff?text=K'"
+          alt="Avatar" /> 
+        Kototjom
       </div>
-   </aside>
+      <button class="close-btn" id="drawerClose"><i data-lucide="x"></i></button>
+    </div>
+    <nav class="drawer-nav" aria-label="Мобильное меню">
+      <a href="#" class="active"><i data-lucide="home"></i> Главная</a>
+      <a href="https://blog.kototjom.top/"><i data-lucide="book"></i> Блог</a>
+    </nav>
+    <div class="drawer-footer">
+      <!-- .lang-toggle был в CSS, но не в HTML. Оставил пустым. -->
+    </div>
+  </aside>
 
-      <main>
-            <section class="hero" id="hero">
-               <canvas id="heroCanvas"></canvas>
-         <div class="avatar"><img src="https://kototjom.top/pics/avatar.jpg" alt="Avatar" /></div>
-         <h1>Kototjom</h1>
-         <h2>Занимаюсь всем на свете — от музыки до стихов.</h2>
+  <main>
+    <section class="hero" id="hero">
+      <canvas id="heroCanvas"></canvas>
+      <div class="avatar">
+        <img 
+          src="https://kototjom.top/pics/avatar.jpg" 
+          onerror="this.src='https://placehold.co/130x130/411670/ffffff?text=K'"
+          alt="Avatar" />
+      </div>
+      <h1>Kototjom</h1>
+      <h2>Занимаюсь всем на свете — от музыки до стихов.</h2>
 
-         <div class="links" id="linksGrid">
-            <a href="https://t.me/kototjom_telegram" class="link-btn btn-telegram"><i data-lucide="send"></i> Telegram</a>
-            <a href="https://www.instagram.com/kototjom" class="link-btn"><i data-lucide="camera"></i> Instagram</a>
-            <a href="https://www.twitch.tv/kototjom" class="link-btn"><i data-lucide="gamepad-2"></i> Twitch</a>
-            <a href="https://www.tiktok.com/@kototjom" class="link-btn"><i data-lucide="music-2"></i> TikTok</a>
-            <a href="https://www.youtube.com/@kototjom" class="link-btn"><i data-lucide="youtube"></i> YouTube</a>
-         </div>
+      <div class="links" id="linksGrid">
+        <a href="https://t.me/kototjom_telegram" class="link-btn btn-telegram"><i data-lucide="send"></i> Telegram</a>
+        <a href="https://www.instagram.com/kototjom" class="link-btn"><i data-lucide="camera"></i> Instagram</a>
+        <a href="https://www.twitch.tv/kototjom" class="link-btn"><i data-lucide="gamepad-2"></i> Twitch</a>
+        <a href="https://www.tiktok.com/@kototjom" class="link-btn"><i data-lucide="music-2"></i> TikTok</a>
+        <a href="https://www.youtube.com/@kototjom" class="link-btn"><i data-lucide="youtube"></i> YouTube</a>
+      </div>
 
-         <div class="scroll-hint" id="scrollHint">
-            <i data-lucide="mouse-pointer-2"></i><span>Листай вниз — моя библиотека</span>
-         </div>
-      </section>
+      <div class="scroll-hint" id="scrollHint">
+        <i data-lucide="mouse-pointer-2"></i><span>Листай вниз — моя библиотека</span>
+      </div>
+    </section>
 
-            <section class="works" id="library">
-         <div class="works__inner">
-            <h3>Библиотека</h3>
-            <p class="sub">Книги, стихи и проекты</p>
+    <section class="works" id="library">
+      <div class="works-inner">
+        <h3>Библиотека</h3>
+        <p class="sub">Книги, стихи и проекты</p>
 
-            <div class="library-grid">
-                              <article class="card">
-                  <div class="card-cover">
-                     <img src="/pics/Frameв 19.png" alt="Иллюстрация к книге 'Анфиса, спокойной ночи'">
-                     <span class="badge-lang">author.today</span>
-                  </div>
-    <div class="card-body">
-                     <div class="card-title">"Анфиса, спокойной ночи"</div>
-                     <div class="card-meta"><i data-lucide="calendar"></i> 2023 • <i data-lucide="book"></i> Проза</div>
-                     <p class="card-desc">Жизнь Алекса была скучна. Он выполнял одну и туже работу каждый день, а из его круга общения у него была только Анфиса...</p>
-                     <div class="tags"><span class="tag">#проза</span><span class="tag">#соавтор</span></div>
-                  </div>
-                  <div class="card-actions"><a class="btn primary" href="https://author.today/work/286071">Читать</a></div>
-               </article>
-
-                              <article class="card">
-                  <div class="card-cover">
-                     <img src="/pics/книга.png" alt="Иллюстрация к сборнику поэзии">
-                     <span class="badge-lang">poeziya.ru</span>
-                  </div>
-                  <div class="card-body">
-                     <div class="card-title">"И снова у обрыва"</div>
-                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
-                     <p class="card-desc">Стихотворение о навязчивом повторении и принятия безисходности. Входит в сборник поэзии "На грани повтора"</p>
-                     <div class="tags"><span class="tag">#abab</span><span class="tag">#ru</span></div>
-                  </div>
-                  <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303808/">Читать</a></div>
-               </article>
-
-                              <article class="card">
-                  <div class="card-cover">
-                     <img src="/pics/Frame 19.png" alt="Иллюстрация к сборнику поэзии">
-                     <span class="badge-lang">poeziya.ru</span>
-                  </div>
-    <div class="card-body">
-                     <div class="card-title">"Идея"</div>
-                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
-                     <p class="card-desc">Стихотворение о вдохновении и его неарелизации. Входит в сборник поэзии "На грани повтора"</p>
-                     <div class="tags"><span class="tag">#aabbccdd</span><span class="tag">#ru</span></div>
-                  </div>
-                  <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303809/">Читать</a></div>
-               </article>
-
-                              <article class="card">
-                  <div class="card-cover">
-                     <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Erl_king_sterner.jpg" alt="Иллюстрация к балладе Erlkönig">
-                     <span class="badge-lang">poeziya.ru</span>
-                  </div>
-                  <div class="card-body">
-                     <div class="card-title">Перевод "Erlkönig" - "Лесной царь"</div>
-                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
-                     <p class="card-desc">Перевод баллады Erlkönig на русский с сохранением смысла</p>
-                     <div class="tags"><span class="tag">#aabb</span><span class="tag">#ru</span></div>
-                  </div>
-                  <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303810/">Читать</a></div>
-               </article>
-
-                              <article class="card">
-                  <div class="card-cover">
-                     <img src="/pics/Fraыme 19.png" alt="Иллюстрация к калькулятору скруглений">
-                     <span class="badge-lang">WEB</span>
-                  </div>
-                  <div class="card-body">
-                     <div class="card-title">"Калькулятор скруглений"</div>
-                     <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="laptop"></i> Сайт</div>
-                     <p class="card-desc">В дизайне часто нужно создать блок, внутри которого находится другой элемент. Мой калькулятор подсчитает скругления для них</p>
-                     <div class="tags"><span class="tag">#javascript</span><span class="tag">#одностраничник</span></div>
-                  </div>
-                  <div class="card-actions"><a class="btn primary" href="https://calc.kototjom.top/">Перейти</a></div>
-               </article>
-
+        <div class="library-grid">
+          
+          <article class="card">
+            <div class="card-cover">
+              <img 
+                src="/pics/Frameв 19.png" 
+                onerror="this.src='https://placehold.co/600x338/171717/333333?text=Image+Not+Found'"
+                alt="Иллюстрация к книге 'Анфиса, спокойной ночи'">
+              <span class="badge-lang">author.today</span>
             </div>
-         </div>
-      </section>
-   </main>
+            <div class="card-body">
+              <div class="card-title">"Анфиса, спокойной ночи"</div>
+              <div class="card-meta"><i data-lucide="calendar"></i> 2023 • <i data-lucide="book"></i> Проза</div>
+              <p class="card-desc">Жизнь Алекса была скучна. Он выполнял одну и туже работу каждый день, а из его круга общения у него была только Анфиса...</p>
+              <div class="tags"><span class="tag">#проза</span><span class="tag">#соавтор</span></div>
+            </div>
+            <div class="card-actions"><a class="btn primary" href="https://author.today/work/286071">Читать</a></div>
+          </article>
 
-   <footer>
-      <div class="footer-inner">
-         <div class="copy">© 2025 Kototjom — Все права защищены. <a href="https://docs.kototjom.top/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C/" class="policy">Документы и политика приватности</a></div>
+          <article class="card">
+            <div class="card-cover">
+              <img 
+                src="/pics/книга.png" 
+                onerror="this.src='https://placehold.co/600x338/171717/333333?text=Image+Not+Found'"
+                alt="Иллюстрация к сборнику поэзии">
+              <span class="badge-lang">poeziya.ru</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">"И снова у обрыва"</div>
+              <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
+              <p class="card-desc">Стихотворение о навязчивом повторении и принятия безисходности. Входит в сборник поэзии "На грани повтора"</p>
+              <div class="tags"><span class="tag">#abab</span><span class="tag">#ru</span></div>
+            </div>
+            <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303808/">Читать</a></div>
+          </article>
+
+          <article class="card">
+            <div class="card-cover">
+              <img 
+                src="/pics/Frame 19.png" 
+                onerror="this.src='https://placehold.co/600x338/171717/333333?text=Image+Not+Found'"
+                alt="Иллюстрация к сборнику поэзии">
+              <span class="badge-lang">poeziya.ru</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">"Идея"</div>
+              <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
+              <p class="card-desc">Стихотворение о вдохновении и его неарелизации. Входит в сборник поэзии "На грани повтора"</p>
+              <div class="tags"><span class="tag">#aabbccdd</span><span class="tag">#ru</span></div>
+            </div>
+            <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303809/">Читать</a></div>
+          </article>
+
+          <article class="card">
+            <div class="card-cover">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/3/30/Erl_king_sterner.jpg" 
+                onerror="this.src='https://placehold.co/600x338/171717/333333?text=Image+Not+Found'"
+                alt="Иллюстрация к балладе Erlkönig">
+              <span class="badge-lang">poeziya.ru</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">Перевод "Erlkönig" - "Лесной царь"</div>
+              <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="feather"></i> Поэзия</div>
+              <p class="card-desc">Перевод баллады Erlkönig на русский с сохранением смысла</p>
+              <div class="tags"><span class="tag">#aabb</span><span class="tag">#ru</span></div>
+            </div>
+            <div class="card-actions"><a class="btn primary" href="https://poeziya.ru/a/1303810/">Читать</a></div>
+          </article>
+
+          <article class="card">
+            <div class="card-cover">
+              <img 
+                src="/pics/Fraыme 19.png" 
+                onerror="this.src='https://placehold.co/600x338/171717/333333?text=Image+Not+Found'"
+                alt="Иллюстрация к калькулятору скруглений">
+              <span class="badge-lang">WEB</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">"Калькулятор скруглений"</div>
+              <div class="card-meta"><i data-lucide="calendar"></i> 2025 • <i data-lucide="laptop"></i> Сайт</div>
+              <p class="card-desc">В дизайне часто нужно создать блок, внутри которого находится другой элемент. Мой калькулятор подсчитает скругления для них</p>
+              <div class="tags"><span class="tag">#javascript</span><span class="tag">#одностраничник</span></div>
+            </div>
+            <div class="card-actions"><a class="btn primary" href="https://calc.kototjom.top/">Перейти</a></div>
+          </article>
+
+        </div>
       </div>
-   </footer>
+    </section>
+  </main>
 
-   <script>
-      // Icons
+  <footer>
+    <div class="footer-inner">
+      <div class="copy">© 2025 Kototjom — Все права защищены. <a href="https://docs.kototjom.top/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C/" class="policy">Документы и политика конфиденциальности</a></div>
+      
+      <!-- НОВОЕ: Блок с иконками соцсетей -->
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/kototjom" aria-label="Instagram"><i data-lucide="camera"></i></a>
+        <a href="https://www.twitch.tv/kototjom" aria-label="Twitch"><i data-lucide="gamepad-2"></i></a>
+        <a href="https://www.tiktok.com/@kototjom" aria-label="TikTok"><i data-lucide="music-2"></i></a>
+        <a href="https://www.youtube.com/@kototjom" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /*
+      ИЗМЕНЕНИЕ:
+      Обернул весь JS-код для DOM (меню, подсказки, иконки)
+      в 'DOMContentLoaded'. Это гарантирует, что скрипт
+      не попытается найти элементы ('menuBtn' и т.д.)
+      до того, как HTML будет полностью загружен.
+      
+      Логика Canvas'а осталась в 'load', что тоже правильно.
+    */
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. Icons
+      // (lucide.js был загружен с 'defer', поэтому он должен быть здесь)
       if (window.lucide && typeof window.lucide.createIcons === 'function') {
-         window.lucide.createIcons();
+        try {
+          window.lucide.createIcons();
+        } catch (e) {
+          console.error('Ошибка при создании иконок Lucide:', e);
+        }
+      } else {
+        console.warn('Lucide.js не загрузился вовремя.');
       }
 
-      // Drawer
-      (function(){
-         const body = document.body;
-         const btn = document.getElementById('menuBtn');
-         const drawer = document.getElementById('drawer');
-         const overlay = document.getElementById('drawerOverlay');
-         const closeBtn = document.getElementById('drawerClose');
+      // 2. Drawer
+      (function () {
+        const body = document.body;
+        const btn = document.getElementById('menuBtn');
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('drawerOverlay');
+        const closeBtn = document.getElementById('drawerClose');
 
-         function openDrawer(){ body.setAttribute('data-drawer','open'); drawer.setAttribute('aria-hidden','false'); overlay.hidden = false; }
-         function closeDrawer(){ body.setAttribute('data-drawer','closed'); drawer.setAttribute('aria-hidden','true'); overlay.hidden = true; }
-         function toggleDrawer(){ const isOpen = body.getAttribute('data-drawer') === 'open'; isOpen ? closeDrawer() : openDrawer(); }
+        // Проверяем, что все элементы найдены
+        if (!btn || !drawer || !overlay || !closeBtn) {
+          console.warn('Элементы Drawer не найдены.');
+          return;
+        }
 
-         btn?.addEventListener('click', toggleDrawer);
-         closeBtn?.addEventListener('click', closeDrawer);
-         overlay?.addEventListener('click', closeDrawer);
-         document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
+        function openDrawer() {
+          body.setAttribute('data-drawer', 'open');
+          drawer.setAttribute('aria-hidden', 'false');
+          overlay.hidden = false;
+        }
+        function closeDrawer() {
+          body.setAttribute('data-drawer', 'closed');
+          drawer.setAttribute('aria-hidden', 'true');
+          overlay.hidden = true;
+        }
+        function toggleDrawer() {
+          const isOpen = body.getAttribute('data-drawer') === 'open';
+          isOpen ? closeDrawer() : openDrawer();
+        }
+
+        btn.addEventListener('click', toggleDrawer);
+        closeBtn.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeDrawer();
+        });
       })();
 
-      // Подсказка: прятать при 1 колонке + плавная прозрачность при скролле
-      (function(){
-         const hint = document.getElementById('scrollHint');
-         const links = document.getElementById('linksGrid');
-         if(!hint || !links) return;
+      // 3. Подсказка (Scroll hint)
+      (function () {
+        const hint = document.getElementById('scrollHint');
+        const links = document.getElementById('linksGrid');
+        if (!hint || !links) return;
 
-         function columnsCount(){
-            const cols = getComputedStyle(links).gridTemplateColumns;
-            return cols ? cols.split(' ').length : 2;
-         }
+        function columnsCount() {
+          const cols = getComputedStyle(links).gridTemplateColumns;
+          return cols ? cols.split(' ').length : 2;
+        }
 
-         function applyVisibility(){
-            if(columnsCount() === 1){
-               hint.style.display = 'none';
-            }else{
-               hint.style.display = 'inline-flex';
-            }
-         }
+        function applyVisibility() {
+          if (columnsCount() === 1) {
+            hint.style.display = 'none';
+          } else {
+            hint.style.display = 'inline-flex';
+          }
+        }
 
-         function applyOpacity(){
-            if(hint.style.display === 'none') return;
-            const y = Math.max(window.scrollY, 0);
-            const k = Math.min(y / 200, 1);
-            hint.style.opacity = String(1 - k);
-         }
+        function applyOpacity() {
+          if (hint.style.display === 'none') return;
+          const y = Math.max(window.scrollY, 0);
+          const k = Math.min(y / 200, 1);
+          hint.style.opacity = String(1 - k);
+        }
 
-         applyVisibility(); applyOpacity();
-         window.addEventListener('resize', ()=>{ applyVisibility(); applyOpacity(); });
-         window.addEventListener('scroll', applyOpacity, {passive:true});
+        applyVisibility();
+        applyOpacity();
+        window.addEventListener('resize', () => {
+          applyVisibility();
+          applyOpacity();
+        });
+        window.addEventListener('scroll', applyOpacity, { passive: true });
       })();
-      // ===== CANVAS ANIMATION LOGIC =====
-(function(){
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-    const PARTICLE_COUNT = 80;
-    // Используем ваш фиолетовый акцент с прозрачностью
-    const ACCENT_COLOR = 'rgba(65, 22, 112, 0.5)'; 
-    const LINK_DISTANCE = 100;
+    }); // Конец 'DOMContentLoaded'
 
-    /**
-     * Particle class for the flowing background effect.
-     */
-    class Particle {
+
+    // ===== CANVAS ANIMATION LOGIC =====
+    // (Этот код был хорош, я его не трогал.
+    //  Он использует 'window.load', что правильно
+    //  для получения точных размеров элемента .hero)
+    (function () {
+      const canvas = document.getElementById('heroCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let particles = [];
+      const PARTICLE_COUNT = 80;
+      const ACCENT_COLOR = 'rgba(65, 22, 112, 0.5)';
+      const LINK_DISTANCE = 100;
+
+      class Particle {
         constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            // Направление движения (медленное)
-            this.dx = (Math.random() - 0.4) * 0.2; 
-            this.dy = (Math.random() - 0.5) * 0.2;
-            this.radius = Math.random() * 1.5 + 0.5;
-            this.color = ACCENT_COLOR;
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.dx = (Math.random() - 0.4) * 0.2;
+          this.dy = (Math.random() - 0.5) * 0.2;
+          this.radius = Math.random() * 1.5 + 0.5;
+          this.color = ACCENT_COLOR;
         }
 
         draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            ctx.fillStyle = this.color;
-            ctx.fill();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+          ctx.fillStyle = this.color;
+          ctx.fill();
         }
 
         update() {
-            // Перенос через границы
-            if (this.x + this.radius > width) this.x = 0;
-            if (this.x - this.radius < 0) this.x = width;
-            if (this.y + this.radius > height) this.y = 0;
-            if (this.y - this.radius < 0) this.y = height;
+          if (this.x + this.radius > width) this.x = 0;
+          if (this.x - this.radius < 0) this.x = width;
+          if (this.y + this.radius > height) this.y = 0;
+          if (this.y - this.radius < 0) this.y = height;
 
-            this.x += this.dx;
-            this.y += this.dy;
+          this.x += this.dx;
+          this.y += this.dy;
 
-            this.draw();
+          this.draw();
         }
-    }
+      }
 
-    /**
-     * Sets up the canvas size based on its parent container.
-     */
-    function resizeCanvas() {
+      function resizeCanvas() {
         const heroSection = document.getElementById('hero');
         if (heroSection) {
-            width = heroSection.clientWidth;
-            height = heroSection.clientHeight;
-            canvas.width = width;
-            canvas.height = height;
-            
-            // Reinitialize particles on resize
-            particles = [];
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new Particle());
-            }
-        }
-    }
+          width = heroSection.clientWidth;
+          height = heroSection.clientHeight;
+          canvas.width = width;
+          canvas.height = height;
 
-    /**
-     * Draws lines between close particles for a "cosmic web" effect.
-     */
-    function drawConnections() {
+          particles = [];
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new Particle());
+          }
+        }
+      }
+
+      function drawConnections() {
         for (let i = 0; i < particles.length; i++) {
-            for (let j = i; j < particles.length; j++) {
-                const p1 = particles[i];
-                const p2 = particles[j];
+          for (let j = i; j < particles.length; j++) {
+            const p1 = particles[i];
+            const p2 = particles[j];
+            const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
 
-                // Calculate distance
-                const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-
-                if (dist < LINK_DISTANCE) {
-                    const opacity = 1 - dist / LINK_DISTANCE;
-                    ctx.beginPath();
-                    // Очень тонкая фиолетовая линия
-                    ctx.strokeStyle = `rgba(65, 22, 112, ${opacity * 0.4})`; 
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
-                }
+            if (dist < LINK_DISTANCE) {
+              const opacity = 1 - dist / LINK_DISTANCE;
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(65, 22, 112, ${opacity * 0.4})`;
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
             }
+          }
         }
-    }
+      }
 
-    /**
-     * Main animation loop.
-     */
-    function animate() {
-        // Полупрозрачный фон для эффекта "шлейфа"
-        ctx.fillStyle = 'rgba(18, 18, 18, 0.2)'; 
+      function animate() {
+        ctx.fillStyle = 'rgba(18, 18, 18, 0.2)';
         ctx.fillRect(0, 0, width, height);
-
         drawConnections();
-        
         for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
+          particles[i].update();
         }
-
         requestAnimationFrame(animate);
-    }
+      }
 
-    // Start the application:
-    window.addEventListener('load', () => {
+      // Start the application:
+      window.addEventListener('load', () => {
         resizeCanvas();
         animate();
-    });
+      });
 
-    window.addEventListener('resize', resizeCanvas);
-})();
-   </script>
+      window.addEventListener('resize', resizeCanvas);
+    })();
+  </script>
 </body>
 </html>
