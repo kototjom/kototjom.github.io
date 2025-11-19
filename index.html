@@ -149,6 +149,12 @@
             gap: 24px;
         }
 
+        @media (max-width: 350px) {
+            .grid {
+               grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            }
+        }
+
         /* --- 4. Дизайн Карточки (Как на скрине) --- */
         .card {
             background-color: var(--card-bg);
@@ -311,8 +317,8 @@
                 Telegram
             </a>
             <a href="https://www.instagram.com/kototjom/" class="social-btn">Instagram</a>
-            <a href="https://www.tiktok.com/@kototjom" class="social-btn">YouTube</a>
-            <a href="https://www.youtube.com/@kototjom" class="social-btn">TikTok</a>
+            <a href="https://www.tiktok.com/@kototjom" class="social-btn">TikTok</a>
+            <a href="https://www.youtube.com/@kototjom" class="social-btn">YouTube</a>
         </div>
     </header>
 
