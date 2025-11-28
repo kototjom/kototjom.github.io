@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artjom Titov | Work</title>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,600;0,900;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #Fdfdfd;
+            --text-color: #1a1a1a;
+            --accent-color: #3F4581;
+            --border-color: #e5e5e5;
+            --card-bg: #ffffff;
+            --dark-card-bg: #1a1a1a;
+            --dark-card-text: #ffffff;
+            --card-radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lora', serif;
+            line-height: 1.5;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        ::selection { background-color: var(--accent-color); color: white; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 1rem;
+            position: relative;
+        }
+
+        /* --- НОВЫЙ ХЕДЕР (Аватар + Языки) --- */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Стиль для мобильной аватарки в хедере */
+        .mobile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            display: block; /* Видна на мобильных */
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 8px;
+            font-family: sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            /* margin-bottom убрал, так как родитель header-bar задает отступ */
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #999;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover { color: var(--accent-color); }
+        
+        .lang-btn.active {
+            color: var(--accent-color);
+            background-color: rgba(63, 69, 129, 0.1);
+        }
+
+        /* На планшетах и десктопах скрываем аватарку из хедера */
+        @media (min-width: 768px) {
+            .mobile-avatar {
+                display: none;
+            }
+            .header-bar {
+                justify-content: flex-end; /* Только языки справа */
+            }
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            grid-auto-rows: auto;
+        }
+
+        @media (min-width: 560px) {
+             .bento-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: minmax(180px, auto);
+                grid-template-areas:
+                    "hero hero"
+                    "experience languages"
+                    "stack stack"
+                    "projects connect";
+            }
+            .card-hero { grid-area: hero; }
+            .card-experience { grid-area: experience; }
+            .card-languages { grid-area: languages; display: flex !important; }
+            .card-stack { grid-area: stack; }
+            .card-projects { grid-area: projects; }
+            .card-connect { grid-area: connect; }
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 2rem; }
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, minmax(180px, auto));
+                grid-template-areas:
+                    "hero hero experience"
+                    "hero hero experience"
+                    "stack stack languages"
+                    "projects projects connect";
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: auto; 
+                grid-template-areas: 
+                    "hero hero experience languages"
+                    "hero hero experience connect"
+                    "stack stack projects projects";
+                grid-auto-rows: minmax(180px, auto); 
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: var(--card-radius);
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            min-height: 180px; 
+            z-index: 1;
+        }
+
+        .card.interactive { cursor: pointer; }
+
+        .card.interactive:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px var(--accent-color);
+            z-index: 2;
+        }
+
+        .card:not(.interactive):hover { border-color: #ccc; }
+
+        .card.dark { background-color: var(--dark-card-bg); color: var(--dark-card-text); }
+        .card.dark:hover { border-color: #333; box-shadow: none; }
+        
+        .card.dark.interactive:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px #333; 
+        }
+
+        @media (min-width: 1024px) { .p-8 { padding: 2rem; } }
+
+        .text-accent { color: var(--accent-color); }
+        .font-sans { font-family: sans-serif; }
+        .italic { font-style: italic; }
+        .uppercase { text-transform: uppercase; letter-spacing: 0.05em; }
+        .text-sm { font-size: 0.875rem; }
+        .text-xs { font-size: 0.75rem; }
+        .text-gray { color: #666; }
+        .text-gray-light { color: #999; }
+        
+        h1 { font-size: 2.5rem; line-height: 1.1; margin-top: 1rem; }
+        @media (min-width: 768px) { h1 { font-size: 4rem; } }
+
+        .lang-item {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #f3f3f3; padding-bottom: 4px; margin-bottom: 8px;
+        }
+        .lang-item:last-child { border-bottom: none; }
+
+        .arrow-icon {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            opacity: 0; transition: opacity 0.3s ease; color: var(--accent-color);
+            z-index: 10;
+        }
+        .card.dark .arrow-icon { color: white !important; }
+        
+        .card.interactive:hover .arrow-icon { opacity: 1; }
+
+        .social-links { display: flex; gap: 1rem; }
+        .social-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; background-color: #f9f9f9;
+            border: 1px solid #eee; border-radius: 8px;
+            transition: all 0.2s; color: var(--text-color);
+        }
+        .social-btn:hover { background-color: var(--accent-color); color: white; border-color: var(--accent-color); }
+
+        .footer {
+            margin-top: 3rem; display: flex; justify-content: space-between;
+            color: #9ca3af; font-size: 0.875rem; font-family: sans-serif; flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 480px) {
+            .tech-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .project-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+        .project-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .icon-circle {
+            background: rgba(255,255,255,0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; 
+        }
+
+        /* --- СТИЛИ ДЛЯ АВАТАРКИ ВНУТРИ КАРТОЧКИ (Десктоп) --- */
+        .avatar-img {
+            width: 80px; 
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        /* По умолчанию (мобильный) скрываем аватарку внутри карточки, так как она в хедере */
+        .avatar-container {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .card-hero {
+                overflow: hidden;
+            }
+            .avatar-container {
+                display: block; /* Показываем на десктопе */
+                position: absolute;
+                right: 2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1;
+                opacity: 1;
+            }
+            .avatar-img {
+                width: 180px;
+                height: 180px;
+                border: none;
+                filter: grayscale(100%);
+                opacity: 0.2;
+            }
+            .card-hero:hover .avatar-img {
+                opacity: 0.4;
+                filter: grayscale(0%);
+                transform: scale(1.05);
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex; 
+            justify-content: center; align-items: center;
+            visibility: hidden; 
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%; max-width: 600px;
+            border-radius: 16px; padding: 2.5rem;
+            position: relative;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-btn {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: none; border: none;
+            cursor: pointer; color: #999; transition: color 0.2s;
+        }
+        .close-btn:hover { color: var(--text-color); }
+
+        #modal-title { font-size: 2rem; margin-bottom: 1.5rem; }
+        #modal-body p { margin-bottom: 1rem; color: #4b5563; font-size: 1.1rem; }
+        #modal-body ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        #modal-body li { margin-bottom: 0.5rem; color: #4b5563; }
+
+        .project-item {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+        
+        .experience-item {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 480px) {
+            .project-item, .experience-item {
+                flex-direction: column;
+            }
+        }
+
+        .project-item:hover, .experience-item:hover {
+            border-color: var(--accent-color);
+            background-color: #fafafa;
+            transform: translateY(-2px);
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background-color: #f3f4f6;
+            object-fit: cover;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .item-content {
+            flex: 1;
+        }
+
+        .project-title, .experience-title { font-weight: bold; font-size: 1.25rem; margin-bottom: 0.25rem; font-family: 'Playfair Display', serif; }
+        .experience-date { font-size: 0.85rem; color: #888; margin-bottom: 0.5rem; font-family: sans-serif; text-transform: uppercase; }
+        
+        .project-tech { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+        .tech-tag { 
+            background: #f3f4f6; padding: 4px 8px; 
+            border-radius: 6px; font-size: 0.75rem; 
+            font-family: sans-serif; text-transform: uppercase; color: #666; 
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .project-link:hover {
+            border-bottom-color: var(--accent-color);
+        }
+        
+        .footer-link {
+            color: #9ca3af;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            transition: text-decoration-color 0.2s;
+        }
+        .footer-link:hover {
+            text-decoration-color: #9ca3af;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Хедер с мобильной аватаркой и переключателем -->
+        <div class="header-bar">
+            <img src="https://yt3.googleusercontent.com/5hZKeFR_OINozOzljwVA9QQTdItdRgE7kZGfthn2X3RZJ7uN9fCG1G9TmzmNvhuenpSdcw4GMA=s160-c-k-c0x00ffffff-no-rj" alt="Avatar" class="mobile-avatar">
+            
+            <div class="lang-switcher">
+                <button class="lang-btn" onclick="setLanguage('ru')" id="btn-ru">RU</button>
+                <span style="color:#e5e5e5">|</span>
+                <button class="lang-btn" onclick="setLanguage('de')" id="btn-de">DE</button>
+                <span style="color:#e5e5e5">|</span>
+                <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+            </div>
+        </div>
+
+        <div class="bento-grid">
+
+            <div class="card card-hero interactive p-8" onclick="openModal('about')">
+                <div class="arrow-icon"><i data-lucide="maximize-2"></i></div>
+                
+                <!-- Аватарка для десктопа (внутри карточки) -->
+                <div class="avatar-container">
+                    <img src="https://yt3.googleusercontent.com/5hZKeFR_OINozOzljwVA9QQTdItdRgE7kZGfthn2X3RZJ7uN9fCG1G9TmzmNvhuenpSdcw4GMA=s160-c-k-c0x00ffffff-no-rj" alt="Avatar" class="avatar-img">
+                </div>
+                
+                <div style="position: relative; z-index: 2;">
+                    <p class="text-sm uppercase text-gray font-sans" data-key="portfolio_year">Рабочий сайт</p>
+                    <h1>Artjom <br/> <span class="italic" style="font-weight: 300;">Titov</span></h1>
+                </div>
+                
+                <div style="margin-top: 2rem; position: relative; z-index: 2;">
+                    <p style="font-size: 1.25rem; color: #4b5563;" data-key="role">Дизайнер & <br/> Творец</p>
+                    <p class="text-accent" style="margin-top: 0.5rem; font-weight: 500;">@kototjom</p>
+                </div>
+            </div>
+
+            <div class="card card-experience dark interactive" onclick="openModal('experience')">
+                <div class="icon-circle">
+                    <i data-lucide="palette"></i>
+                </div>
+                <div class="arrow-icon"><i data-lucide="maximize-2"></i></div>
+
+                <div style="margin-top: 1rem;">
+                    <p class="text-gray-light text-sm uppercase font-sans mb-2" data-key="exp_title">Опыт</p>
+                    <h2 style="font-size: 1.875rem; font-style: italic; font-weight: 300; margin-bottom: 1rem;" data-key="exp_since">С 2022 года</h2>
+                    <p style="color: #d1d5db; font-size: 0.875rem;" data-key="exp_desc">От простых дизайнов к поиску новых решений.</p>
+                </div>
+            </div>
+
+            <div class="card card-languages">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <i data-lucide="globe" class="text-accent"></i>
+                    <span style="font-weight: bold;" data-key="lang_title">Языки</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 1.125rem;">
+                    <div class="lang-item">
+                        <span data-key="lang_ru">Русский</span>
+                        <span class="text-xs text-gray font-sans uppercase" data-key="level_native">Родной</span>
+                    </div>
+                    <div class="lang-item">
+                        <span data-key="lang_de">Немецкий</span>
+                        <span class="text-xs text-gray font-sans uppercase" data-key="level_fluent">B1</span>
+                    </div>
+                    <div class="lang-item">
+                        <span data-key="lang_en">Английский</span>
+                        <span class="text-xs text-gray font-sans uppercase">A1/A2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-stack interactive" onclick="openModal('stack')">
+                <div class="arrow-icon"><i data-lucide="maximize-2"></i></div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                    <i data-lucide="code" class="text-accent"></i>
+                    <h3 style="font-size: 1.25rem; font-weight: bold;">Tech Stack</h3>
+                </div>
+                <div class="tech-grid">
+                    <div><span class="text-xs text-gray font-sans uppercase">Code</span><p style="font-size: 1rem;">HTML, CSS, JS (Basic)</p></div>
+                    <div><span class="text-xs text-gray font-sans uppercase">Design</span><p style="font-size: 1rem;">Figma, и т.п.</p></div>
+                    <div><span class="text-xs text-gray font-sans uppercase">AI</span><p style="font-size: 1rem;" class="text-accent">Gemini, ChatGPT, Veo</p></div>
+                </div>
+            </div>
+
+            <div class="card card-projects interactive" onclick="openModal('projects')" style="flex-direction: row; align-items: center;">
+                <div>
+                    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;" data-key="projects_title_html">Создаю свои <br/> <span class='italic text-accent'>собственные проекты</span></h2>
+                    <p class="text-gray" data-key="projects_desc">От идеи до реализации</p>
+                </div>
+                <div class="project-btn">
+                    <i data-lucide="arrow-up-right"></i>
+                </div>
+            </div>
+
+            <div class="card card-connect">
+                <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 1rem;" data-key="connect">Связаться</h3>
+                <div class="social-links">
+                    <a href="https://tally.so/r/A7rqrk" class="social-btn"><i data-lucide="mail"></i></a>
+                    <a href="https://github.com/kototjom" class="social-btn"><i data-lucide="github"></i></a>
+                    <a href="https://www.figma.com/@kototjom" class="social-btn"><i data-lucide="figma"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div>
+                <p>© <span id="current-year">2025</span> Artjom Titov. <a href="/work/privacy/" class="footer-link" data-key="privacy_policy">Политика конфиденциальности</a></p>
+            </div>
+            <p data-key="footer_loc">Сделано в Саарбрюккене.</p>
+        </div>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()"><i data-lucide="x"></i></button>
+            <h2 id="modal-title">Title</h2>
+            <div id="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const modalContent = {
+            about: {
+                ru: { title: "Обо мне", body: `<p>Живу в Саарбрюккене. Увлекаюсь технологиями и творчеством. Моя цель — создавать интересные проекты и исследовать новые возможности в разных сферах.</p>` },
+                de: { title: "Über mich", body: `<p>Ich lebe in Saarbrücken. Ich begeistere mich für Technologie und Kreativität. Mein Ziel ist es, interessante Projekte zu erstellen und neue Möglichkeiten zu entdecken.</p>` },
+                en: { title: "About Me", body: `<p>I live in Saarbrücken. I am passionate about technology and creativity. My goal is to create interesting projects and explore new possibilities.</p>` }
+            },
+            experience: {
+                ru: { 
+                    title: "Опыт", 
+                    body: `
+                    <p>Я начал свой путь в 2022 году. Начиная с простых личных дизайнов и сайтов, я пришел к постоянному поиску новых идей и реализации творческих задумок.</p>
+                    <div class="experience-list">
+                        <a href="#" class="experience-item">
+                            <img src="/pics/verdant.png" class="item-image" alt="Verdant Logo">
+                            <div class="item-content">
+                                <div class="experience-title">Логотип и графика для Verdant</div>
+                                <div class="experience-date">2024</div>
+                                <p>Разработка веб-сайта, логотипа и остальной инфографики для Minecraft-Сервера</p>
+                            </div>
+                        </a>
+                         <a href="#" class="experience-item">
+                            <img src="https://ui-avatars.com/api/?name=Link in Bio&background=3F4581&color=fff" class="item-image" alt="Bio Link">
+                            <div class="item-content">
+                                <div class="experience-title">Link in Bio</div>
+                                <div class="experience-date">2024</div>
+                                <p>Разработка сайта мультиссылки</p>
+                            </div>
+                        </a>
+                    </div>
+                    ` 
+                },
+                de: { 
+                    title: "Erfahrung", 
+                    body: `
+                    <p>Ich habe meinen Weg im Jahr 2022 begonnen. Angefangen mit einfachen Designs und Webseiten, bin ich nun auf der ständigen Suche nach neuen Ideen und kreativen Umsetzungen.</p>
+                    <div class="experience-list">
+                        <a href="#" class="experience-item">
+                            <img src="/pics/verdant.png" class="item-image" alt="Verdant Logo">
+                            <div class="item-content">
+                                <div class="experience-title">Logo und Grafik für Verdant</div>
+                                <div class="experience-date">2024</div>
+                                <p>Entwicklung einer Website, eines Logos und weiterer Infografiken für den Minecraft-Server</p>
+                            </div>
+                        </a>
+                         <a href="#" class="experience-item">
+                            <img src="https://ui-avatars.com/api/?name=Link in Bio&background=3F4581&color=fff" class="item-image" alt="Link im Bio">
+                            <div class="item-content">
+                                <div class="experience-title">Link in Bio</div>
+                                <div class="experience-date">2024</div>
+                                <p>Entwicklung einer Website mit mehreren Links</p>
+                            </div>
+                        </a>
+                    </div>
+                    `
+                },
+                en: { 
+                    title: "Experience", 
+                    body: `
+                    <p>I started my journey in 2022. Starting with simple personal designs and websites, I moved towards constant exploration of new ideas and creative implementation.</p>
+                    <div class="experience-list">
+                        <a href="#" class="experience-item">
+                            <img src="/pics/verdant.png" class="item-image" alt="Verdant Logo">
+                            <div class="item-content">
+                                <div class="experience-title">Logo and graphics for Verdant</div>
+                                <div class="experience-date">2024</div>
+                                <p>Development of a website, logo and other infographics for Minecraft Server</p>
+                            </div>
+                        </a>
+                         <a href="#" class="experience-item">
+                            <img src="https://ui-avatars.com/api/?name=Link in Bio&background=3F4581&color=fff" class="item-image" alt="Link im Bio">
+                            <div class="item-content">
+                                <div class="experience-title">Link in Bio</div>
+                                <div class="experience-date">2024</div>
+                                <p>Development of a multi-link website</p>
+                            </div>
+                        </a>
+                    </div>
+                    `
+                }
+            },
+            stack: {
+                ru: { title: "Стек технологий", body: `<p><b>Design:</b> Figma и другие инструменты.</p><p><b>Code:</b> HTML, CSS, JavaScript (Базовый уровень).</p><p><b>AI:</b> Gemini, ChatGPT, Veo.</p>` },
+                de: { title: "Tech Stack", body: `<p><b>Design:</b> Figma und ähnliche.</p><p><b>Code:</b> HTML, CSS, JavaScript (Grundlagen).</p><p><b>AI:</b> Gemini, ChatGPT, Veo.</p>` },
+                en: { title: "Tech Stack", body: `<p><b>Design:</b> Figma, etc.</p><p><b>Code:</b> HTML, CSS, JavaScript (Basic).</p><p><b>AI:</b> Gemini, ChatGPT, Veo.</p>` }
+            },
+            projects: {
+                ru: {
+                    title: "Мои проекты",
+                    body: `
+                        <div class="project-list">
+                            <div class="project-item">
+                                <img src="https://ui-avatars.com/api/?name=CS&background=3F4581&color=fff&font-size=0.4" class="item-image" alt="Calc">
+                                <div class="item-content">
+                                    <div class="project-title">Калькулятор Скруглений</div>
+                                    <p>Инструмент для создания гармоничных интерфейсов (согласованные скругления).</p>
+                                    <a href="https://calc.kototjom.top/" target="_blank" class="project-link">
+                                        calc.kototjom.top <i data-lucide="external-link" style="width:16px; height:16px;"></i>
+                                    </a>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">WEB TOOLS</span>
+                                        <span class="tech-tag">UI/UX</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-item" style="opacity: 0.5;">
+                                <div class="item-image"><i data-lucide="loader" style="color: #999;"></i></div>
+                                <div class="item-content">
+                                    <div class="project-title">Следующий проект...</div>
+                                    <p>В процессе разработки. Следите за обновлениями.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">Coming Soon</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                de: {
+                    title: "Meine Projekte",
+                    body: `
+                        <div class="project-list">
+                            <div class="project-item">
+                                <img src="https://ui-avatars.com/api/?name=CS&background=3F4581&color=fff&font-size=0.4" class="item-image" alt="Calc">
+                                <div class="item-content">
+                                    <div class="project-title">Eckenradius-Rechner</div>
+                                    <p>Tool für harmonisches Interface-Design (Corner Smoothing).</p>
+                                    <a href="https://calc.kototjom.top/" target="_blank" class="project-link">
+                                        calc.kototjom.top <i data-lucide="external-link" style="width:16px; height:16px;"></i>
+                                    </a>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">WEB TOOLS</span>
+                                        <span class="tech-tag">UI/UX</span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="project-item" style="opacity: 0.5;">
+                                <div class="item-image"><i data-lucide="loader" style="color: #999;"></i></div>
+                                <div class="item-content">
+                                    <div class="project-title">Nächstes Projekt...</div>
+                                    <p>In Entwicklung. Bleiben Sie dran.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">Coming Soon</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                en: {
+                    title: "My Projects",
+                    body: `
+                        <div class="project-list">
+                            <div class="project-item">
+                                <img src="https://ui-avatars.com/api/?name=CS&background=3F4581&color=fff&font-size=0.4" class="item-image" alt="Calc">
+                                <div class="item-content">
+                                    <div class="project-title">Corner Smoothing Calc</div>
+                                    <p>Tool for creating harmonious interfaces (Corner Smoothing).</p>
+                                    <a href="https://calc.kototjom.top/" target="_blank" class="project-link">
+                                        calc.kototjom.top <i data-lucide="external-link" style="width:16px; height:16px;"></i>
+                                    </a>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">WEB TOOLS</span>
+                                        <span class="tech-tag">UI/UX</span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="project-item" style="opacity: 0.5;">
+                                <div class="item-image"><i data-lucide="loader" style="color: #999;"></i></div>
+                                <div class="item-content">
+                                    <div class="project-title">Next Project...</div>
+                                    <p>In progress. Stay tuned.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">Coming Soon</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            }
+        };
+
+        function openModal(cardId) {
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            const data = modalContent[cardId];
+
+            if (data && data[lang]) {
+                const content = data[lang];
+                document.getElementById('modal-title').innerText = content.title;
+                document.getElementById('modal-body').innerHTML = content.body;
+                
+                const overlay = document.getElementById('modal-overlay');
+                overlay.classList.add('active');
+                
+                lucide.createIcons();
+            }
+        }
+
+        function closeModal(event) {
+            if (event && !event.target.classList.contains('modal-overlay')) return;
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeModal();
+        });
+
+        const translations = {
+            ru: {
+                portfolio_year: "Рабочий сайт",
+                role: "Дизайнер & <br/> Творец",
+                exp_title: "Опыт", exp_since: "С 2022 года", exp_desc: "От простых дизайнов к поиску новых решений.",
+                lang_title: "Языки", lang_ru: "Русский", lang_de: "Немецкий", lang_en: "Английский", level_native: "Родной", level_fluent: "B1",
+                projects_title_html: "Создаю свои <br/> <span class='italic text-accent'>собственные проекты</span>", projects_desc: "От идеи до реализации",
+                connect: "Связаться", footer_loc: "Сделано в Саарбрюккене.", privacy_policy: "Политика конфиденциальности"
+            },
+            en: {
+                portfolio_year: "Professional website",
+                role: "Designer & <br/> Creator",
+                exp_title: "Experience", exp_since: "Since 2022", exp_desc: "From simple designs to exploring new ideas.",
+                lang_title: "Languages", lang_ru: "Russian", lang_de: "German", lang_en: "English", level_native: "Native", level_fluent: "B1",
+                projects_title_html: "Building my <br/> <span class='italic text-accent'>own projects</span>", projects_desc: "From idea to realization",
+                connect: "Connect", footer_loc: "Designed in Saarbrücken.", privacy_policy: "Privacy Policy"
+            },
+            de: {
+                portfolio_year: "Berufliche Website",
+                role: "Designer & <br/> Gestalter",
+                exp_title: "Erfahrung", exp_since: "Seit 2022", exp_desc: "Von einfachen Designs zur Suche nach neuen Ideen.",
+                lang_title: "Sprachen", lang_ru: "Russisch", lang_de: "Deutsch", lang_en: "Englisch", level_native: "Muttersprache", level_fluent: "B1",
+                projects_title_html: "Entwickle meine <br/> <span class='italic text-accent'>eigenen Projekte</span>", projects_desc: "Von der Idee zur Umsetzung",
+                connect: "Kontakt", footer_loc: "Designed in Saarbrücken.", privacy_policy: "Datenschutzerklärung"
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${lang}`).classList.add('active');
+
+            const texts = translations[lang];
+            for (const key in texts) {
+                const element = document.querySelector(`[data-key="${key}"]`);
+                if (element) element.innerHTML = texts[key];
+            }
+            document.documentElement.lang = lang;
+        }
+
+        function initLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const browserLang = navigator.language.slice(0, 2); 
+            if (savedLang && translations[savedLang]) setLanguage(savedLang);
+            else if (translations[browserLang]) setLanguage(browserLang);
+            else setLanguage('en'); 
+        }
+
+        initLanguage();
+    </script>
+</body>
+</html>
