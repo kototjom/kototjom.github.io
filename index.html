@@ -10,8 +10,8 @@
         :root {
             --bg-color: #0f0f12; /* Глубокий темный фон */
             --card-bg: #18181b; /* Фон карточки */
-            --accent-color: #3F4581; /* Фиолетовый акцент (как на скрине) */
-            --accent-hover: #3F4581;
+            --accent-color: #3F4581; /* Фиолетовый акцент */
+            --accent-hover: #5058a6;
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
             --border-color: #27272a;
@@ -33,7 +33,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Фоновый узор (сетка) - едва заметный */
+            /* Фоновый узор (сетка) */
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -62,7 +62,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--bg-color);
-            box-shadow: 0 0 0 2px var(--accent-color); /* Фиолетовая обводка */
+            box-shadow: 0 0 0 2px var(--accent-color);
         }
 
         .status-indicator {
@@ -71,7 +71,7 @@
             right: 5px;
             width: 16px;
             height: 16px;
-            background-color: #22c55e; /* Зеленый онлайн */
+            background-color: #22c55e;
             border: 3px solid var(--bg-color);
             border-radius: 50%;
         }
@@ -123,7 +123,7 @@
         
         .social-btn.main:hover {
             background: var(--accent-hover);
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 4px 15px rgba(63, 69, 129, 0.4);
         }
 
         /* --- 3. Сетка контента (Library) --- */
@@ -131,6 +131,7 @@
             width: 100%;
             max-width: 1100px;
             padding: 20px;
+            flex-grow: 1; /* Чтобы футер прижимался к низу */
         }
 
         .section-title {
@@ -145,9 +146,9 @@
 
         .grid {
             display: grid;
-            /* Адаптивная сетка: от 1 до 3 колонок */
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
             gap: 24px;
+            grid-auto-flow: dense;
         }
 
         @media (max-width: 350px) {
@@ -156,16 +157,24 @@
             }
         }
 
-        /* --- 4. Дизайн Карточки (Как на скрине) --- */
+        /* --- 4. Дизайн Карточки --- */
         .card {
             background-color: var(--card-bg);
             border-radius: 20px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
             position: relative;
+            height: 100%;
+        }
+
+        /* Стиль для ВАЖНОГО блока */
+        .card.important {
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 4px 20px rgba(63, 69, 129, 0.15); /* Легкое свечение */
+            background: linear-gradient(145deg, var(--card-bg) 0%, #1e1e24 100%);
         }
 
         .card:hover {
@@ -174,12 +183,49 @@
             border-color: rgba(124, 58, 237, 0.3);
         }
 
+        .card.important:hover {
+            border-color: var(--accent-hover);
+            box-shadow: 0 10px 35px rgba(63, 69, 129, 0.3);
+        }
+
+        /* ВАЖНЫЙ БЛОК: Горизонтальный лэйаут для ПК */
+        @media (min-width: 664px) {
+            .card.important {
+                grid-column: span 2;
+                flex-direction: row; 
+                align-items: stretch;
+            }
+
+            .card.important .card-image-wrapper {
+                width: 45%; 
+                height: auto; 
+                min-height: 250px;
+            }
+
+            .card.important .card-body {
+                width: 55%; 
+                justify-content: center; 
+                padding: 30px;
+            }
+
+            .card.important .card-title {
+                font-size: 1.5rem;
+                margin-bottom: 12px;
+            }
+            
+            .card.important .read-btn {
+                margin-top: auto;
+                width: 100%; 
+            }
+        }
+
         /* Верхняя часть с картинкой */
         .card-image-wrapper {
             height: 180px;
-            background: #232323; /* Заглушка если картинки нет */
+            background: #232323;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .card-img {
@@ -191,23 +237,6 @@
 
         .card:hover .card-img {
             transform: scale(1.05);
-        }
-
-        /* Бейдж источника (author.today и т.д.) */
-        .source-badge {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
         /* Тело карточки */
@@ -246,31 +275,20 @@
             color: #d4d4d8;
             margin-bottom: 20px;
             line-height: 1.4;
-            flex-grow: 1; /* Текст занимает свободное место */
+            flex-grow: 1;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Обрезка текста до 3 строк */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
-        /* Теги */
-        .tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+        
+        @media (min-width: 768px) {
+            .card.important .card-desc {
+                -webkit-line-clamp: 6; 
+                font-size: 1rem;
+            }
         }
 
-        .tag {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Кнопка внизу */
         .read-btn {
             width: 100%;
             padding: 12px;
@@ -288,15 +306,41 @@
         .read-btn:hover {
             background-color: var(--accent-hover);
         }
+        
+        /* --- 5. Футер --- */
+        .footer {
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+            color: #71717a;
+            font-size: 0.8rem;
+            margin-top: 40px;
+            background-color: rgba(0, 0, 0, 0.151); 
+            border-top: 1px solid rgba(255,255,255,0.03);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-link {
+            color: #71717a;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-link:hover {
+            color: var(--text-main);
+        }
 
         /* --- Анимации --- */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Иконки SVG (Inline для простоты) */
-        .icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     </style>
 </head>
@@ -305,7 +349,7 @@
     <!-- Хедер: Профиль и Соцсети -->
     <header>
         <div class="avatar-container">
-            <img src="/pics/channels4_profile.jpg" alt="Avatar" class="avatar">
+            <img src="/pics/channels4_profile.jpg" alt="Avatar" class="avatar" onerror="this.src='https://via.placeholder.com/100'">
             <div class="status-indicator"></div>
         </div>
         <h1>Kototjom</h1>
@@ -329,147 +373,114 @@
             Библиотека всякого
         </div>
 
-        <div class="grid">
-            
-            <!-- Карточка 1 -->
-            <div class="card">
-                <div class="card-image-wrapper">
-                    <img src="/pics/Frameв 19.png" alt="Cover" class="card-img">
-                    <div class="source-badge">author.today</div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">"Анфиса, спокойной ночи"</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <i class="bi bi-calendar"></i>
-                            2023
-                        </div>
-                        <div class="meta-item">
-                            <i class="bi bi-book"></i>
-                            Проза
-                        </div>
-                    </div>
-                    <p class="card-desc">
-                        Жизнь Алекса была скучна. Он выполнял одну и ту же работу каждый день, а из круга общения у него была только Анфиса...
-                    </p>
-                    <div class="tags">
-                        <span class="tag">#проза</span>
-                        <span class="tag">#соавтор</span>
-                    </div>
-                    <a href="https://author.today/work/286071" class="read-btn">Читать</a>
-                </div>
-            </div>
-
-            <!-- Карточка 2 -->
-            <div class="card">
-                <div class="card-image-wrapper">
-                    <img src="/pics/книга.png" alt="Cover" class="card-img">
-                    <div class="source-badge">poeziya.ru</div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">"И снова у обрыва"</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <i class="bi bi-calendar"></i>
-                            2025
-                        </div>
-                        <div class="meta-item">
-                            <i class="bi bi-feather"></i>
-                            Поэзия
-                        </div>
-                    </div>
-                    <p class="card-desc">
-                        Стихотворение о навязчивом повторении и принятии безысходности. Входит в сборник "На грани повтора".
-                    </p>
-                    <div class="tags">
-                        <span class="tag">#abab</span>
-                        <span class="tag">#ru</span>
-                    </div>
-                    <a href="https://poeziya.ru/a/1303808/" class="read-btn">Читать</a>
-                </div>
-            </div>
-
-            <!-- Карточка 3 -->
-            <div class="card">
-                <div class="card-image-wrapper">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Erl_king_sterner.jpg" alt="Cover" class="card-img">
-                    <div class="source-badge">poeziya.ru</div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">Перевод "Erlkönig"</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <i class="bi bi-calendar"></i>
-                            2025
-                        </div>
-                        <div class="meta-item">
-                            <i class="bi bi-feather"></i>
-                            Перевод
-                        </div>
-                    </div>
-                    <p class="card-desc">
-                        Классический перевод баллады Erlkönig («Лесной царь») на русский с сохранением ритма.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">#aabb</span>
-                        <span class="tag">#de</span>
-                    </div>
-                    <a href="https://poeziya.ru/a/1303810/" class="read-btn">Читать</a>
-                </div>
-            </div>
-
-             <!-- Карточка 4 -->
-             <div class="card">
-                <div class="card-image-wrapper">
-                    <img src="https://kototjom.top/pics/Frame%2019.png" alt="Cover" class="card-img">
-                    <div class="source-badge">poeziya.ru</div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">"Идея"</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <i class="bi bi-calendar"></i>
-                            2025
-                        </div>
-                        <div class="meta-item">
-                            <i class="bi bi-feather"></i>
-                            Поэзия
-                        </div>
-                    </div>
-                    <p class="card-desc">
-                        Стихотворение о вдохновении и его неарелизации. Входит в сборник поэзии "На грани повтора".
-                    </p>
-                    <div class="tags">
-                        <span class="tag">#aabbccdd</span>
-                        <span class="tag">#ru</span>
-                    </div>
-                    <a href="https://poeziya.ru/a/1303809/" class="read-btn">Читать</a>
-                </div>
-            </div>
-
-        </div>
+        <div class="grid" id="library-grid"></div>
     </div>
+    
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/конфиденциальность/" class="footer-link">Конфиденциальность</a>
+            <a href="#" class="footer-link">Made with ❤️</a>
+        </div>
+        <p>© <span id="current-year"></span> Artjom Titov. All rights reserved.</p>
+    </footer>
 
-    <!-- Простой JS для интерактивности карточек (необязательно, но красиво) -->
+    <!-- JAVASCRIPT: НАСТРОЙКИ И ДАННЫЕ -->
     <script>
-        // Добавляем легкий 3D эффект при наведении курсора
-        const cards = document.querySelectorAll('.card');
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        /**
+         * ⚙️ НАСТРОЙКИ БИБЛИОТЕКИ
+         */
+        const libraryData = [
+            {
+                title: '"И снова у обрыва"',
+                year: "2025",
+                category: "Поэзия",
+                categoryIcon: "bi-feather",
+                desc: "Стихотворение о навязчивом повторении и принятии безысходности. Входит в сборник \"На грани повтора\".",
+                image: "/pics/книга.png",
+                link: "https://poeziya.ru/a/1303808/",
+                important: true
+            },
+            {
+                title: '"Анфиса, спокойной ночи"',
+                year: "2023",
+                category: "Проза",
+                categoryIcon: "bi-book",
+                desc: "Жизнь Алекса была скучна. Он выполнял одну и ту же работу каждый день, а из круга общения у него была только Анфиса...",
+                image: "/pics/Frameв 19.png",
+                link: "https://author.today/work/286071",
+                important: false
+            },
+            {
+                title: 'Перевод "Erlkönig"',
+                year: "2025",
+                category: "Перевод",
+                categoryIcon: "bi-translate",
+                desc: "Классический перевод баллады Erlkönig («Лесной царь») на русский с сохранением ритма.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/3/30/Erl_king_sterner.jpg",
+                link: "https://poeziya.ru/a/1303810/",
+                important: false
+            },
+            {
+                title: '"Идея"',
+                year: "2025",
+                category: "Поэзия",
+                categoryIcon: "bi-feather",
+                desc: "Стихотворение о вдохновении и его нереализации.",
+                image: "/pics/Fraыme 19.png", 
+                link: "https://poeziya.ru/a/1303809/",
+                important: false
+            }
+        ];
 
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+        // --- ФУНКЦИЯ ОТРИСОВКИ ---
+        function renderLibrary() {
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = ''; 
+
+            libraryData.forEach(item => {
+                const cardHTML = `
+                    <div class="card ${item.important ? 'important' : ''}">
+                        <div class="card-image-wrapper">
+                            <img src="${item.image}" alt="${item.title}" class="card-img" onerror="this.src='https://placehold.co/600x400/232323/FFF?text=Нет+изображения'">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${item.title}</h3>
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <i class="bi bi-calendar"></i>
+                                    ${item.year}
+                                </div>
+                                <div class="meta-item">
+                                    <i class="bi ${item.categoryIcon || 'bi-book'}"></i>
+                                    ${item.category}
+                                </div>
+                            </div>
+                            <p class="card-desc">
+                                ${item.desc}
+                            </p>
+                            
+                            <a href="${item.link}" class="read-btn" target="_blank">Читать</a>
+                        </div>
+                    </div>
+                `;
                 
-                // Легкий наклон
-                // card.style.transform = `perspective(1000px) rotateX(${(y - rect.height/2) / 20}deg) rotateY(${-(x - rect.width/2) / 20}deg) translateY(-5px)`;
+                grid.insertAdjacentHTML('beforeend', cardHTML);
             });
 
-            card.addEventListener('mouseleave', () => {
-                // card.style.transform = 'translateY(0)';
+            addHoverEffects();
+        }
+
+        function addHoverEffects() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                });
             });
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', renderLibrary);
     </script>
-
 </body>
 </html>
