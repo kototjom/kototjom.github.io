@@ -6,16 +6,31 @@
     <title>Kototjom | Link in bio</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
-        /* --- 1. Базовые настройки (Reset & Variables) --- */
+        /* --- 1. Базовые настройки --- */
         :root {
-            --bg-color: #0f0f12; /* Глубокий темный фон */
-            --card-bg: #18181b; /* Фон карточки */
-            --accent-color: #3F4581; /* Фиолетовый акцент */
+            --bg-color: #0f0f12; 
+            --library-bg: #16161a; 
+            --card-bg: #1a1a1d; 
+            --accent-color: #3F4581; 
             --accent-hover: #5058a6;
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
-            --border-color: #27272a;
+            --border-color: rgba(255, 255, 255, 0.08);
             --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f1f23;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
         }
 
         * {
@@ -30,30 +45,41 @@
             font-family: var(--font-family);
             line-height: 1.5;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Фоновый узор (сетка) */
+            overflow-x: hidden;
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
+            background-attachment: fixed;
         }
 
-        /* --- 2. Хедер (Профиль + Ссылки) --- */
-        header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            max-width: 600px;
+        /* --- 2. Hero Section --- */
+        .hero-section {
+            min-height: 100vh;
             width: 100%;
-            animation: fadeIn 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px 100px; 
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out;
+            margin: auto;
         }
 
         .avatar-container {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            flex-shrink: 0;
         }
 
         .avatar {
@@ -61,169 +87,213 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--bg-color);
-            box-shadow: 0 0 0 2px var(--accent-color);
+            border: 4px solid var(--bg-color);
+            box-shadow: 0 0 0 2px var(--accent-color), 0 10px 40px rgba(63, 69, 129, 0.4);
         }
 
         .status-indicator {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 16px;
-            height: 16px;
+            bottom: 6px;
+            right: 6px;
+            width: 20px;
+            height: 20px;
             background-color: #22c55e;
-            border: 3px solid var(--bg-color);
+            border: 4px solid var(--bg-color);
             border-radius: 50%;
         }
 
         h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .bio {
             color: var(--text-muted);
-            margin-bottom: 24px;
-            font-size: 0.95rem;
+            margin-bottom: 32px;
+            font-size: 1.1rem;
         }
 
         .social-links {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 12px;
-            flex-wrap: wrap;
+            width: 100%;
         }
 
         .social-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05); 
             color: var(--text-main);
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-size: 0.9rem;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 1rem;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 10px;
             border: 1px solid transparent;
         }
 
         .social-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.1);
         }
 
         .social-btn.main {
             background: var(--accent-color);
             font-weight: 600;
         }
-        
-        .social-btn.main:hover {
-            background: var(--accent-hover);
-            box-shadow: 0 4px 15px rgba(63, 69, 129, 0.4);
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            animation: bounce 2.5s infinite;
+            opacity: 0.5;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 5;
         }
 
-        /* --- 3. Сетка контента (Library) --- */
-        .library-container {
+        /* --- 3. Секция Библиотеки (Упрощено для скорости) --- */
+        .library-section {
             width: 100%;
-            max-width: 1100px;
-            padding: 20px;
-            flex-grow: 1; /* Чтобы футер прижимался к низу */
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 24px;
-            font-size: 1.2rem;
-            color: var(--text-main);
-            padding-left: 5px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 24px;
-            grid-auto-flow: dense;
-        }
-
-        @media (max-width: 350px) {
-            .grid {
-               grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-            }
-        }
-
-        /* --- 4. Дизайн Карточки --- */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            background-color: var(--library-bg); 
+            border-top: 1px solid var(--border-color);
+            border-radius: 40px 40px 0 0;
             display: flex;
             flex-direction: column;
             position: relative;
+            z-index: 2; 
+            min-height: 100vh;
+            /* Убрали тень и эффекты матовости для стабильности FPS */
+            box-shadow: none;
+        }
+
+        .library-content-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            padding: 30px 20px 80px 20px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .library-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .library-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tabs-container {
+            background: rgba(0, 0, 0, 0.3); 
+            padding: 4px;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+            display: inline-flex;
+            width: fit-content;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background-color: var(--accent-color);
+        }
+
+        .grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .grid.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 4. Карточки --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
             height: 100%;
         }
 
-        /* Стиль для ВАЖНОГО блока */
-        .card.important {
-            border: 1px solid var(--accent-color);
-            box-shadow: 0 4px 20px rgba(63, 69, 129, 0.15); /* Легкое свечение */
-            background: linear-gradient(145deg, var(--card-bg) 0%, #1e1e24 100%);
-        }
-
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
         }
 
-        .card.important:hover {
-            border-color: var(--accent-hover);
-            box-shadow: 0 10px 35px rgba(63, 69, 129, 0.3);
+        .card.important {
+            border: 1px solid rgba(63, 69, 129, 0.6);
         }
 
-        /* ВАЖНЫЙ БЛОК: Горизонтальный лэйаут для ПК */
-        @media (min-width: 664px) {
+        @media (min-width: 850px) {
             .card.important {
                 grid-column: span 2;
                 flex-direction: row; 
-                align-items: stretch;
             }
-
             .card.important .card-image-wrapper {
                 width: 45%; 
-                height: auto; 
-                min-height: 250px;
+                height: 100%;
+                min-height: 300px;
             }
-
             .card.important .card-body {
                 width: 55%; 
-                justify-content: center; 
-                padding: 30px;
-            }
-
-            .card.important .card-title {
-                font-size: 1.5rem;
-                margin-bottom: 12px;
-            }
-            
-            .card.important .read-btn {
-                margin-top: auto;
-                width: 100%; 
+                padding: 32px;
             }
         }
 
-        /* Верхняя часть с картинкой */
         .card-image-wrapper {
-            height: 180px;
-            background: #232323;
-            position: relative;
+            height: 200px;
+            background: #121214;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -239,170 +309,176 @@
             transform: scale(1.05);
         }
 
-        /* Тело карточки */
         .card-body {
-            padding: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            min-width: 0;
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
+            margin-bottom: 8px;
+            word-wrap: break-word;
         }
 
-        /* Мета-инфо (Год, Категория) */
         .card-meta {
             display: flex;
-            align-items: center;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 12px;
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            margin-bottom: 16px;
         }
 
         .card-desc {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #d4d4d8;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            margin-bottom: 24px;
             flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
             overflow: hidden;
-        }
-        
-        @media (min-width: 768px) {
-            .card.important .card-desc {
-                -webkit-line-clamp: 6; 
-                font-size: 1rem;
-            }
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
         }
 
         .read-btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: var(--accent-color);
             color: white;
-            border: none;
             border-radius: 12px;
             font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
             text-align: center;
             text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+            margin-top: auto;
         }
 
         .read-btn:hover {
             background-color: var(--accent-hover);
         }
-        
+
         /* --- 5. Футер --- */
         .footer {
             width: 100%;
-            padding: 40px 20px;
+            padding: 40px 20px; 
             text-align: center;
-            color: #71717a;
-            font-size: 0.8rem;
-            margin-top: 40px;
-            background-color: rgba(0, 0, 0, 0.151); 
-            border-top: 1px solid rgba(255,255,255,0.03);
+            color: #52525b;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            background-color: rgba(0, 0, 0, 0.1);
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 10px;
+            gap: 24px;
+            margin-bottom: 16px;
         }
         
         .footer-link {
-            color: #71717a;
+            color: inherit;
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.3s;
         }
-        
+
         .footer-link:hover {
             color: var(--text-main);
         }
 
-        /* --- Анимации --- */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Хедер: Профиль и Соцсети -->
-    <header>
-        <div class="avatar-container">
-            <img src="/pics/channels4_profile.jpg" alt="Avatar" class="avatar" onerror="this.src='https://via.placeholder.com/100'">
-            <div class="status-indicator"></div>
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="avatar-container">
+                <img src="/pics/channels4_profile.jpg" alt="Avatar" class="avatar" onerror="this.src='https://via.placeholder.com/150'">
+                <div class="status-indicator"></div>
+            </div>
+            <h1>Kototjom</h1>
+            <p class="bio">ready to slay, duh</p>
+            
+            <div class="social-links">
+                <a href="https://t.me/kototjom_telegram" class="social-btn main">
+                    <i class="bi bi-telegram"></i> Telegram
+                </a>
+                <a href="https://www.instagram.com/kototjom/" class="social-btn">
+                    <i class="bi bi-instagram"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com/@kototjom" class="social-btn">
+                    <i class="bi bi-tiktok"></i> TikTok
+                </a>
+                <a href="https://www.youtube.com/@kototjom" class="social-btn">
+                    <i class="bi bi-youtube"></i> YouTube
+                </a>
+            </div>
         </div>
-        <h1>Kototjom</h1>
-        <p class="bio">ready to slay, duh</p>
+
+        <div class="scroll-down" onclick="document.querySelector('.library-section').scrollIntoView({behavior: 'smooth'})">
+            <i class="bi bi-chevron-down"></i>
+        </div>
+    </section>
+
+    <section class="library-section" id="library">
+        <div class="library-content-wrapper">
+            <div class="library-header">
+                <h2 class="section-title">
+                    <i class="bi bi-collection"></i> Моя библиотека
+                </h2>
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="filterLibrary('creative')">Творчество</button>
+                    <button class="tab-btn" onclick="filterLibrary('sites')">Мои сайты</button>
+                </div>
+            </div>
+
+            <div class="grid" id="library-grid"></div>
+        </div>
         
-        <div class="social-links">
-            <a href="https://t.me/kototjom_telegram" class="social-btn main">
-            <i class="bi bi-telegram"></i>
-                Telegram
-            </a>
-            <a href="https://www.instagram.com/kototjom/" class="social-btn">Instagram</a>
-            <a href="https://www.tiktok.com/@kototjom" class="social-btn">TikTok</a>
-            <a href="https://www.youtube.com/@kototjom" class="social-btn">YouTube</a>
-        </div>
-    </header>
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/конфиденциальность/" class="footer-link">Конфиденциальность</a>
+                <a href="#" class="footer-link">Made with ❤️</a>
+            </div>
+            <p class="copyright">© <span id="current-year"></span> Artjom Titov. All rights reserved.</p>
+        </footer>
+    </section>
 
-    <!-- Библиотека проектов -->
-    <div class="library-container">
-        <div class="section-title">
-            <i class="bi bi-book"></i>
-            Библиотека всякого
-        </div>
-
-        <div class="grid" id="library-grid"></div>
-    </div>
-    
-    <!-- Футер -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="/конфиденциальность/" class="footer-link">Конфиденциальность</a>
-            <a href="#" class="footer-link">Made with ❤️</a>
-        </div>
-        <p>© <span id="current-year"></span> Artjom Titov. All rights reserved.</p>
-    </footer>
-
-    <!-- JAVASCRIPT: НАСТРОЙКИ И ДАННЫЕ -->
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
-        /**
-         * ⚙️ НАСТРОЙКИ БИБЛИОТЕКИ
-         */
+
         const libraryData = [
             {
+                type: 'creative',
                 title: '"И снова у обрыва"',
                 year: "2025",
                 category: "Поэзия",
                 categoryIcon: "bi-feather",
-                desc: "Стихотворение о навязчивом повторении и принятии безысходности. Входит в сборник \"На грани повтора\".",
+                desc: "Стихотворение о навязчивом повторении и принятии безысходности",
                 image: "/pics/книга.png",
                 link: "https://poeziya.ru/a/1303808/",
                 important: true
             },
             {
+                type: 'creative',
                 title: '"Анфиса, спокойной ночи"',
                 year: "2023",
                 category: "Проза",
@@ -413,6 +489,7 @@
                 important: false
             },
             {
+                type: 'creative',
                 title: 'Перевод "Erlkönig"',
                 year: "2025",
                 category: "Перевод",
@@ -423,6 +500,7 @@
                 important: false
             },
             {
+                type: 'creative',
                 title: '"Идея"',
                 year: "2025",
                 category: "Поэзия",
@@ -431,56 +509,62 @@
                 image: "/pics/Fraыme 19.png", 
                 link: "https://poeziya.ru/a/1303809/",
                 important: false
-            }
+            },
+            {
+                type: 'sites',
+                title: 'Калькулятор скруглений',
+                year: "2024",
+                category: "Веб-сайт",
+                categoryIcon: "bi-laptop",
+                desc: "Генератор скругления для контейнеров, внутри которых находится другой элемент",
+                image: "https://i.ibb.co/ZRrsXGhF/image.png", 
+                link: "https://calc.kototjom.top/",
+                important: false
+            },
         ];
 
-        // --- ФУНКЦИЯ ОТРИСОВКИ ---
-        function renderLibrary() {
+        function renderLibrary(filterType = 'creative') {
             const grid = document.getElementById('library-grid');
-            grid.innerHTML = ''; 
-
-            libraryData.forEach(item => {
-                const cardHTML = `
-                    <div class="card ${item.important ? 'important' : ''}">
-                        <div class="card-image-wrapper">
-                            <img src="${item.image}" alt="${item.title}" class="card-img" onerror="this.src='https://placehold.co/600x400/232323/FFF?text=Нет+изображения'">
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">${item.title}</h3>
-                            <div class="card-meta">
-                                <div class="meta-item">
-                                    <i class="bi bi-calendar"></i>
-                                    ${item.year}
-                                </div>
-                                <div class="meta-item">
-                                    <i class="bi ${item.categoryIcon || 'bi-book'}"></i>
-                                    ${item.category}
-                                </div>
+            grid.classList.remove('visible');
+            
+            setTimeout(() => {
+                grid.innerHTML = ''; 
+                const filteredData = libraryData.filter(item => item.type === filterType);
+                filteredData.forEach(item => {
+                    const cardHTML = `
+                        <div class="card ${item.important ? 'important' : ''}">
+                            <div class="card-image-wrapper">
+                                <img src="${item.image}" alt="${item.title}" class="card-img" onerror="this.src='https://placehold.co/600x400/1a1a1c/FFF?text=Нет+изображения'">
                             </div>
-                            <p class="card-desc">
-                                ${item.desc}
-                            </p>
-                            
-                            <a href="${item.link}" class="read-btn" target="_blank">Читать</a>
+                            <div class="card-body">
+                                <h3 class="card-title">${item.title}</h3>
+                                <div class="card-meta">
+                                    <span><i class="bi bi-calendar"></i> ${item.year}</span>
+                                    <span><i class="bi ${item.categoryIcon || 'bi-book'}"></i> ${item.category}</span>
+                                </div>
+                                <p class="card-desc">${item.desc}</p>
+                                <a href="${item.link}" class="read-btn" target="_blank">
+                                    ${filterType === 'sites' ? 'Посетить' : 'Читать'} 
+                                    <i class="bi bi-arrow-right-short"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                `;
-                
-                grid.insertAdjacentHTML('beforeend', cardHTML);
-            });
-
-            addHoverEffects();
-        }
-
-        function addHoverEffects() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
+                    `;
+                    grid.insertAdjacentHTML('beforeend', cardHTML);
                 });
-            });
+                grid.classList.add('visible');
+            }, 100); 
         }
 
-        document.addEventListener('DOMContentLoaded', renderLibrary);
+        function filterLibrary(type) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if(type === 'creative') buttons[0].classList.add('active');
+            if(type === 'sites') buttons[1].classList.add('active');
+            renderLibrary(type);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { renderLibrary('creative'); });
     </script>
 </body>
 </html>
