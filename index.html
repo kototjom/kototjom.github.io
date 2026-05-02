@@ -149,9 +149,10 @@
             justify-content: space-between;
         }
 
+        /* Обновленная сетка для 2-х элементов */
         .bento-box {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
 
@@ -163,7 +164,10 @@
             position: relative;
             transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
@@ -174,6 +178,7 @@
         .card h3 {
             font-size: 0.9rem;
             margin-bottom: 8px;
+            color: var(--text);
         }
 
         .card p {
@@ -186,77 +191,6 @@
             font-size: 1.5rem;
             margin-bottom: 10px;
             display: block;
-        }
-
-        .tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
-
-        .modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--overlay);
-            backdrop-filter: blur(4px);
-            display: none;
-            justify-content: center;
-            align-items: flex-end;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: #1c1e26;
-            border-top: 3px solid var(--primary);
-            border-radius: 32px 32px 0 0;
-            max-width: 500px;
-            width: 100%;
-            padding: 40px 30px;
-            position: relative;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-handle {
-            width: 40px;
-            height: 5px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: var(--paper);
-            border: none;
-            color: var(--text);
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-body {
-            text-align: center;
-        }
-
-        .modal-body h2 {
-            margin: 15px 0;
-            font-size: 1.5rem;
-        }
-
-        .modal-body p {
-            color: var(--text-dim);
-            font-size: 1rem;
-            line-height: 1.6;
         }
 
         footer {
@@ -319,21 +253,19 @@
         </div>
 
         <div class="bento-box">
-            <div class="card tall" onclick="openModal('Поэзия', '🎋', 'Этот раздел сайта ещё не готов')">
+            <!-- Кнопка 1: Поэзия (Ссылка) -->
+            <a href="https://t.me/your_poetry_link" class="card">
                 <span class="card-icon">🎋</span>
                 <h3>Поэзия</h3>
-                <p>Цифровой хаос и вдохновение</p>
-            </div>
-            <div class="card" onclick="openModal('Проекты', '🎐', 'Этот раздел сайта ещё не готов')">
+                <p>Цифровой хаос и вдохновение.</p>
+            </a>
+            
+            <!-- Кнопка 2: Другое (Ссылка) -->
+            <a href="https://t.me/your_other_projects" class="card">
                 <span class="card-icon">🎐</span>
                 <h3>Другое</h3>
-                <p>Проекты и идеи</p>
-            </div>
-            <div class="card" onclick="openModal('Портфолио', '💢', 'Этот раздел сайта ещё не готов')">
-                <span class="card-icon">💢</span>
-                <h3>Портфолио</h3>
-                <p>Портфолио работ</p>
-            </div>
+                <p>Проекты и идеи.</p>
+            </a>
         </div>
     </div>
 
@@ -342,44 +274,6 @@
             © 2024-2026 — муа💙 <a href="/privacy/" style="text-decoration: none; color: #ffffff;">privacy</a>
         </div>
     </footer>
-
-    <div id="modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content">
-            <div class="modal-handle"></div>
-            <button class="close-modal" onclick="hideModal()">&times;</button>
-            <div class="modal-body" id="modal-body"></div>
-        </div>
-    </div>
-
-    <script>
-        function openModal(title, icon, text) {
-            const modal = document.getElementById('modal');
-            const body = document.getElementById('modal-body');
-            body.innerHTML = `
-                <span style="font-size: 4rem; display: block;">${icon}</span>
-                <h2>${title}</h2>
-                <p>${text}</p>
-            `;
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('active');
-            }, 10);
-        }
-
-        function hideModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('active');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 400);
-        }
-
-        function closeModal(event) {
-            if (event.target.id === 'modal') {
-                hideModal();
-            }
-        }
-    </script>
 
 </body>
 </html>
