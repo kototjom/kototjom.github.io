@@ -3,568 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kototjom | Link in bio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>KTJM // @Kototjom</title>
     <style>
-        /* --- 1. Базовые настройки --- */
+        @font-face {
+           font-family: 'Montserrat';
+           src: url('/files/Montserrat-VariableFont_wght.ttf') format('truetype-variations');
+           font-weight: 100 900;
+           font-style: normal;
+           font-display: swap;
+       }
+
         :root {
-            --bg-color: #0f0f12; 
-            --library-bg: #16161a; 
-            --card-bg: #1a1a1d; 
-            --accent-color: #3F4581; 
-            --accent-hover: #5058a6;
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --primary: #3f4581;
+            --primary-soft: #4e559e;
+            --bg: #16171d;
+            --paper: rgba(63, 69, 129, 0.12);
+            --text: #e2e4f3;
+            --text-dim: #8e92b2;
+            --rounding: 28px;
+            --overlay: rgba(0, 0, 0, 0.6);
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-color);
+            background: var(--bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: #1f1f23;
+            background: var(--primary);
             border-radius: 10px;
+            border: 2px solid var(--bg);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-color);
+            background: var(--primary-soft);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-family);
-            line-height: 1.5;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 0 0;
             overflow-x: hidden;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-attachment: fixed;
+                radial-gradient(circle at 50% 50%, rgba(63, 69, 129, 0.1), transparent),
+                url("/files/stardust.png"); /* текстура с сайта https://www.transparenttextures.com/ */
         }
 
-        /* --- 2. Hero Section --- */
-        .hero-section {
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 80px 20px 100px; 
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content {
+        .container {
+            width: calc(100% - 40px);
+            max-width: 440px;
             text-align: center;
-            max-width: 500px;
-            width: 100%;
-            animation: fadeIn 0.8s ease-out;
-            margin: auto;
-        }
-
-        .avatar-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 24px;
-            flex-shrink: 0;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--bg-color);
-            box-shadow: 0 0 0 2px var(--accent-color), 0 10px 40px rgba(63, 69, 129, 0.4);
-        }
-
-        .status-indicator {
-            position: absolute;
-            bottom: 6px;
-            right: 6px;
-            width: 20px;
-            height: 20px;
-            background-color: #22c55e;
-            border: 4px solid var(--bg-color);
-            border-radius: 50%;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #fff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .bio {
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            font-size: 1.1rem;
-        }
-
-        .social-links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
-
-        .social-btn {
-            background: rgba(255, 255, 255, 0.05); 
-            color: var(--text-main);
-            text-decoration: none;
-            padding: 14px 24px;
-            border-radius: 16px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: 1px solid transparent;
-        }
-
-        .social-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .social-btn.main {
-            background: var(--accent-color);
-            font-weight: 600;
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-muted);
-            animation: bounce 2.5s infinite;
-            opacity: 0.3;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 5;
-        }
-
-        /* --- 3. Секция Библиотеки (Упрощено для скорости) --- */
-        .library-section {
-            width: 100%;
-            background-color: var(--library-bg); 
-            border-top: 1px solid var(--border-color);
-            border-radius: 40px 40px 0 0;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 2; 
-            min-height: 100vh;
-            /* Убрали тень и эффекты матовости для стабильности FPS */
-            box-shadow: none;
-        }
-
-        .library-content-wrapper {
-            max-width: 1100px;
-            width: 100%;
-            padding: 30px 20px 80px 20px; 
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
             flex-grow: 1;
+            margin-bottom: 80px;
         }
 
-        .library-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
+        .profile {
             margin-bottom: 40px;
-            gap: 20px;
         }
 
-        @media (max-width: 768px) {
-            .library-header {
-                flex-direction: column;
-                text-align: center;
-            }
+        .badge {
+            font-size: 0.7rem;
+            background: var(--primary);
+            padding: 4px 12px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .name-block h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            color: var(--text);
         }
 
-        .tabs-container {
-            background: rgba(0, 0, 0, 0.3); 
-            padding: 4px;
-            border-radius: 100px;
-            border: 1px solid var(--border-color);
-            display: inline-flex;
-            width: fit-content;
+        .name-block .sub-name {
+            font-size: 1rem;
+            color: var(--primary-soft);
+            font-weight: 600;
+            margin-top: 5px;
         }
 
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 10px 24px;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .tab-btn.active {
-            color: #fff;
-            background-color: var(--accent-color);
-        }
-
-        .grid {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .grid.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- 4. Карточки --- */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+        .links-wrap {
             display: flex;
             flex-direction: column;
-            height: 100%;
+            gap: 14px;
+            margin-bottom: 50px;
+        }
+
+        .link-item {
+            background: var(--paper);
+            border: 2px solid transparent;
+            border-radius: var(--rounding);
+            padding: 18px;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+
+        .link-item:hover {
+            background: rgba(63, 69, 129, 0.25);
+            transform: translateY(-2px);
+            border-color: var(--primary-soft);
+        }
+
+        .link-item span:first-child {
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .label-eng {
+            font-size: 0.7rem;
+            opacity: 0.4;
+            text-transform: uppercase;
+        }
+
+        .creative-title {
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bento-box {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 15px;
+        }
+
+        .card {
+            background: var(--paper);
+            border-radius: var(--rounding);
+            padding: 20px;
+            text-align: left;
+            position: relative;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-color);
+            background: var(--primary);
+            transform: scale(1.02);
         }
 
-        .card.important {
-            border: 1px solid rgba(63, 69, 129, 0.6);
-        }
-
-        @media (min-width: 850px) {
-            .card.important {
-                grid-column: span 2;
-                flex-direction: row; 
-            }
-            .card.important .card-image-wrapper {
-                width: 45%; 
-                height: 100%;
-                min-height: 300px;
-            }
-            .card.important .card-body {
-                width: 55%; 
-                padding: 32px;
-            }
-        }
-
-        .card-image-wrapper {
-            height: 200px;
-            background: #121214;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-img {
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            min-width: 0;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .card h3 {
+            font-size: 0.9rem;
             margin-bottom: 8px;
-            word-wrap: break-word;
         }
 
-        .card-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 16px;
+        .card p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            line-height: 1.4;
         }
 
-        .card-desc {
-            font-size: 0.95rem;
-            color: #d4d4d8;
-            margin-bottom: 24px;
-            flex-grow: 1;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
+        .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
-        .read-btn {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: 12px;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
+        .tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--overlay);
+            backdrop-filter: blur(4px);
+            display: none;
             justify-content: center;
+            align-items: flex-end;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1c1e26;
+            border-top: 3px solid var(--primary);
+            border-radius: 32px 32px 0 0;
+            max-width: 500px;
+            width: 100%;
+            padding: 40px 30px;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: var(--paper);
+            border: none;
+            color: var(--text);
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            transition: background 0.2s;
+            justify-content: center;
+        }
+
+        .modal-body {
+            text-align: center;
+        }
+
+        .modal-body h2 {
+            margin: 15px 0;
+            font-size: 1.5rem;
+        }
+
+        .modal-body p {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.03);
             margin-top: auto;
         }
 
-        .read-btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        /* --- 5. Футер --- */
-        .footer {
-            width: 100%;
-            padding: 40px 20px; 
-            text-align: center;
-            color: #52525b;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-color);
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-        }
-        
-        .footer-link {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-link:hover {
-            color: var(--text-main);
+        .footer-text {
+            font-size: 0.7rem;
+            opacity: 0.4;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-        }
-
+        .container > * { animation: fadeIn 1s ease forwards; }
     </style>
 </head>
 <body>
 
-    <section class="hero-section">
-        <div class="hero-content">
-            <div class="avatar-container">
-                <img src="/assets/channels4_profile.jpg" alt="Avatar" class="avatar" onerror="this.src='https://via.placeholder.com/150'">
-                <div class="status-indicator"></div>
+    <div class="container">
+        <header class="profile">
+            <div class="badge">ready to slay</div>
+            <div class="name-block">
+                <h1>KTJM</h1>
+                <div class="sub-name">aka @kototjom</div>
             </div>
-            <h1>Kototjom</h1>
-            <p class="bio">ready to slay, duh</p>
-            
-            <div class="social-links">
-                <a href="https://t.me/kototjom_telegram" class="social-btn main">
-                    <i class="bi bi-telegram"></i> Telegram
-                </a>
-                <a href="https://www.instagram.com/kototjom/" class="social-btn">
-                    <i class="bi bi-instagram"></i> Instagram
-                </a>
-                <a href="https://www.tiktok.com/@kototjom" class="social-btn">
-                    <i class="bi bi-tiktok"></i> TikTok
-                </a>
-                <a href="https://www.youtube.com/@kototjom" class="social-btn">
-                    <i class="bi bi-youtube"></i> YouTube
-                </a>
-            </div>
+        </header>
+
+        <nav class="links-wrap">
+            <a href="https://t.me/kototjom_telegram" class="link-item">
+                <span><small>🍵</small> Telegram</span>
+                <span class="label-eng">Blog</span>
+            </a>
+            <a href="https://www.instagram.com/kototjom/" class="link-item">
+                <span><small>🍙</small> Instagram</span>
+                <span class="label-eng">Life</span>
+            </a>
+            <a href="https://www.youtube.com/@kototjom" class="link-item">
+                <span><small>📻</small> YouTube</span>
+                <span class="label-eng">Videos</span>
+            </a>
+            <a href="https://www.tiktok.com/@kototjom" class="link-item">
+                <span><small>📻</small> TikTok</span>
+                <span class="label-eng">Reposts</span>
+            </a>
+        </nav>
+
+        <div class="creative-title">
+            <span>Творческий уголок</span>
+            <span style="opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">Creative</span>
         </div>
 
-        <div class="scroll-down" onclick="document.querySelector('.library-section').scrollIntoView({behavior: 'smooth'})">
-            <i class="bi bi-chevron-down"></i>
-        </div>
-    </section>
-
-    <section class="library-section" id="library">
-        <div class="library-content-wrapper">
-            <div class="library-header">
-                <h2 class="section-title">
-                    <i class="bi bi-collection"></i> Моя библиотека
-                </h2>
-                
-                <div class="tabs-container">
-                    <button class="tab-btn active" onclick="filterLibrary('creative')">Творчество</button>
-                    <button class="tab-btn" onclick="filterLibrary('sites')">Проекты</button>
-                </div>
+        <div class="bento-box">
+            <div class="card tall" onclick="openModal('Поэзия', '🎋', 'Этот раздел сайта ещё не готов')">
+                <span class="card-icon">🎋</span>
+                <h3>Поэзия</h3>
+                <p>Цифровой хаос и вдохновение</p>
             </div>
-
-            <div class="grid" id="library-grid"></div>
-        </div>
-        
-        <footer class="footer">
-            <div class="footer-links">
-                <a href="https://kototjom.top/конфиденциальность/" class="footer-link">Конфиденциальность</a>
-                <a href="#" class="footer-link">Made with ❤️</a>
+            <div class="card" onclick="openModal('Проекты', '🎐', 'Этот раздел сайта ещё не готов')">
+                <span class="card-icon">🎐</span>
+                <h3>Другое</h3>
+                <p>Проекты и идеи</p>
             </div>
-            <p class="copyright">© <span id="current-year"></span> Artjom Titov. All rights reserved.</p>
-        </footer>
-    </section>
+            <div class="card" onclick="openModal('Портфолио', '💢', 'Этот раздел сайта ещё не готов')">
+                <span class="card-icon">💢</span>
+                <h3>Портфолио</h3>
+                <p>Портфолио работ</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-text">
+            © 2024-2026 — муа💙 <a href="/privacy/" style="text-decoration: none; color: #ffffff;">privacy</a>
+        </div>
+    </footer>
+
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-handle"></div>
+            <button class="close-modal" onclick="hideModal()">&times;</button>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        const libraryData = [
-            {
-                type: 'creative',
-                title: '"И снова у обрыва"',
-                year: "2025",
-                category: "Поэзия",
-                categoryIcon: "bi-feather",
-                desc: "Стихотворение о навязчивом повторении и принятии безысходности",
-                image: "https://cdn.pixabay.com/photo/2023/01/15/16/20/library-7720589_960_720.jpg",
-                link: "https://poeziya.ru/a/1303808/",
-                important: true
-            },
-            {
-                type: 'creative',
-                title: '"Анфиса, спокойной ночи"',
-                year: "2023",
-                category: "Проза",
-                categoryIcon: "bi-book",
-                desc: "Жизнь Алекса была скучна. Он выполнял одну и ту же работу каждый день, а из круга общения у него была только Анфиса...",
-                image: "/assets/Frameв 19.png",
-                link: "https://author.today/work/286071",
-                important: false
-            },
-            {
-                type: 'creative',
-                title: 'Перевод "Erlkönig"',
-                year: "2025",
-                category: "Перевод",
-                categoryIcon: "bi-translate",
-                desc: "Классический перевод баллады Erlkönig («Лесной царь») на русский с сохранением ритма.",
-                image: "https://upload.wikimedia.org/wikipedia/commons/3/30/Erl_king_sterner.jpg",
-                link: "https://poeziya.ru/a/1303810/",
-                important: false
-            },
-            {
-                type: 'creative',
-                title: '"Идея"',
-                year: "2025",
-                category: "Поэзия",
-                categoryIcon: "bi-feather",
-                desc: "Стихотворение о вдохновении и его нереализации.",
-                image: "https://i.pinimg.com/736x/1f/59/81/1f5981ed868f0cf7f1e8625b43490455.jpg", 
-                link: "https://poeziya.ru/a/1303809/",
-                important: false
-            },
-            {
-                type: 'sites',
-                title: 'Калькулятор скруглений',
-                year: "2025",
-                category: "Веб-сайт",
-                categoryIcon: "bi-laptop",
-                desc: "Генератор скругления для контейнеров, внутри которых находится другой элемент",
-                image: "/assets/скругления.png", 
-                link: "https://calc.kototjom.top/",
-                important: false
-            },
-        ];
-
-        function renderLibrary(filterType = 'creative') {
-            const grid = document.getElementById('library-grid');
-            grid.classList.remove('visible');
-            
+        function openModal(title, icon, text) {
+            const modal = document.getElementById('modal');
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `
+                <span style="font-size: 4rem; display: block;">${icon}</span>
+                <h2>${title}</h2>
+                <p>${text}</p>
+            `;
+            modal.style.display = 'flex';
             setTimeout(() => {
-                grid.innerHTML = ''; 
-                const filteredData = libraryData.filter(item => item.type === filterType);
-                filteredData.forEach(item => {
-                    const cardHTML = `
-                        <div class="card ${item.important ? 'important' : ''}">
-                            <div class="card-image-wrapper">
-                                <img src="${item.image}" alt="${item.title}" class="card-img" onerror="this.src='https://placehold.co/600x400/1a1a1c/FFF?text=Нет+изображения'">
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">${item.title}</h3>
-                                <div class="card-meta">
-                                    <span><i class="bi bi-calendar"></i> ${item.year}</span>
-                                    <span><i class="bi ${item.categoryIcon || 'bi-book'}"></i> ${item.category}</span>
-                                </div>
-                                <p class="card-desc">${item.desc}</p>
-                                <a href="${item.link}" class="read-btn" target="_blank">
-                                    ${filterType === 'sites' ? 'Посетить' : 'Читать'} 
-                                    <i class="bi bi-arrow-right-short"></i>
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    grid.insertAdjacentHTML('beforeend', cardHTML);
-                });
-                grid.classList.add('visible');
-            }, 100); 
+                modal.classList.add('active');
+            }, 10);
         }
 
-        function filterLibrary(type) {
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if(type === 'creative') buttons[0].classList.add('active');
-            if(type === 'sites') buttons[1].classList.add('active');
-            renderLibrary(type);
+        function hideModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 400);
         }
 
-        document.addEventListener('DOMContentLoaded', () => { renderLibrary('creative'); });
+        function closeModal(event) {
+            if (event.target.id === 'modal') {
+                hideModal();
+            }
+        }
     </script>
+
 </body>
 </html>
