@@ -3,274 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KTJM // @Kototjom</title>
+    <title>KTJM // @kototjom</title>
     <style>
         @font-face {
-           font-family: 'Montserrat';
-           src: url('/files/Montserrat-VariableFont_wght.ttf') format('truetype-variations');
+           font-family: 'Inter';
+           src: url('/files/Inter.ttf') format('truetype-variations');
            font-weight: 100 900;
            font-style: normal;
            font-display: swap;
        }
 
         :root {
-            --primary: #3f4581;
-            --primary-soft: #4e559e;
-            --bg: #16171d;
-            --paper: rgba(63, 69, 129, 0.12);
-            --text: #e2e4f3;
-            --text-dim: #8e92b2;
-            --rounding: 28px;
-            --overlay: rgba(0, 0, 0, 0.6);
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-            border: 2px solid var(--bg);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-soft);
+            --bg-top: #4E0F36;
+            --bg-bottom: #050506;
+            --theme-pink: rgba(185, 53, 133, 0.4);
+            --solid-pink: #db2777;
+            --marquee-bg: #B93585;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --zinc-900: #18181b;
+            --pink-400: #f472b6;
         }
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif !important;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 641px) {
+            html {
+                zoom: 110%; 
+            }
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Montserrat', sans-serif;
-            min-height: 100vh;
+            background: radial-gradient(circle at top, var(--bg-top) 0%, var(--bg-bottom) 70%);
+            background-attachment: fixed;
+            color: white;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 100px 0 0;
+            margin: 0;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(63, 69, 129, 0.1), transparent),
-                url("/files/stardust.png"); /* текстура с сайта https://www.transparenttextures.com/ */
+            padding: 1.25rem; 
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 2.5rem; 
+            }
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 4px solid var(--theme-pink);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @media (min-width: 768px) {
+            body::after {
+                border: 8px solid var(--theme-pink);
+            }
         }
 
         .container {
-            width: calc(100% - 40px);
-            max-width: 440px;
-            text-align: center;
-            flex-grow: 1;
-            margin-bottom: 80px;
+            max-width: 28rem; 
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .profile {
-            margin-bottom: 40px;
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .badge {
-            font-size: 0.7rem;
-            background: var(--primary);
-            padding: 4px 12px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .name-block h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 1;
-            color: var(--text);
-        }
-
-        .name-block .sub-name {
-            font-size: 1rem;
-            color: var(--primary-soft);
-            font-weight: 600;
-            margin-top: 5px;
-        }
-
-        .links-wrap {
+        .flex-col-center {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 50px;
-        }
-
-        .link-item {
-            background: var(--paper);
-            border: 2px solid transparent;
-            border-radius: var(--rounding);
-            padding: 18px;
-            text-decoration: none;
-            color: var(--text);
-            display: flex;
             align-items: center;
-            justify-content: space-between;
-            transition: all 0.4s ease;
         }
 
-        .link-item:hover {
-            background: rgba(63, 69, 129, 0.25);
-            transform: translateY(-2px);
-            border-color: var(--primary-soft);
+        header {
+            margin-bottom: 1rem; 
         }
 
-        .link-item span:first-child {
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .logo {
+            font-size: 1.25rem; 
+            font-weight: 700;
+            letter-spacing: -0.025em; 
+            margin: 0;
         }
 
-        .label-eng {
-            font-size: 0.7rem;
-            opacity: 0.4;
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 0;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 700;
+            opacity: 0.7;
             text-transform: uppercase;
-        }
-
-        .creative-title {
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-left: 10px;
-            color: var(--text-dim);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .bento-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .card {
-            background: var(--paper);
-            border-radius: var(--rounding);
-            padding: 20px;
-            text-align: left;
+            letter-spacing: 0.2em;
+            transition: opacity 0.2s;
             position: relative;
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-decoration: none;
-            color: inherit;
+            z-index: 10001;
+        }
+
+        .menu-btn:hover {
+            opacity: 1;
+        }
+
+        .marquee-container {
+            background: var(--marquee-bg);
+            overflow: hidden;
+            width: 100%;
             display: flex;
-            flex-direction: column;
+            border-radius: 0.5rem; 
+            padding-top: 0.625rem; 
+            padding-bottom: 0.625rem;
+            margin-bottom: 2.5rem; 
         }
 
-        .card:hover {
-            background: var(--primary);
-            transform: scale(1.02);
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee-infinite 20s linear infinite;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--text);
+        .marquee-content span {
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
 
-        .card p {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            line-height: 1.4;
+        @keyframes marquee-infinite {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
-        .card-icon {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+        .profile-section {
+            margin-top: 2.5rem; 
+            margin-bottom: 5rem; 
+            text-align: center;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            transform: rotate(-3deg);
+            margin-bottom: 1.5rem; 
+        }
+
+        .avatar-border {
+            padding: 4px;
+            background: var(--solid-pink);
+            border-radius: 1.2rem;
+        }
+
+        .avatar-img-container {
+            width: 6rem; 
+            height: 6rem; 
+            border-radius: 1.1rem;
+            overflow: hidden;
+            background: var(--zinc-900);
+        }
+
+        .username {
+            font-size: 1.5rem; 
+            font-weight: 900; 
+            margin-bottom: 0.375rem; 
+            margin-top: 0;
+        }
+
+        .status {
+            font-size: 0.75rem; 
+            opacity: 0.5;
+            font-style: italic;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem; 
+            width: 100%;
+            margin-bottom: 1rem; 
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem; 
+            padding: 1rem 1.25rem; 
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+            color: white;
             display: block;
+            text-align: center;
+        }
+
+        .glass-card span {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--glass-border);
+        }
+
+        .text-block {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            width: 100%;
+            height: auto;
+            padding: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem; 
+        }
+
+        .footer-divider {
+            border: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            margin: 0;
         }
 
         footer {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.25);
-            padding: 60px 20px;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            margin-top: auto;
-        }
-
-        .footer-text {
-            font-size: 0.7rem;
-            opacity: 0.4;
-            letter-spacing: 2px;
+            padding-top: 1.5rem; 
+            padding-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
             text-transform: uppercase;
+            letter-spacing: 0.25em;
+            opacity: 0.3;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        footer a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
         }
 
-        .container > * { animation: fadeIn 1s ease forwards; }
+        footer a:hover {
+            color: var(--pink-400);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 6, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .menu-links li {
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .menu-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 2.5rem;
+            font-weight: 900;
+            display: block;
+            transition: transform 0.3s, color 0.3s;
+            transform: translateY(100%);
+        }
+
+        .menu-overlay.active .menu-links a {
+            transform: translateY(0);
+        }
+
+        .menu-links a:hover {
+            color: var(--pink-400);
+        }
+
+        .menu-links li:nth-child(1) a { transition-delay: 0.1s; }
+        .menu-links li:nth-child(2) a { transition-delay: 0.2s; }
+        .menu-links li:nth-child(3) a { transition-delay: 0.3s; }
+        .menu-links li:nth-child(4) a { transition-delay: 0.4s; }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="profile">
-            <div class="badge">ready to slay</div>
-            <div class="name-block">
-                <h1>KTJM</h1>
-                <div class="sub-name">aka @kototjom</div>
-            </div>
-        </header>
-
-        <nav class="links-wrap">
-            <a href="https://t.me/kototjom_telegram" class="link-item">
-                <span><small>🍵</small> Telegram</span>
-                <span class="label-eng">Blog</span>
-            </a>
-            <a href="https://www.instagram.com/kototjom/" class="link-item">
-                <span><small>🍙</small> Instagram</span>
-                <span class="label-eng">Life</span>
-            </a>
-            <a href="https://www.youtube.com/@kototjom" class="link-item">
-                <span><small>📻</small> YouTube</span>
-                <span class="label-eng">Videos</span>
-            </a>
-            <a href="https://www.tiktok.com/@kototjom" class="link-item">
-                <span><small>📻</small> TikTok</span>
-                <span class="label-eng">Reposts</span>
-            </a>
-        </nav>
-
-        <div class="creative-title">
-            <span>Творческий уголок</span>
-            <span style="opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">Creative</span>
-        </div>
-
-        <div class="bento-box">
-            <a href="https://poeziya.ru/u/92335/" class="card">
-                <span class="card-icon">🎋</span>
-                <h3>Поэзия</h3>
-                <p>Цифровой хаос и вдохновение.</p>
-            </a>
-            
-            <a href="/упс" class="card">
-                <span class="card-icon">🎐</span>
-                <h3>Другое</h3>
-                <p>Проекты и идеи.</p>
-            </a>
-        </div>
+    <div class="menu-overlay" id="menuOverlay">
+        <ul class="menu-links">
+            <li><a href="#">Главная</a></li>
+            <li><a href="https://poeziya.ru/u/92335/">Поэзия</a></li>
+        </ul>
     </div>
 
-    <footer>
-        <div class="footer-text">
-            © 2024-2026 — муа💙 <a href="/privacy/" style="text-decoration: none; color: #ffffff;">privacy</a>
+    <header class="container flex-between">
+        <h1 class="logo">KTJM</h1>
+        <button class="menu-btn" id="menuToggle">Menü</button>
+    </header>
+
+    <main class="container flex-col-center">
+        
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <span>мне ОЧЕНЬ хотелось бегущую строку но что писать я не придумал</span>
+                <span>мне ОЧЕНЬ хотелось бегущую строку но что писать я не придумал</span>
+            </div>
         </div>
-    </footer>
+
+        <div class="profile-section">
+            <div class="avatar-wrapper">
+                <div class="avatar-border">
+                    <div class="avatar-img-container">
+                        <img src="\files\avatar.jpg" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            <h2 class="username">@kototjom</h2>
+            <p class="status">ready to slay</p>
+        </div>
+
+        <div class="links-grid">
+            <a href="https://www.instagram.com/kototjom/" class="glass-card">
+                <span>Instagram</span>
+            </a>
+            <a href="https://www.tiktok.com/@kototjom" class="glass-card">
+                <span>TikTok</span>
+            </a>
+            <a href="https://www.youtube.com/@kototjom" class="glass-card">
+                <span>YouTube</span>
+            </a>
+            <a href="https://t.me/kototjom_telegram" class="glass-card">
+                <span>Telegram</span>
+            </a>
+        </div>
+
+        <div class="text-block">
+            Привяу, я Артём. Велком <br>
+            <span id="user-age">16</span> yo, Германия<br>
+            Говорю свободно на русском, более менее на немецком и кое-как по английски <br>
+            Занимаюсь всем к чему душа лежит:
+            <ul>
+                <li>Видеомонтаж</li>
+                <li>Дизайн</li>
+                <li>ИНОГДА!!! пытаюсь что то накодить (спойлер: я знаю только базу-базу html и всё)</li>
+                <li>Блоггинг</li>
+                <li>Поэзия, книги</li>
+                <li>Музыка</li>
+            </ul>
+            Сайт задизайнил сам, а код навайбкодил, пардон
+        </div>
+
+    </main>
+
+    <div class="container">
+        <hr class="footer-divider">
+        <footer>
+            <div>2024-<span id="current-year"></span></div>
+            <a href="/privacy/german">Datenschutz</a>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            return age;
+        }
+        document.getElementById('user-age').textContent = calculateAge('2009-06-24');
+
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = menuOverlay.classList.toggle('active');
+            if (isOpen) {
+                document.body.classList.add('menu-open');
+                window.scrollTo(0, 0);
+            } else {
+                document.body.classList.remove('menu-open');
+            }
+            menuToggle.textContent = isOpen ? 'Close' : 'Menü';
+        });
+
+        menuOverlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('active');
+                document.body.classList.remove('menu-open');
+                menuToggle.textContent = 'Menü';
+            });
+        });
+    </script>
 
 </body>
 </html>
