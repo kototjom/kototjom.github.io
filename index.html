@@ -3,274 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KTJM // @Kototjom</title>
+    <title>KTJM — про меня // творчество // блог</title>
     <style>
-        @font-face {
-           font-family: 'Montserrat';
-           src: url('/files/Montserrat-VariableFont_wght.ttf') format('truetype-variations');
-           font-weight: 100 900;
-           font-style: normal;
-           font-display: swap;
-       }
-
         :root {
-            --primary: #3f4581;
-            --primary-soft: #4e559e;
-            --bg: #16171d;
-            --paper: rgba(63, 69, 129, 0.12);
-            --text: #e2e4f3;
-            --text-dim: #8e92b2;
-            --rounding: 28px;
-            --overlay: rgba(0, 0, 0, 0.6);
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-            border: 2px solid var(--bg);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-soft);
+            --bg-start: #4A233E;
+            --bg-end: #170B13;
+            --accent-color: #B93585;
+            --footer-text-color: #6C2E54;
+            --main-text-color: #ffffff;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --content-width: 900px;
+            /* Единый отступ для симметрии (верх и низ) */
+            --vertical-spacing: 80px; 
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Montserrat', sans-serif;
+        body, html {
+            width: 100%;
+            /* Убрали фиксированную высоту 100%, чтобы страница скроллилась естественно */
+            font-family: var(--font-family);
+            color: var(--main-text-color);
+            background-color: var(--bg-end);
+        }
+
+        .page-wrapper {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 100px 0 0;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(63, 69, 129, 0.1), transparent),
-                url("/files/stardust.png"); /* текстура с сайта https://www.transparenttextures.com/ */
+            /* Изменили проценты: теперь темный цвет (bg-end) занимает 60% площади, делая фон мрачнее */
+            background: radial-gradient(circle at top, var(--bg-start) 0%, var(--bg-end) 60%);
+            outline: 10px solid rgba(185, 53, 132, 0.171);
+            outline-offset: -10px;
+            position: relative;
         }
 
         .container {
-            width: calc(100% - 40px);
-            max-width: 440px;
-            text-align: center;
-            flex-grow: 1;
-            margin-bottom: 80px;
+            /* Убрали flex: 1 и центровку align-items, чтобы блок не висел посередине */
+            display: flex;
+            justify-content: center;
+            padding: var(--vertical-spacing) 20px; /* Отступ сверху задан переменной */
+            width: 100%;
         }
 
-        .profile {
-            margin-bottom: 40px;
+        .content-grid {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 10px; /* Уменьшили расстояние между левым и правым блоком */
+            width: fit-content;
         }
 
-        .badge {
-            font-size: 0.7rem;
-            background: var(--primary);
-            padding: 4px 12px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+        .image-block {
+            flex-shrink: 0;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .image-block img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .info-block {
+            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            text-align: right;
+            padding-bottom: 10px; 
+        }
+
+        .info-top h1 {
+            font-size: 100px;
+            line-height: 0.85;
             text-transform: uppercase;
-        }
-
-        .name-block h1 {
-            font-size: 3.5rem;
             font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 1;
-            color: var(--text);
-        }
-
-        .name-block .sub-name {
-            font-size: 1rem;
-            color: var(--primary-soft);
-            font-weight: 600;
-            margin-top: 5px;
-        }
-
-        .links-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 50px;
-        }
-
-        .link-item {
-            background: var(--paper);
-            border: 2px solid transparent;
-            border-radius: var(--rounding);
-            padding: 18px;
-            text-decoration: none;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.4s ease;
-        }
-
-        .link-item:hover {
-            background: rgba(63, 69, 129, 0.25);
-            transform: translateY(-2px);
-            border-color: var(--primary-soft);
-        }
-
-        .link-item span:first-child {
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .label-eng {
-            font-size: 0.7rem;
-            opacity: 0.4;
-            text-transform: uppercase;
-        }
-
-        .creative-title {
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-left: 10px;
-            color: var(--text-dim);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .bento-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .card {
-            background: var(--paper);
-            border-radius: var(--rounding);
-            padding: 20px;
-            text-align: left;
-            position: relative;
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            background: var(--primary);
-            transform: scale(1.02);
-        }
-
-        .card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-
-        .card p {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            line-height: 1.4;
-        }
-
-        .card-icon {
-            font-size: 1.5rem;
             margin-bottom: 10px;
-            display: block;
         }
+
+        .nav-links {
+            font-size: 18px;
+            color: var(--main-text-color);
+            opacity: 0.8;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.5;
+        }
+
+        .about-text {
+            font-size: 15px;
+            line-height: 1.4;
+            max-width: 420px;
+            margin-left: auto;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            opacity: 0.7;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .icon-link {
+            width: 32px;
+            height: 32px;
+            display: block;
+            transition: opacity 0.2s;
+        }
+
+        .icon-link:hover { opacity: 0.7; }
+        .icon-link svg { width: 100%; height: 100%; fill: white; }
 
         footer {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.25);
-            padding: 60px 20px;
+            /* Отступ сверху равен отступу контейнера сверху для симметрии */
+            margin-top: 0; 
+            padding-bottom: 40px;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            margin-top: auto;
+            color: var(--footer-text-color);
+            font-size: 13px;
         }
 
-        .footer-text {
-            font-size: 0.7rem;
+        .footer-divider {
+            width: 100%;
+            margin: 0 auto 25px auto;
+            border: 0;
+            border-top: 2px dashed var(--footer-text-color);
             opacity: 0.4;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            max-width: 740px
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        footer p { margin-bottom: 5px; }
 
-        .container > * { animation: fadeIn 1s ease forwards; }
+        footer a { color: var(--footer-text-color); }
+
+        @media (max-width: 900px) {
+            .container {
+                padding-top: 40px; /* На мобилках чуть меньше сверху */
+            }
+
+            .content-grid {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .info-block {
+                text-align: center;
+                padding-bottom: 0;
+            }
+
+            .info-top h1 {
+                font-size: 60px;
+            }
+
+            .image-block {
+                width: 90%;
+                max-width: 320px;
+                height: auto;
+                aspect-ratio: 443 / 503;
+            }
+
+            .about-text {
+                display: none; 
+            }
+
+            .social-icons {
+                justify-content: center;
+                margin-top: 20px;
+            }
+            
+            .footer-divider {
+                max-width: 80%;
+            }
+        }
+                .icon-link img {
+            width: 100%;
+            height: 100%;
+            /* object-fit: contain гарантирует, что иконка впишется в 32x32px без искажений */
+            object-fit: contain; 
+            /* Если иконки черные, а фон темный, этот фильтр сделает их белыми */
+            filter: brightness(0) invert(1); 
+            display: block;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="profile">
-            <div class="badge">ready to slay</div>
-            <div class="name-block">
-                <h1>KTJM</h1>
-                <div class="sub-name">aka @kototjom</div>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- Основной блок -->
+            <div class="content-grid">
+                
+                <div class="image-block">
+                    <!-- Заменил на заглушку, так как локального файла нет, но стили применятся к твоему файлу -->
+                    <img src="/files/image-removebg-preview (1) 1.png" alt="Character">
+                </div>
+
+                <!-- Блок инфо -->
+                <div class="info-block">
+                    <div class="info-top">
+                        <h1>KTJM</h1>
+                        <nav class="nav-links">
+                            <a href="/упс">про меня</a> // <a href="/упс">творчество</a> // <a href="/упс">блог</a>
+                        </nav>
+                    </div>
+
+                    <div class="info-bottom">
+                        <div class="about-text">
+                            Привяу, я Артём, 16 yo, Германия. Велком
+                            Говорю свободно на русском, более менее на
+                            немецком и кое-как по английски
+                            Занимаюсь всем к чему душа лежит
+                            Сайт задизайнил сам, а код навайбкодил, пардон
+                        </div>
+                        
+                        <div class="social-icons">
+                            <a href="https://www.instagram.com/kototjom" class="icon-link"><img src="/files/instagram.svg" alt="Инстаграм"></a>
+                            <a href="https://t.me/kototjom_telegram" class="icon-link"><img src="/files/telegram.svg" alt="Телеграм"></a>
+                            <a href="https://www.youtube.com/@kototjom" class="icon-link"><img src="/files/youtube.svg" alt="Ютуб"></a>
+                            <a href="https://www.tiktok.com/@kototjom" class="icon-link"><img src="/files/tiktok.svg" alt="Тикток"></a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </header>
-
-        <nav class="links-wrap">
-            <a href="https://t.me/kototjom_telegram" class="link-item">
-                <span><small>🍵</small> Telegram</span>
-                <span class="label-eng">Blog</span>
-            </a>
-            <a href="https://www.instagram.com/kototjom/" class="link-item">
-                <span><small>🍙</small> Instagram</span>
-                <span class="label-eng">Life</span>
-            </a>
-            <a href="https://www.youtube.com/@kototjom" class="link-item">
-                <span><small>📻</small> YouTube</span>
-                <span class="label-eng">Videos</span>
-            </a>
-            <a href="https://www.tiktok.com/@kototjom" class="link-item">
-                <span><small>📻</small> TikTok</span>
-                <span class="label-eng">Reposts</span>
-            </a>
-        </nav>
-
-        <div class="creative-title">
-            <span>Творческий уголок</span>
-            <span style="opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">Creative</span>
         </div>
 
-        <div class="bento-box">
-            <a href="https://poeziya.ru/u/92335/" class="card">
-                <span class="card-icon">🎋</span>
-                <h3>Поэзия</h3>
-                <p>Цифровой хаос и вдохновение.</p>
-            </a>
-            
-            <a href="/упс" class="card">
-                <span class="card-icon">🎐</span>
-                <h3>Другое</h3>
-                <p>Проекты и идеи.</p>
-            </a>
-        </div>
+        <!-- Футер с линией -->
+        <footer>
+            <hr class="footer-divider">
+            <p>без понятия чей артик - взял его в пинтересте</p>
+            <p>2024-сейчас, <a href="/privacy">privacy</a></p>
+        </footer>
     </div>
-
-    <footer>
-        <div class="footer-text">
-            © 2024-2026 — муа💙 <a href="/privacy/" style="text-decoration: none; color: #ffffff;">privacy</a>
-        </div>
-    </footer>
 
 </body>
 </html>
